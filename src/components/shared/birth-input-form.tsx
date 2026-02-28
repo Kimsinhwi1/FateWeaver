@@ -17,9 +17,12 @@ import type { BirthInput } from '@/types/saju'
 interface BirthInputFormProps {
   onSubmit: (data: BirthInput) => void
   isLoading?: boolean
+  /** 제출 버튼 텍스트 커스터마이징 — 타로/운세 페이지별 다른 문구 */
+  submitLabel?: string
+  loadingLabel?: string
 }
 
-export default function BirthInputForm({ onSubmit, isLoading }: BirthInputFormProps) {
+export default function BirthInputForm({ onSubmit, isLoading, submitLabel, loadingLabel }: BirthInputFormProps) {
   const t = useTranslations('birthForm')
   const tTarot = useTranslations('tarot')
 
@@ -140,7 +143,9 @@ export default function BirthInputForm({ onSubmit, isLoading }: BirthInputFormPr
         disabled={!birthDate || isLoading}
         className="w-full rounded-full bg-mystic-600 py-3 text-base font-medium text-white shadow-lg shadow-mystic-600/25 transition-all hover:bg-mystic-500 disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {isLoading ? tTarot('loading') : tTarot('startReading')}
+        {isLoading
+          ? (loadingLabel || tTarot('loading'))
+          : (submitLabel || tTarot('startReading'))}
       </button>
     </form>
   )

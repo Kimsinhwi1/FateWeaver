@@ -28,9 +28,39 @@ const cinzel = Cinzel({
   display: 'swap',
 })
 
-export const metadata: Metadata = {
-  title: 'FateWeaver — AI Fortune Reading',
-  description: 'The first AI that reads your fate through both Eastern & Western wisdom.',
+const BASE_URL = 'https://fateweaver.vercel.app'
+
+/** 동적 메타데이터 — locale에 따라 title, OG, Twitter 분기 */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const isKo = locale === 'ko'
+
+  return {
+    metadataBase: new URL(BASE_URL),
+    title: {
+      default: isKo
+        ? 'FateWeaver — AI 운세 리딩 | 동양 사주 × 서양 타로'
+        : 'FateWeaver — AI Fortune Reading | Eastern Saju × Western Tarot',
+      template: isKo ? '%s | FateWeaver' : '%s | FateWeaver',
+    },
+    description: isKo
+      ? '동양 사주명리학과 서양 타로를 AI가 융합 해석하는 글로벌 운세 서비스'
+      : 'The first AI that reads your fate through both Eastern & Western wisdom.',
+    openGraph: {
+      type: 'website',
+      siteName: 'FateWeaver',
+      locale: isKo ? 'ko_KR' : 'en_US',
+      images: [{ url: '/api/og', width: 1200, height: 630, alt: 'FateWeaver — AI Fortune Reading' }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      images: ['/api/og'],
+    },
+  }
 }
 
 export default async function RootLayout({

@@ -88,6 +88,62 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* 샘플 리딩 미리보기 섹션 */}
+        <section className="mx-auto mt-28 w-full max-w-3xl">
+          <h2 className="mb-3 text-center font-heading text-2xl font-bold text-slate-100 sm:text-3xl">
+            {t('landing.sample.title')}
+          </h2>
+          <p className="mb-10 text-center text-sm text-slate-500">
+            {t('landing.sample.description')}
+          </p>
+
+          {/* 샘플 카드 3장 */}
+          <div className="mb-8 flex justify-center gap-4 sm:gap-6">
+            {[
+              { label: t('landing.sample.card1'), position: t('tarot.positions.past') },
+              { label: t('landing.sample.card2'), position: t('tarot.positions.present') },
+              { label: t('landing.sample.card3'), position: t('tarot.positions.future') },
+            ].map((card) => (
+              <div key={card.position} className="text-center">
+                <div className="mx-auto flex h-28 w-20 items-center justify-center rounded-xl border border-mystic-500/30 bg-gradient-to-b from-mystic-900/40 to-slate-900/80 sm:h-36 sm:w-24">
+                  <span className="text-2xl sm:text-3xl">&#x1F0CF;</span>
+                </div>
+                <p className="mt-2 text-xs text-mystic-400">{card.position}</p>
+                <p className="mt-0.5 text-xs text-slate-500">{card.label}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* 샘플 해석 텍스트 */}
+          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8">
+            <p className="text-sm leading-relaxed text-slate-300 sm:text-base">
+              {t('landing.sample.text')}
+            </p>
+          </div>
+        </section>
+
+        {/* 하단 CTA 섹션 */}
+        <section className="mx-auto mt-28 w-full max-w-2xl text-center">
+          <h2 className="font-heading text-2xl font-bold text-slate-100 sm:text-3xl">
+            {t('landing.cta2.title')}
+          </h2>
+
+          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <Link
+              href={`/${locale}/tarot`}
+              className="inline-block rounded-full bg-mystic-600 px-8 py-3.5 text-base font-medium text-white shadow-lg shadow-mystic-600/30 transition-all hover:bg-mystic-500 hover:shadow-mystic-500/40 hover:scale-[1.02]"
+            >
+              {t('landing.cta2.tarot')}
+            </Link>
+            <Link
+              href={`/${locale}/daily`}
+              className="inline-block rounded-full border border-gold-500/40 px-8 py-3.5 text-base font-medium text-gold-400 transition-all hover:border-gold-400 hover:bg-gold-500/10 hover:scale-[1.02]"
+            >
+              {t('landing.cta2.daily')}
+            </Link>
+          </div>
+        </section>
+
         {/* 신뢰 지표 */}
         <section className="mx-auto mt-20 flex max-w-md flex-wrap items-center justify-center gap-8 text-center">
           <div>

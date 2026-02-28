@@ -12,6 +12,7 @@ import Footer from '@/components/layout/footer'
 import BirthInputForm from '@/components/shared/birth-input-form'
 import CardSpread from '@/components/tarot/card-spread'
 import ReadingResult from '@/components/tarot/reading-result'
+import ShareCard from '@/components/shared/share-card'
 import type { BirthInput } from '@/types/saju'
 import type { DrawnCard } from '@/types/tarot'
 
@@ -30,6 +31,7 @@ export default function TarotPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [result, setResult] = useState<ReadingResponse | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [showShare, setShowShare] = useState(false)
 
   const handleSubmit = async (birthData: BirthInput) => {
     setIsLoading(true)
@@ -131,19 +133,24 @@ export default function TarotPage() {
                 {t('retry')}
               </button>
 
-              {/* 결과 공유 (Phase 2 placeholder) */}
+              {/* 결과 공유 */}
               <button
-                disabled
-                className="group relative rounded-full border border-white/10 px-6 py-2.5 text-sm text-slate-500 transition-colors"
-                title={t('shareComingSoon')}
+                onClick={() => setShowShare(true)}
+                className="rounded-full border border-gold-500/40 px-6 py-2.5 text-sm text-gold-400 transition-colors hover:border-gold-400 hover:bg-gold-500/10"
               >
                 {t('share')}
-                <span className="ml-1.5 rounded bg-mystic-900/50 px-1.5 py-0.5 text-[10px] text-mystic-400">
-                  {t('shareComingSoon')}
-                </span>
               </button>
             </div>
           </div>
+        )}
+
+        {/* 공유 카드 모달 */}
+        {showShare && result && (
+          <ShareCard
+            cards={result.cards}
+            interpretation={result.interpretation}
+            onClose={() => setShowShare(false)}
+          />
         )}
       </main>
 

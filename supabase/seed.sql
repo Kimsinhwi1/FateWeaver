@@ -54,17 +54,22 @@ CREATE TABLE IF NOT EXISTS saju_readings (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 일일 운세 (Phase 2+)
+-- 일일 운세 (Phase 2)
+-- Phase 2에서는 Auth 없이 birth_date 기반 캐싱
+-- 같은 생년월일이면 같은 날 같은 운세를 반환 → API 비용 절약
 CREATE TABLE IF NOT EXISTS daily_fortunes (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES user_profiles(id) ON DELETE CASCADE,
+  birth_date DATE NOT NULL,            -- 익명 캐싱 키 (생년월일)
   fortune_date DATE NOT NULL,
   content TEXT NOT NULL,
   lucky_color TEXT,
   lucky_number INTEGER,
   mood_score INTEGER,                 -- 1-10
+  zodiac_sign TEXT,                   -- 별자리
+  locale TEXT DEFAULT 'en',
   created_at TIMESTAMPTZ DEFAULT NOW(),
-  UNIQUE(user_id, fortune_date)       -- 하루에 하나만
+  UNIQUE(birth_date, fortune_date)   -- 같은 생년월일 + 같은 날 = 같은 운세
 );
 
 -- ─────────────────────────────────────────
@@ -121,8 +126,8 @@ CREATE POLICY "Users can insert own daily fortunes"
   WITH CHECK (auth.uid() = user_id);
 
 -- ─────────────────────────────────────────
--- 4. Phase 1 MVP — 익명 사용자 정책
---    비로그인 상태에서도 타로 리딩이 가능하도록
+-- 4. 익명 사용자 정책
+--    비로그인 상태에서도 리딩/운세 이용 가능
 -- ─────────────────────────────────────────
 
 -- 익명 사용자도 타로 리딩 생성 가능 (user_id = NULL)
@@ -135,10 +140,20 @@ CREATE POLICY "Anyone can view tarot reading by id"
   ON tarot_readings FOR SELECT
   USING (user_id IS NULL);
 
+-- 익명 사용자도 일일 운세 생성 가능
+CREATE POLICY "Anonymous can insert daily fortunes"
+  ON daily_fortunes FOR INSERT
+  WITH CHECK (user_id IS NULL);
+
+-- 익명 사용자도 birth_date 기반 운세 조회 가능
+CREATE POLICY "Anyone can view daily fortune by birth_date"
+  ON daily_fortunes FOR SELECT
+  USING (user_id IS NULL);
+
 -- ─────────────────────────────────────────
 -- 5. 인덱스 — 성능 최적화
 -- ─────────────────────────────────────────
 
 CREATE INDEX IF NOT EXISTS idx_tarot_readings_user_id ON tarot_readings(user_id);
 CREATE INDEX IF NOT EXISTS idx_tarot_readings_created_at ON tarot_readings(created_at DESC);
-CREATE INDEX IF NOT EXISTS idx_daily_fortunes_user_date ON daily_fortunes(user_id, fortune_date);
+CREATE INDEX IF NOT EXISTS idx_daily_fortunes_birth_date ON daily_fortunes(birth_date, fortune_date);

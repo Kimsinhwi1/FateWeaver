@@ -6,13 +6,14 @@
   "nav": {
     "home": "Home",
     "tarot": "Tarot Reading",
+    "daily": "Daily Fortune",
     "about": "About"
   },
   "landing": {
     "hero": {
-      "title": "Discover Your Fate",
-      "titleAccent": "Through Ancient Wisdom",
-      "subtitle": "Eastern Saju and Western Tarot — two ancient wisdoms woven into one personalized reading by AI.",
+      "title": "Your Fate Is Written",
+      "titleAccent": "In the Stars and In the Cards",
+      "subtitle": "Ancient Eastern birth charts meet Western Tarot — AI weaves them into one powerful reading, just for you.",
       "cta": "Begin Your Reading",
       "ctaFree": "Free 3-Card Reading"
     },
@@ -23,6 +24,19 @@
       "sajuDesc": "Your Four Pillars decoded — the cosmic blueprint written at your birth.",
       "fusion": "AI Fusion",
       "fusionDesc": "Two wisdom traditions, one deeply personalized oracle reading."
+    },
+    "sample": {
+      "title": "What Your Reading Looks Like",
+      "description": "Your reading will be even more personal — tailored to your unique birth chart.",
+      "card1": "The Empress",
+      "card2": "Eight of Swords (R)",
+      "card3": "The Star",
+      "text": "A nurturing energy from your past has laid the foundation for who you are today. The bonds you've quietly tended are now ready to bear fruit. Recently, you may have felt trapped by invisible walls — but these walls were never real. The moment you decide to step forward, you'll find they dissolve like morning mist. A brilliant light awaits ahead. Trust the quiet voice within, and take one small step this week toward what truly excites you."
+    },
+    "cta2": {
+      "title": "Ready to Discover Your Path?",
+      "tarot": "Get Your Tarot Reading",
+      "daily": "Check Today's Fortune"
     },
     "trust": {
       "readings": "Readings Delivered",
@@ -42,6 +56,41 @@
       "past": "Past",
       "present": "Present",
       "future": "Future"
+    }
+  },
+  "daily": {
+    "title": "Today's Fortune",
+    "subtitle": "Enter your birth details to receive your personalized daily fortune",
+    "loading": "The Oracle is reading the stars...",
+    "checkFortune": "Check My Fortune",
+    "retry": "Check Another Birthday",
+    "moodScore": "Today's Energy Level",
+    "luckyColor": "Lucky Color",
+    "luckyNumber": "Lucky Number",
+    "zodiac": {
+      "aries": "Aries",
+      "taurus": "Taurus",
+      "gemini": "Gemini",
+      "cancer": "Cancer",
+      "leo": "Leo",
+      "virgo": "Virgo",
+      "libra": "Libra",
+      "scorpio": "Scorpio",
+      "sagittarius": "Sagittarius",
+      "capricorn": "Capricorn",
+      "aquarius": "Aquarius",
+      "pisces": "Pisces"
+    }
+  },
+  "premium": {
+    "title": "Deeper Insights",
+    "comingSoon": "Coming Soon",
+    "description": "Premium features are being prepared. Stay tuned for a deeper look into your destiny.",
+    "features": {
+      "deepReading": "In-depth 10-year fortune analysis",
+      "monthlyFortune": "Monthly fortune & guidance",
+      "compatibility": "Love & relationship compatibility",
+      "yearlyForecast": "Yearly forecast & career outlook"
     }
   },
   "birthForm": {

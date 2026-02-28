@@ -30,6 +30,12 @@ export default function Header() {
           >
             {t('tarot')}
           </Link>
+          <Link
+            href={`/${locale}/daily`}
+            className="text-sm text-slate-300 transition-colors hover:text-mystic-400"
+          >
+            {t('daily')}
+          </Link>
 
           {/* 언어 전환 */}
           <Link

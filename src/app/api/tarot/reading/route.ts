@@ -103,6 +103,14 @@ export async function POST(request: NextRequest) {
     const body: ReadingRequest = await request.json()
     const { birthDate, birthTime, locale, question } = body
 
+    /* 입력 검증 — 필수 필드 + 형식 확인 */
+    if (!birthDate || !/^\d{4}-\d{2}-\d{2}$/.test(birthDate)) {
+      return NextResponse.json({ error: 'Invalid birthDate format (YYYY-MM-DD)' }, { status: 400 })
+    }
+    if (birthTime && !/^\d{2}:\d{2}$/.test(birthTime)) {
+      return NextResponse.json({ error: 'Invalid birthTime format (HH:mm)' }, { status: 400 })
+    }
+
     // 1. 생년월일 파싱
     const { year, month, day } = parseBirthDate(birthDate)
     const hour = birthTime ? parseBirthTime(birthTime) : undefined
@@ -130,7 +138,7 @@ export async function POST(request: NextRequest) {
     const readingId = crypto.randomUUID()
 
     // 5. DB 저장 (비동기 — 로그인 유저만, 실패해도 무관)
-    saveReading(readingId, cards, interpretation, body.spreadType, question)
+    saveReading(readingId, cards, interpretation, body.spreadType, question).catch(() => {})
 
     return NextResponse.json({
       readingId,

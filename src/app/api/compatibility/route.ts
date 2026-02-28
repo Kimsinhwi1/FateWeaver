@@ -82,6 +82,22 @@ export async function POST(request: NextRequest) {
     const body: CompatibilityRequest = await request.json()
     const { person1, person2, locale } = body
 
+    /* 입력 검증 — 두 사람의 생년월일 필수 */
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/
+    const timeRegex = /^\d{2}:\d{2}$/
+    if (!person1?.birthDate || !dateRegex.test(person1.birthDate)) {
+      return NextResponse.json({ error: 'Invalid person1.birthDate format (YYYY-MM-DD)' }, { status: 400 })
+    }
+    if (!person2?.birthDate || !dateRegex.test(person2.birthDate)) {
+      return NextResponse.json({ error: 'Invalid person2.birthDate format (YYYY-MM-DD)' }, { status: 400 })
+    }
+    if (person1.birthTime && !timeRegex.test(person1.birthTime)) {
+      return NextResponse.json({ error: 'Invalid person1.birthTime format (HH:mm)' }, { status: 400 })
+    }
+    if (person2.birthTime && !timeRegex.test(person2.birthTime)) {
+      return NextResponse.json({ error: 'Invalid person2.birthTime format (HH:mm)' }, { status: 400 })
+    }
+
     /* 1. 두 사람의 사주 각각 계산 */
     const { year: y1, month: m1, day: d1 } = parseBirthDate(person1.birthDate)
     const h1 = person1.birthTime ? parseBirthTime(person1.birthTime) : undefined

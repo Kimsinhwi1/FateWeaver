@@ -169,6 +169,14 @@ export async function POST(request: NextRequest) {
     const body: DailyFortuneRequest = await request.json()
     const { birthDate, birthTime, locale } = body
 
+    /* 입력 검증 — 필수 필드 + 형식 확인 */
+    if (!birthDate || !/^\d{4}-\d{2}-\d{2}$/.test(birthDate)) {
+      return NextResponse.json({ error: 'Invalid birthDate format (YYYY-MM-DD)' }, { status: 400 })
+    }
+    if (birthTime && !/^\d{2}:\d{2}$/.test(birthTime)) {
+      return NextResponse.json({ error: 'Invalid birthTime format (HH:mm)' }, { status: 400 })
+    }
+
     // 1. 생년월일 파싱 + 사주 계산
     const { year, month, day } = parseBirthDate(birthDate)
     const hour = birthTime ? parseBirthTime(birthTime) : undefined
@@ -231,7 +239,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 7. 캐시 저장 (비동기 — 실패해도 무관, 로그인 시 user_id 포함)
-    saveToCache(birthDate, today, zodiacSign, result, userId)
+    saveToCache(birthDate, today, zodiacSign, result, userId).catch(() => {})
 
     return NextResponse.json(result)
   } catch (error) {

@@ -1,21 +1,68 @@
 /* ─────────────────────────────────────────
- * 푸터 — 하단 고정 영역
- * 법적 고지(면책 문구)는 여기에만 배치 — 해석 본문에 절대 섞지 않는다
+ * 푸터 — 하단 네비게이션 + 법적 고지
+ * 모바일에서 헤더에 숨겨진 링크들을 여기서 보여준다
+ * 비유: 쇼핑몰 1층 안내판 — 헤더가 간판이면 푸터는 층별 안내
  * ───────────────────────────────────────── */
 
-import { useTranslations } from 'next-intl'
+import Link from 'next/link'
+import { useLocale, useTranslations } from 'next-intl'
 
 export default function Footer() {
   const t = useTranslations('common')
+  const tNav = useTranslations('nav')
+  const locale = useLocale()
 
   return (
-    <footer className="border-t border-white/5 py-8 text-center">
-      <p className="text-xs text-slate-500">
-        {t('disclaimer')}
-      </p>
-      <p className="mt-2 text-xs text-slate-600">
-        &copy; 2025 FateWeaver. All rights reserved.
-      </p>
+    <footer className="border-t border-white/5 py-10">
+      {/* 네비게이션 링크 — 모바일에서 헤더에 숨겨진 메뉴 접근용 */}
+      <nav className="mx-auto mb-6 grid max-w-5xl grid-cols-2 gap-3 px-4 sm:grid-cols-4">
+        <Link
+          href={`/${locale}/tarot`}
+          className="text-sm text-slate-400 transition-colors hover:text-mystic-400"
+        >
+          {tNav('tarot')}
+        </Link>
+        <Link
+          href={`/${locale}/daily`}
+          className="text-sm text-slate-400 transition-colors hover:text-mystic-400"
+        >
+          {tNav('daily')}
+        </Link>
+        <Link
+          href={`/${locale}/archetype`}
+          className="text-sm text-slate-400 transition-colors hover:text-mystic-400"
+        >
+          {tNav('archetype')}
+        </Link>
+        <Link
+          href={`/${locale}/compatibility`}
+          className="text-sm text-slate-400 transition-colors hover:text-gold-400"
+        >
+          {tNav('compatibility')}
+        </Link>
+        <Link
+          href={`/${locale}/blog`}
+          className="text-sm text-slate-400 transition-colors hover:text-mystic-400"
+        >
+          {tNav('blog')}
+        </Link>
+        <Link
+          href={`/${locale}/pricing`}
+          className="text-sm text-slate-400 transition-colors hover:text-gold-400"
+        >
+          {tNav('pricing')}
+        </Link>
+      </nav>
+
+      {/* 면책 문구 + 저작권 */}
+      <div className="text-center">
+        <p className="text-xs text-slate-500">
+          {t('disclaimer')}
+        </p>
+        <p className="mt-2 text-xs text-slate-600">
+          &copy; 2025 FateWeaver. All rights reserved.
+        </p>
+      </div>
     </footer>
   )
 }

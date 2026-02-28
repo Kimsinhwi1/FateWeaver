@@ -45,6 +45,18 @@ export default function Header() {
             {t('archetype')}
           </Link>
           <Link
+            href={`/${locale}/compatibility`}
+            className="hidden min-h-[44px] items-center text-sm text-slate-300 transition-colors hover:text-gold-400 sm:flex"
+          >
+            {t('compatibility')}
+          </Link>
+          <Link
+            href={`/${locale}/blog`}
+            className="hidden min-h-[44px] items-center text-sm text-slate-300 transition-colors hover:text-mystic-400 lg:flex"
+          >
+            {t('blog')}
+          </Link>
+          <Link
             href={`/${locale}/pricing`}
             className="hidden min-h-[44px] items-center text-sm text-slate-300 transition-colors hover:text-gold-400 lg:flex"
           >

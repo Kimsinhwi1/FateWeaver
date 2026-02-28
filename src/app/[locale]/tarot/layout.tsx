@@ -25,6 +25,7 @@ export async function generateMetadata({
       title: isKo
         ? '무료 AI 타로 리딩 — FateWeaver'
         : 'Free AI Tarot Reading — FateWeaver',
+      images: [{ url: '/api/og', width: 1200, height: 630 }],
     },
   }
 }

@@ -10,7 +10,7 @@ FateWeaver — 동양 사주 × 서양 타로를 AI가 융합 해석하는 글�
 - Next.js 15 (App Router) + Tailwind CSS
 - Supabase (DB + Auth)
 - Anthropic Claude API
-- Cloudflare Pages 배포
+- Vercel 배포
 - Paddle (결제)
 
 ## 코드 규칙

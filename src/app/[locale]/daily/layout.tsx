@@ -23,6 +23,7 @@ export async function generateMetadata({
       title: isKo
         ? '오늘의 운세 — FateWeaver'
         : "Today's Fortune — FateWeaver",
+      images: [{ url: '/api/og', width: 1200, height: 630 }],
     },
   }
 }

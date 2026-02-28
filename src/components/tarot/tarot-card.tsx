@@ -36,7 +36,9 @@ export default function TarotCard({
       const timer = setTimeout(() => setFlipped(true), flipDelay)
       return () => clearTimeout(timer)
     }
-    setFlipped(false)
+    // isRevealed가 false → 초기 상태로 리셋 (다음 턴에 적용)
+    const reset = setTimeout(() => setFlipped(false), 0)
+    return () => clearTimeout(reset)
   }, [isRevealed, flipDelay])
 
   /** 카드 이미지 경로 — card.id(예: "major_0")를 기반으로 이미지를 찾는다 */

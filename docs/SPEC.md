@@ -56,7 +56,7 @@
 백엔드:      Next.js API Routes + Supabase (DB + Auth)
 AI:          Anthropic Claude API (운세 해석 생성)
 결제:        Paddle (1순위) / Lemon Squeezy (백업) — 아래 결제 전략 참고
-배포:        Cloudflare Pages
+배포:        Vercel
 다국어:      next-intl (영어, 한국어, 일본어, 중국어 우선)
 이미지:      Canvas API / html2canvas (공유카드 생성)
 ```

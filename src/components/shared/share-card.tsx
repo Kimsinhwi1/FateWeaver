@@ -3,21 +3,22 @@
  * 비유: 운세 결과를 예쁜 "포토카드"로 만들어주는 스튜디오
  *
  * 공유 방식 4가지:
- *   1. 이미지 저장 (html2canvas → PNG 다운로드)
+ *   1. 이미지 저장 (Pure Canvas → PNG 다운로드)
  *   2. 이미지 복사 (클립보드에 PNG 복사)
  *   3. 텍스트 복사 (해석 전문 텍스트로 복사 — 폴백)
  *   4. 네이티브 공유 (Web Share API — 모바일 전용)
  *
- * html2canvas 호환을 위해 캡처 영역에서는 Next.js <Image> 대신
- * 일반 <img> 태그를 사용한다 (Next.js 이미지 최적화 URL과 호환 문제)
+ * html2canvas 제거 — Pure Canvas 2D API로 직접 렌더링
+ * document.write() 차단 문제 근본 해결, CORS 문제 없음
  * ───────────────────────────────────────── */
 
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import type { DrawnCard } from '@/types/tarot'
 import { captureShareCard, downloadImage, copyToClipboard } from '@/lib/utils/share'
+import type { ShareCardData } from '@/lib/utils/share'
 
 interface ShareCardProps {
   cards: DrawnCard[]
@@ -28,7 +29,6 @@ interface ShareCardProps {
 export default function ShareCard({ cards, interpretation, onClose }: ShareCardProps) {
   const t = useTranslations('tarot')
   const locale = useLocale()
-  const cardRef = useRef<HTMLDivElement>(null)
   const [isCapturing, setIsCapturing] = useState(false)
   const [copied, setCopied] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -60,13 +60,23 @@ export default function ShareCard({ cards, interpretation, onClose }: ShareCardP
     return drawn.isReversed ? `${name} ↺` : name
   }
 
+  /** Canvas에 전달할 구조화된 데이터 — DOM 참조 대신 순수 데이터 */
+  const shareData: ShareCardData = {
+    cards: cards.map((drawn, i) => ({
+      id: drawn.card.id,
+      name: cardName(drawn),
+      position: positionLabels[i],
+      isReversed: drawn.isReversed,
+    })),
+    summaryText,
+  }
+
   /** 1. 이미지 저장 (다운로드) */
   const handleDownload = async () => {
-    if (!cardRef.current) return
     setIsCapturing(true)
     setError(null)
     try {
-      const blob = await captureShareCard(cardRef.current)
+      const blob = await captureShareCard(shareData)
       downloadImage(blob)
     } catch {
       setError(isKo ? '이미지 저장 실패. 텍스트 복사를 이용해 주세요.' : 'Image save failed. Try copying text instead.')
@@ -77,11 +87,10 @@ export default function ShareCard({ cards, interpretation, onClose }: ShareCardP
 
   /** 2. 이미지 복사 (클립보드) */
   const handleCopyImage = async () => {
-    if (!cardRef.current) return
     setIsCapturing(true)
     setError(null)
     try {
-      const blob = await captureShareCard(cardRef.current)
+      const blob = await captureShareCard(shareData)
       const success = await copyToClipboard(blob)
       if (success) {
         setCopied(true)
@@ -170,9 +179,8 @@ export default function ShareCard({ cards, interpretation, onClose }: ShareCardP
           </button>
         </div>
 
-        {/* ── 공유 카드 미리보기 — 이 div가 html2canvas 캡처 대상 ── */}
+        {/* ── 공유 카드 미리보기 (CSS 렌더링 — 실제 캡처는 Canvas로) ── */}
         <div
-          ref={cardRef}
           className="overflow-hidden rounded-xl"
           style={{ width: '100%', maxWidth: '480px', margin: '0 auto' }}
         >
@@ -199,9 +207,7 @@ export default function ShareCard({ cards, interpretation, onClose }: ShareCardP
               </div>
             </div>
 
-            {/* 카드 3장 — 실제 타로 카드 이미지 사용
-                html2canvas가 Next.js <Image>를 제대로 캡처 못하므로
-                일반 <img> 태그 + crossOrigin="anonymous" 사용 */}
+            {/* 카드 3장 — 미리보기용 */}
             <div
               style={{
                 display: 'flex',

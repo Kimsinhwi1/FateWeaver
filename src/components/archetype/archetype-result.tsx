@@ -6,11 +6,10 @@
 
 'use client'
 
-import { useRef } from 'react'
-import { useTranslations } from 'next-intl'
+import { useState } from 'react'
+import { useLocale, useTranslations } from 'next-intl'
 import { getArchetype } from '@/data/archetypes'
 import type { ArchetypeResult as ArchetypeResultType } from '@/lib/archetype/matcher'
-import { captureShareCard, downloadImage } from '@/lib/utils/share'
 
 interface Props {
   result: ArchetypeResultType
@@ -18,20 +17,46 @@ interface Props {
 
 export default function ArchetypeResult({ result }: Props) {
   const t = useTranslations('archetype')
-  const shareRef = useRef<HTMLDivElement>(null)
+  const locale = useLocale()
+  const [copied, setCopied] = useState(false)
 
   const primary = getArchetype(result.primary)
   const secondary = getArchetype(result.secondary)
   if (!primary || !secondary) return null
 
-  /** 공유 이미지 다운로드 */
+  const isKo = locale === 'ko'
+
+  /** 텍스트 복사로 공유 — 모바일 호환 100% */
   async function handleShare() {
-    if (!shareRef.current) return
     try {
-      const blob = await captureShareCard(shareRef.current)
-      downloadImage(blob, `fateweaver-archetype-${result.primary}.png`)
+      const text = [
+        `${primary?.emoji ?? '🔮'} FateWeaver Archetype`,
+        '━━━━━━━━━━━━━━━━━━━━',
+        '',
+        t(`types.${result.primary}.name`),
+        t(`types.${result.primary}.title`),
+        '',
+        t(`types.${result.primary}.description`),
+        '',
+        `${isKo ? '보조 원형' : 'Secondary'}: ${secondary?.emoji ?? ''} ${t(`types.${result.secondary}.name`)}`,
+        '',
+        '━━━━━━━━━━━━━━━━━━━━',
+        '🌙 fateweaver.vercel.app',
+      ].join('\n')
+
+      if (navigator.share) {
+        await navigator.share({
+          title: `${primary?.emoji ?? '🔮'} ${t(`types.${result.primary}.name`)}`,
+          text,
+          url: 'https://fateweaver.vercel.app',
+        })
+      } else {
+        await navigator.clipboard.writeText(text)
+        setCopied(true)
+        setTimeout(() => setCopied(false), 2000)
+      }
     } catch {
-      /* 무시 — html2canvas 실패 시 */
+      /* 유저가 공유 시트를 닫은 경우 — 무시 */
     }
   }
 
@@ -39,7 +64,6 @@ export default function ArchetypeResult({ result }: Props) {
     <div className="mx-auto w-full max-w-lg">
       {/* 주 원형 카드 */}
       <div
-        ref={shareRef}
         className="rounded-2xl border border-white/10 bg-slate-900 p-8 text-center"
         style={{
           background: `linear-gradient(135deg, ${primary.gradient.from}10, ${primary.gradient.to}10)`,
@@ -131,7 +155,7 @@ export default function ArchetypeResult({ result }: Props) {
         onClick={handleShare}
         className="mt-6 flex h-12 w-full items-center justify-center rounded-full border border-white/20 text-sm font-medium text-slate-300 transition-all hover:border-gold-500/40 hover:text-gold-400 active:scale-[0.98]"
       >
-        {t('share')}
+        {copied ? (isKo ? '✔ 복사됨!' : '✔ Copied!') : t('share')}
       </button>
     </div>
   )

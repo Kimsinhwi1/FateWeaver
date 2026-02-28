@@ -86,13 +86,13 @@ export default function DailyPage() {
           </p>
         </div>
 
-        {/* 남은 무료 횟수 안내 */}
-        {!isPremium && !fortuneData && !isLoading && (
+        {/* 남은 무료 횟수 안내 — i18n 처리 */}
+        {!isPremium && !fortuneData && !isLoading && getRemainingUses('daily', isPremium) > 0 && (
           <p className="mb-4 text-center text-xs text-slate-500">
-            {getRemainingUses('daily', isPremium) > 0
-              ? `${getRemainingUses('daily', isPremium)}/${FREE_LIMITS.daily} remaining today`
-              : ''
-            }
+            {tCommon('remainingToday', {
+              remaining: getRemainingUses('daily', isPremium),
+              total: FREE_LIMITS.daily,
+            })}
           </p>
         )}
 

@@ -37,13 +37,15 @@
   --color-gold-950: #451a03;
 }
 
-/* 부드러운 스크롤 */
+/* 부드러운 스크롤 + 모바일 가로 스크롤 방지 */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
-/* 별빛 배경 효과 */
+/* 별빛 배경 효과 + 모바일 가로 스크롤 방지 */
 body {
+  overflow-x: hidden;
   background-image:
     radial-gradient(ellipse at 20% 50%, rgba(120, 0, 255, 0.08) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 20%, rgba(59, 7, 100, 0.12) 0%, transparent 50%),

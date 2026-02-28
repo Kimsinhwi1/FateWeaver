@@ -654,6 +654,7 @@
   "common": {
     "loading": "Loading...",
     "error": "Something went wrong. Please try again.",
-    "disclaimer": "For entertainment purposes only. Not a substitute for professional advice."
+    "disclaimer": "For entertainment purposes only. Not a substitute for professional advice.",
+    "remainingToday": "{remaining}/{total} remaining today"
   }
 }

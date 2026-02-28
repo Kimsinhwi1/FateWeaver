@@ -82,14 +82,14 @@ export default function Footer() {
       <div className="mx-auto mb-4 flex max-w-5xl items-center justify-center gap-4 px-4">
         <Link
           href={`/${locale}/privacy`}
-          className="text-xs text-slate-500 transition-colors hover:text-slate-400"
+          className="inline-flex min-h-[44px] items-center text-xs text-slate-500 transition-colors hover:text-slate-400"
         >
           {tNav('privacy')}
         </Link>
         <span className="text-xs text-slate-700">|</span>
         <Link
           href={`/${locale}/terms`}
-          className="text-xs text-slate-500 transition-colors hover:text-slate-400"
+          className="inline-flex min-h-[44px] items-center text-xs text-slate-500 transition-colors hover:text-slate-400"
         >
           {tNav('terms')}
         </Link>

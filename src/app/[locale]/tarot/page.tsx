@@ -95,13 +95,13 @@ export default function TarotPage() {
           </p>
         </div>
 
-        {/* 남은 무료 횟수 안내 */}
-        {!isPremium && !result && !isLoading && (
+        {/* 남은 무료 횟수 안내 — i18n 처리 */}
+        {!isPremium && !result && !isLoading && getRemainingUses('tarot', isPremium) > 0 && (
           <p className="mt-4 text-center text-xs text-slate-500">
-            {getRemainingUses('tarot', isPremium) > 0
-              ? `${getRemainingUses('tarot', isPremium)}/${1} remaining today`
-              : ''
-            }
+            {tCommon('remainingToday', {
+              remaining: getRemainingUses('tarot', isPremium),
+              total: 1,
+            })}
           </p>
         )}
 

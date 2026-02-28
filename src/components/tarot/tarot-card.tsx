@@ -3,6 +3,9 @@
  * 비유: 실제 타로 카드 한 장 — 앞면(해석)과 뒷면(미스터리)이 있다
  * CSS 3D transform으로 카드가 "뒤집어지는" 애니메이션 구현
  * 카드 이미지는 /public/images/tarot/ 에서 card.id 기반으로 로드
+ *
+ * 이미지 로드 실패 시 폴백:
+ *   카드 이름 + 아이콘으로 대체 표시하여 빈 박스 방지
  * ───────────────────────────────────────── */
 
 'use client'
@@ -41,6 +44,9 @@ export default function TarotCard({
     return () => clearTimeout(reset)
   }, [isRevealed, flipDelay])
 
+  /** 이미지 로드 실패 여부 — true면 폴백 UI 표시 */
+  const [imgError, setImgError] = useState(false)
+
   /** 카드 이미지 경로 — card.id(예: "major_0")를 기반으로 이미지를 찾는다 */
   const imagePath = `/images/tarot/${card.id}.jpg`
 
@@ -75,14 +81,30 @@ export default function TarotCard({
           >
             {/* 카드 이미지 — 역방향이면 180도 회전 (실제 타로처럼) */}
             <div className={`relative h-[70%] w-full ${isReversed ? 'rotate-180' : ''}`}>
-              <Image
-                src={imagePath}
-                alt={`${card.name} (${card.nameKo})`}
-                fill
-                sizes="(max-width: 639px) 96px, (max-width: 767px) 160px, 176px"
-                className="object-cover object-top"
-                priority={false}
-              />
+              {imgError ? (
+                /* ── 이미지 로드 실패 시 폴백 UI ──
+                   빈 박스 대신 카드 이름 + 아이콘으로 "이 카드가 무엇인지" 표시
+                   비유: 사진을 못 불러온 명함에 이름이라도 적어둔 것 */
+                <div className="flex h-full w-full flex-col items-center justify-center gap-2 bg-gradient-to-b from-mystic-950 to-slate-950 px-2">
+                  <span className="text-3xl text-mystic-500/60">{'\u2726'}</span>
+                  <span className="text-center text-[10px] font-medium leading-tight text-slate-400 sm:text-xs">
+                    {card.name}
+                  </span>
+                  <span className="text-center text-[9px] text-slate-500 sm:text-[10px]">
+                    {card.nameKo}
+                  </span>
+                </div>
+              ) : (
+                <Image
+                  src={imagePath}
+                  alt={`${card.name} (${card.nameKo})`}
+                  fill
+                  sizes="(max-width: 639px) 96px, (max-width: 767px) 160px, 176px"
+                  className="object-cover object-top"
+                  priority={false}
+                  onError={() => setImgError(true)}
+                />
+              )}
             </div>
 
             {/* 카드 정보 영역 */}

@@ -1,0 +1,64 @@
+/* ─────────────────────────────────────────
+ * 글로벌 스타일 — Tailwind CSS v4
+ * 신비로운 다크 테마의 기반 설정
+ * ───────────────────────────────────────── */
+
+@import "tailwindcss";
+
+/* 커스텀 테마 변수 — 신비로운 퍼플/딥블루 톤 */
+@theme {
+  --font-body: var(--font-body);
+  --font-heading: var(--font-heading);
+
+  /* 브랜드 컬러 — 신비로운 보라/인디고 계열 */
+  --color-mystic-50: #f3f1ff;
+  --color-mystic-100: #ebe5ff;
+  --color-mystic-200: #d9ceff;
+  --color-mystic-300: #bea6ff;
+  --color-mystic-400: #9f75ff;
+  --color-mystic-500: #843dff;
+  --color-mystic-600: #7916ff;
+  --color-mystic-700: #6b04fd;
+  --color-mystic-800: #5a03d5;
+  --color-mystic-900: #4b05ad;
+  --color-mystic-950: #2d0076;
+
+  /* 골드 악센트 — 타로 카드 테두리, 강조 요소 */
+  --color-gold-50: #fffbeb;
+  --color-gold-100: #fef3c7;
+  --color-gold-200: #fde68a;
+  --color-gold-300: #fcd34d;
+  --color-gold-400: #fbbf24;
+  --color-gold-500: #f59e0b;
+  --color-gold-600: #d97706;
+  --color-gold-700: #b45309;
+  --color-gold-800: #92400e;
+  --color-gold-900: #78350f;
+  --color-gold-950: #451a03;
+}
+
+/* 부드러운 스크롤 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 별빛 배경 효과 */
+body {
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(120, 0, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(59, 7, 100, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(30, 58, 138, 0.08) 0%, transparent 50%);
+}
+
+/* 타로 카드 뒤집기 애니메이션 기반 */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}

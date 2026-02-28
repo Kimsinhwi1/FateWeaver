@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "title": "FateWeaver — AI Fortune Reading",
+    "description": "The first AI that reads your fate through both Eastern & Western wisdom. Tarot + Saju combined reading."
+  },
+  "nav": {
+    "home": "Home",
+    "tarot": "Tarot Reading",
+    "about": "About"
+  },
+  "landing": {
+    "hero": {
+      "title": "Where East Meets West",
+      "subtitle": "Ancient Saju wisdom and Tarot cards, woven together by AI",
+      "cta": "Get Your Reading"
+    },
+    "features": {
+      "tarot": "3-Card Tarot",
+      "tarotDesc": "Past, Present, Future — revealed through the cards",
+      "saju": "Saju Analysis",
+      "sajuDesc": "Your birth chart decoded through Eastern philosophy",
+      "fusion": "AI Fusion",
+      "fusionDesc": "Two wisdom traditions, one personalized reading"
+    }
+  },
+  "tarot": {
+    "title": "Your Tarot Reading",
+    "subtitle": "Enter your birth details for a personalized fusion reading",
+    "startReading": "Draw Cards",
+    "loading": "The Oracle is reading your cards...",
+    "positions": {
+      "past": "Past",
+      "present": "Present",
+      "future": "Future"
+    }
+  },
+  "birthForm": {
+    "birthDate": "Birth Date",
+    "birthTime": "Birth Time",
+    "birthTimeOptional": "(optional — for deeper analysis)",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "preferNotToSay": "Prefer not to say"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong. Please try again.",
+    "disclaimer": "For entertainment purposes only."
+  }
+}

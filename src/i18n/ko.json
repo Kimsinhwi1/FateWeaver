@@ -122,6 +122,7 @@
       "compatibility": "연애 & 관계 궁합",
       "monthlyReport": "월간 맞춤 리포트"
     },
+    "upgrade": "프리미엄 업그레이드",
     "viewPricing": "요금제 확인하기",
     "resetNotice": "무료 리딩은 매일 자정에 초기화됩니다."
   },
@@ -187,7 +188,9 @@
       "readingHistory": { "free": "\u2715" },
       "aiCounseling": { "free": "\u2715" }
     },
-    "notice": "가격은 원화(KRW) 기준이며, 결제 기능은 Lemon Squeezy를 통해 곧 오픈됩니다."
+    "subscribe": "구독하기",
+    "checkoutError": "결제 처리에 실패했습니다. 다시 시도해 주세요.",
+    "notice": "가격은 원화(KRW) 기준이며, Lemon Squeezy를 통한 안전한 결제를 제공합니다."
   },
   "common": {
     "loading": "불러오는 중...",

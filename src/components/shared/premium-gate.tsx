@@ -6,12 +6,18 @@
  * 두 가지 모드:
  *   1. 사용량 초과 → "오늘의 무료 리딩을 모두 사용했습니다"
  *   2. 프리미엄 전용 → "이 기능은 프리미엄 회원 전용입니다"
+ *
+ * 업그레이드 버튼:
+ *   - 로그인 유저 → 체크아웃 API 호출 → Lemon Squeezy 결제 페이지
+ *   - 비로그인 유저 → pricing 페이지로 이동 (로그인 유도)
  * ───────────────────────────────────────── */
 
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
+import { useAuth } from '@/components/auth/auth-provider'
 
 interface PremiumGateProps {
   /** 모달 표시 여부 */
@@ -32,8 +38,40 @@ export default function PremiumGate({
 }: PremiumGateProps) {
   const locale = useLocale()
   const t = useTranslations('gate')
+  const { user } = useAuth()
+  const [checkoutLoading, setCheckoutLoading] = useState(false)
 
   if (!isOpen) return null
+
+  /** 프리미엄 월간 구독 체크아웃 */
+  async function handleUpgrade() {
+    if (!user) {
+      // 비로그인 → pricing 페이지로 이동
+      window.location.href = `/${locale}/pricing`
+      return
+    }
+
+    setCheckoutLoading(true)
+    try {
+      const res = await fetch('/api/payments/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planId: 'premium_monthly', locale }),
+      })
+      const data = await res.json()
+
+      if (res.ok && data.checkoutUrl) {
+        window.location.href = data.checkoutUrl
+      } else {
+        // mock 모드 또는 에러 → pricing 페이지로 이동
+        window.location.href = `/${locale}/pricing`
+      }
+    } catch {
+      window.location.href = `/${locale}/pricing`
+    } finally {
+      setCheckoutLoading(false)
+    }
+  }
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -88,9 +126,19 @@ export default function PremiumGate({
 
         {/* CTA 버튼들 */}
         <div className="flex flex-col gap-3">
+          {/* 업그레이드 버튼 — 체크아웃 직접 연결 */}
+          <button
+            onClick={handleUpgrade}
+            disabled={checkoutLoading}
+            className="block rounded-full bg-gradient-to-r from-gold-500 to-gold-600 px-6 py-3 text-center text-sm font-semibold text-slate-950 transition-all hover:from-gold-400 hover:to-gold-500 hover:shadow-lg hover:shadow-gold-500/20 disabled:opacity-50"
+          >
+            {checkoutLoading ? '...' : t('upgrade')}
+          </button>
+
+          {/* 요금제 전체 보기 링크 */}
           <Link
             href={`/${locale}/pricing`}
-            className="block rounded-full bg-gradient-to-r from-gold-500 to-gold-600 px-6 py-3 text-center text-sm font-semibold text-slate-950 transition-all hover:from-gold-400 hover:to-gold-500 hover:shadow-lg hover:shadow-gold-500/20"
+            className="text-center text-xs text-slate-500 transition-colors hover:text-slate-300"
             onClick={onClose}
           >
             {t('viewPricing')}

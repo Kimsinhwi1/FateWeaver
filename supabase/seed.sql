@@ -22,6 +22,11 @@ CREATE TABLE IF NOT EXISTS user_profiles (
   saju_data JSONB,                    -- 사주팔자 계산 결과 캐싱
   locale TEXT DEFAULT 'en',
   is_premium BOOLEAN DEFAULT FALSE,
+  -- Phase 3: 결제 연동 후 구독 상태 관리
+  subscription_status TEXT,              -- 'active' | 'cancelled' | 'past_due' | 'expired'
+  subscription_id TEXT,                  -- 결제사(Lemon Squeezy) 구독 ID
+  subscription_plan TEXT,                -- 'premium_monthly' | 'premium_yearly' | 'deep_reading'
+  subscription_expires_at TIMESTAMPTZ,   -- 구독 만료일 (취소 시 이 날짜까지 프리미엄 유지)
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -124,6 +129,16 @@ CREATE POLICY "Users can view own daily fortunes"
 CREATE POLICY "Users can insert own daily fortunes"
   ON daily_fortunes FOR INSERT
   WITH CHECK (auth.uid() = user_id);
+
+-- ─────────────────────────────────────────
+-- 3-2. 서비스 역할 정책 — 웹훅에서 구독 상태 업데이트용
+--      service_role 키로 접근 시 RLS를 우회하므로
+--      별도 정책이 필요 없지만, 명시적으로 기록
+-- ─────────────────────────────────────────
+
+-- user_profiles: 서버 측에서 구독 상태 업데이트 허용
+-- (웹훅 핸들러가 service_role 키로 직접 업데이트)
+-- Supabase service_role은 RLS를 bypass하므로 정책 추가 불필요
 
 -- ─────────────────────────────────────────
 -- 4. 익명 사용자 정책

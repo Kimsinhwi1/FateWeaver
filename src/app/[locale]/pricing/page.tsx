@@ -2,32 +2,35 @@
  * 가격 페이지 — 프리미엄 업그레이드 안내
  * 비유: "메뉴판" — 무료/프리미엄 차이를 한눈에 보여준다
  *
- * 결제 버튼은 "Coming Soon" 상태 (Lemon Squeezy 승인 전)
+ * 결제 버튼:
+ *   - 로그인 + Lemon Squeezy 설정 완료 → 실제 체크아웃
+ *   - Lemon Squeezy 미설정 → "Coming Soon"
+ *   - 비로그인 → "로그인 먼저" 안내
  * ───────────────────────────────────────── */
 
 'use client'
 
-import { useTranslations } from 'next-intl'
+import { useState } from 'react'
+import { useLocale, useTranslations } from 'next-intl'
 import Header from '@/components/layout/header'
 import Footer from '@/components/layout/footer'
+import { useAuth } from '@/components/auth/auth-provider'
+import { signInWithGoogle } from '@/lib/auth/helpers'
 
 /** 가격 카드 데이터 */
 const plans = [
   {
     id: 'deep_reading',
-    priceKey: 'deepPrice',
     interval: null as string | null,
     popular: false,
   },
   {
     id: 'premium_monthly',
-    priceKey: 'monthlyPrice',
     interval: 'month',
     popular: true,
   },
   {
     id: 'premium_yearly',
-    priceKey: 'yearlyPrice',
     interval: 'year',
     popular: false,
   },
@@ -48,6 +51,42 @@ const comparisonFeatures = [
 
 export default function PricingPage() {
   const t = useTranslations('pricing')
+  const tAuth = useTranslations('auth')
+  const locale = useLocale()
+  const { user } = useAuth()
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null)
+
+  /** 체크아웃 처리 */
+  async function handleCheckout(planId: string) {
+    // 비로그인 → 로그인 안내
+    if (!user) {
+      signInWithGoogle(locale)
+      return
+    }
+
+    setLoadingPlan(planId)
+    try {
+      const res = await fetch('/api/payments/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ planId, locale }),
+      })
+
+      const data = await res.json()
+
+      if (res.ok && data.checkoutUrl) {
+        // Lemon Squeezy 결제 페이지로 이동
+        window.location.href = data.checkoutUrl
+      } else {
+        // 에러 시 (mock 모드 포함) 알림
+        alert(data.error ?? t('checkoutError'))
+      }
+    } catch {
+      alert(t('checkoutError'))
+    } finally {
+      setLoadingPlan(null)
+    }
+  }
 
   return (
     <>
@@ -103,12 +142,22 @@ export default function PricingPage() {
                 {t(`plans.${plan.id}.description`)}
               </p>
 
-              {/* CTA 버튼 — Coming Soon */}
+              {/* CTA 버튼 */}
               <button
-                disabled
-                className="w-full cursor-not-allowed rounded-full bg-white/10 px-6 py-3 text-sm font-medium text-slate-400"
+                onClick={() => handleCheckout(plan.id)}
+                disabled={loadingPlan === plan.id}
+                className={`w-full rounded-full px-6 py-3 text-sm font-medium transition-all ${
+                  plan.popular
+                    ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-slate-950 hover:from-gold-400 hover:to-gold-500 hover:shadow-lg hover:shadow-gold-500/20 disabled:opacity-50'
+                    : 'border border-white/20 text-slate-300 hover:border-gold-500/40 hover:text-gold-400 disabled:opacity-50'
+                }`}
               >
-                {t('comingSoon')}
+                {loadingPlan === plan.id
+                  ? '...'
+                  : !user
+                    ? tAuth('signIn')
+                    : t('subscribe')
+                }
               </button>
             </div>
           ))}

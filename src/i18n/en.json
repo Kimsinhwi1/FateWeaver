@@ -122,6 +122,7 @@
       "compatibility": "Love & relationship compatibility",
       "monthlyReport": "Monthly personalized reports"
     },
+    "upgrade": "Upgrade to Premium",
     "viewPricing": "View Pricing Plans",
     "resetNotice": "Free readings reset every day at midnight."
   },
@@ -187,7 +188,9 @@
       "readingHistory": { "free": "\u2715" },
       "aiCounseling": { "free": "\u2715" }
     },
-    "notice": "Prices are in USD. Payment processing will be available soon via Lemon Squeezy."
+    "subscribe": "Subscribe",
+    "checkoutError": "Checkout failed. Please try again.",
+    "notice": "Prices are in USD. Secure payments powered by Lemon Squeezy."
   },
   "common": {
     "loading": "Loading...",

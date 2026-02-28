@@ -9,7 +9,7 @@ const BASE_URL = 'https://fateweaver.vercel.app'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const locales = ['en', 'ko']
-  const pages = ['', '/tarot', '/daily']
+  const pages = ['', '/tarot', '/daily', '/history', '/pricing']
 
   // locale × page 조합으로 모든 URL 생성
   const urls: MetadataRoute.Sitemap = []

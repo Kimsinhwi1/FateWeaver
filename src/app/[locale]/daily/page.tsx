@@ -11,6 +11,9 @@ import { useLocale, useTranslations } from 'next-intl'
 import BirthInputForm from '@/components/shared/birth-input-form'
 import FortuneResult from '@/components/daily/fortune-result'
 import PremiumTeaser from '@/components/shared/premium-teaser'
+import PremiumGate from '@/components/shared/premium-gate'
+import { useAuth } from '@/components/auth/auth-provider'
+import { canUseFeature, incrementUsage, getRemainingUses, FREE_LIMITS } from '@/lib/usage/limit'
 import type { BirthInput } from '@/types/saju'
 
 interface FortuneData {
@@ -26,12 +29,20 @@ export default function DailyPage() {
   const locale = useLocale()
   const t = useTranslations('daily')
   const tCommon = useTranslations('common')
+  const { isPremium } = useAuth()
 
   const [isLoading, setIsLoading] = useState(false)
   const [fortuneData, setFortuneData] = useState<FortuneData | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [showGate, setShowGate] = useState(false)
 
   const handleSubmit = async (input: BirthInput) => {
+    // 사용 횟수 확인 — 무료 3회/일 초과 시 프리미엄 게이트
+    if (!canUseFeature('daily', isPremium)) {
+      setShowGate(true)
+      return
+    }
+
     setIsLoading(true)
     setError(null)
 
@@ -52,6 +63,9 @@ export default function DailyPage() {
 
       const data: FortuneData = await response.json()
       setFortuneData(data)
+
+      // 성공한 운세만 사용 횟수에 카운트
+      incrementUsage('daily')
     } catch {
       setError(tCommon('error'))
     } finally {
@@ -71,6 +85,16 @@ export default function DailyPage() {
             {t('subtitle')}
           </p>
         </div>
+
+        {/* 남은 무료 횟수 안내 */}
+        {!isPremium && !fortuneData && !isLoading && (
+          <p className="mb-4 text-center text-xs text-slate-500">
+            {getRemainingUses('daily', isPremium) > 0
+              ? `${getRemainingUses('daily', isPremium)}/${FREE_LIMITS.daily} remaining today`
+              : ''
+            }
+          </p>
+        )}
 
         {/* 결과가 없을 때 → 입력 폼 표시 */}
         {!fortuneData && (
@@ -117,6 +141,13 @@ export default function DailyPage() {
         <p className="mt-12 text-center text-xs text-slate-600">
           {tCommon('disclaimer')}
         </p>
+
+        {/* 프리미엄 게이트 모달 */}
+        <PremiumGate
+          isOpen={showGate}
+          onClose={() => setShowGate(false)}
+          type="usage_limit"
+        />
       </div>
     </main>
   )

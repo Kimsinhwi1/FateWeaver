@@ -17,8 +17,6 @@ export class MockPaymentProvider implements PaymentProvider {
     _locale: string
   ): Promise<string> {
     // 목업: 즉시 구독 활성화하고 현재 페이지로 리다이렉트
-    console.log(`[MockPayment] 체크아웃 생성: user=${userId}, price=${priceId}`)
-
     mockSubscriptions.set(userId, {
       userId,
       planId: 'premium_monthly',
@@ -36,7 +34,7 @@ export class MockPaymentProvider implements PaymentProvider {
   }
 
   async handleWebhook(_payload: unknown, _signature: string): Promise<void> {
-    console.log('[MockPayment] 웹훅 처리 (목업 — 무동작)')
+    // 목업 — 웹훅 무동작
   }
 
   async cancelSubscription(subscriptionId: string): Promise<void> {

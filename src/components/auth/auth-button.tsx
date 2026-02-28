@@ -10,12 +10,14 @@ import { useLocale, useTranslations } from 'next-intl'
 import { useAuth } from '@/components/auth/auth-provider'
 import { signInWithGoogle, signOut } from '@/lib/auth/helpers'
 import Link from 'next/link'
+import DeleteAccountModal from '@/components/account/delete-account-modal'
 
 export default function AuthButton() {
   const { user, loading } = useAuth()
   const locale = useLocale()
   const t = useTranslations('auth')
   const [menuOpen, setMenuOpen] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   // 로딩 중에는 스켈레톤 표시
   if (loading) {
@@ -88,6 +90,13 @@ export default function AuthButton() {
             >
               {t('pricing')}
             </Link>
+            <Link
+              href={`/${locale}/feedback`}
+              className="block px-4 py-2 text-sm text-slate-300 transition-colors hover:bg-white/5 hover:text-white"
+              onClick={() => setMenuOpen(false)}
+            >
+              {t('feedback')}
+            </Link>
             <div className="my-1 border-t border-white/5" />
             <button
               onClick={() => {
@@ -98,9 +107,24 @@ export default function AuthButton() {
             >
               {t('signOut')}
             </button>
+            <button
+              onClick={() => {
+                setMenuOpen(false)
+                setShowDeleteModal(true)
+              }}
+              className="block w-full px-4 py-2 text-left text-sm text-red-500/70 transition-colors hover:bg-white/5 hover:text-red-400"
+            >
+              {t('deleteAccount')}
+            </button>
           </div>
         </>
       )}
+
+      {/* 계정 삭제 확인 모달 */}
+      <DeleteAccountModal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+      />
     </div>
   )
 }

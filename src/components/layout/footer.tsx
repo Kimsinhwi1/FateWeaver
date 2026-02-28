@@ -70,15 +70,37 @@ export default function Footer() {
         >
           {tNav('pricing')}
         </Link>
+        <Link
+          href={`/${locale}/feedback`}
+          className="inline-flex min-h-[44px] items-center text-sm text-slate-400 transition-colors hover:text-mystic-400"
+        >
+          {tNav('feedback')}
+        </Link>
       </nav>
 
-      {/* 면책 문구 + 저작권 */}
+      {/* 법적 링크 + 면책 문구 + 저작권 */}
+      <div className="mx-auto mb-4 flex max-w-5xl items-center justify-center gap-4 px-4">
+        <Link
+          href={`/${locale}/privacy`}
+          className="text-xs text-slate-500 transition-colors hover:text-slate-400"
+        >
+          {tNav('privacy')}
+        </Link>
+        <span className="text-xs text-slate-700">|</span>
+        <Link
+          href={`/${locale}/terms`}
+          className="text-xs text-slate-500 transition-colors hover:text-slate-400"
+        >
+          {tNav('terms')}
+        </Link>
+      </div>
+
       <div className="text-center">
         <p className="text-xs text-slate-500">
           {t('disclaimer')}
         </p>
         <p className="mt-2 text-xs text-slate-600">
-          &copy; 2025 FateWeaver. All rights reserved.
+          &copy; 2026 FateWeaver. All rights reserved.
         </p>
       </div>
     </footer>

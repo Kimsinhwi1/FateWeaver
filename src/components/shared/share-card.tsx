@@ -96,22 +96,28 @@ export default function ShareCard({ cards, interpretation, onClose }: ShareCardP
     }
   }
 
-  /** 3. 텍스트 복사 — 이미지 복사 실패 시 대안 */
+  /** 3. 텍스트 복사 — 이미지 복사 실패 시 대안
+   *    구분선과 이모지로 깔끔한 포맷 구성 — SNS에 바로 붙여넣기 가능 */
   const handleCopyText = async () => {
     setError(null)
     try {
       const cardLines = cards
-        .map((c, i) => `${positionLabels[i]}: ${cardName(c)}`)
+        .map((c, i) => `  ${positionLabels[i]}: ${cardName(c)}`)
         .join('\n')
 
       const text = [
         '🔮 FateWeaver Tarot Reading',
+        '━━━━━━━━━━━━━━━━━━━━',
         '',
+        `🃏 ${isKo ? '뽑힌 카드' : 'Cards Drawn'}`,
         cardLines,
         '',
+        `✨ ${isKo ? '해석' : 'Interpretation'}`,
+        '───────────────────',
         interpretation,
         '',
-        'fateweaver.vercel.app',
+        '━━━━━━━━━━━━━━━━━━━━',
+        '🌙 fateweaver.vercel.app',
       ].join('\n')
 
       await navigator.clipboard.writeText(text)
@@ -122,7 +128,8 @@ export default function ShareCard({ cards, interpretation, onClose }: ShareCardP
     }
   }
 
-  /** 4. 네이티브 공유 (모바일 Web Share API) */
+  /** 4. 네이티브 공유 (모바일 Web Share API)
+   *    요약이 아닌 전문 해석 포함 — 공유 받는 사람이 전체 결과를 볼 수 있다 */
   const handleNativeShare = async () => {
     if (!navigator.share) return
     try {
@@ -131,8 +138,8 @@ export default function ShareCard({ cards, interpretation, onClose }: ShareCardP
         .join(', ')
 
       await navigator.share({
-        title: 'FateWeaver Tarot Reading',
-        text: `${cardLines}\n\n${summaryText}`,
+        title: '🔮 FateWeaver Tarot Reading',
+        text: `🃏 ${cardLines}\n\n${interpretation}`,
         url: 'https://fateweaver.vercel.app',
       })
     } catch {

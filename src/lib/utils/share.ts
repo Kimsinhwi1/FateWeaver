@@ -6,7 +6,7 @@
  * 다운로드 또는 클립보드 복사 지원
  *
  * 핵심 포인트:
- *   - allowTaint + useCORS: 같은 도메인 이미지 캡처 보장
+ *   - 이미지를 Data URL로 사전 변환: CDN/CORS 이슈 완전 회피
  *   - 캡처 전 이미지 로드 완료 대기: 빈 이미지 방지
  *   - onclone: 캡처 직전 DOM 상태를 안전하게 정리
  * ───────────────────────────────────────── */
@@ -16,18 +16,13 @@ import html2canvas from 'html2canvas'
 /**
  * 캡처 대상 내부의 모든 <img>가 로드될 때까지 대기
  * 비유: 사진 찍기 전에 "모든 사람이 자리 잡을 때까지" 기다리는 것
- *
- * html2canvas는 이미지가 아직 로드 안 된 상태에서 캡처하면
- * 빈 박스가 나오기 때문에 반드시 사전 대기가 필요하다.
  */
 async function waitForImages(element: HTMLElement): Promise<void> {
   const images = element.querySelectorAll('img')
   const promises = Array.from(images).map((img) => {
-    /** 이미 로드 완료 & 실제 크기 있음 → 기다릴 필요 없음 */
     if (img.complete && img.naturalWidth > 0) return Promise.resolve()
 
     return new Promise<void>((resolve) => {
-      /** 3초 타임아웃 — 이미지가 영원히 안 오면 넘어간다 */
       const timeout = setTimeout(() => resolve(), 3000)
       img.onload = () => { clearTimeout(timeout); resolve() }
       img.onerror = () => { clearTimeout(timeout); resolve() }
@@ -38,35 +33,89 @@ async function waitForImages(element: HTMLElement): Promise<void> {
 }
 
 /**
+ * 이미지를 Data URL로 변환 — CORS/taint 문제 완전 회피
+ * 비유: 사진을 "디지털 사본"으로 만들어 두는 것
+ *
+ * Vercel 프로덕션에서 이미지가 CDN을 통해 서빙되면
+ * cross-origin으로 취급되어 canvas가 tainted 된다.
+ * fetch → blob → FileReader 로 Data URL을 만들면
+ * 완전한 same-origin 데이터가 되어 taint 문제가 사라진다.
+ */
+async function imageToDataUrl(src: string): Promise<string> {
+  try {
+    const response = await fetch(src)
+    const blob = await response.blob()
+    return new Promise<string>((resolve) => {
+      const reader = new FileReader()
+      reader.onloadend = () => resolve(reader.result as string)
+      reader.onerror = () => resolve('')
+      reader.readAsDataURL(blob)
+    })
+  } catch {
+    return ''
+  }
+}
+
+/**
+ * 캡처 대상의 모든 이미지를 Data URL로 사전 변환
+ * 비유: 사진 찍기 전에 모든 소품을 "원본 복사"해 두는 것
+ *
+ * 반환: [{ originalSrc, dataUrl }] — onclone에서 src 교체에 사용
+ */
+async function preloadImagesAsDataUrls(
+  element: HTMLElement
+): Promise<{ src: string; dataUrl: string }[]> {
+  const images = element.querySelectorAll('img')
+  return Promise.all(
+    Array.from(images).map(async (img) => ({
+      src: img.src,
+      dataUrl: await imageToDataUrl(img.src),
+    }))
+  )
+}
+
+/**
  * DOM 요소를 Canvas로 캡처하여 Blob으로 변환
  * 비유: 화면의 일부를 "스크린샷" 찍는 것
  *
- * 순서: 이미지 로드 대기 → html2canvas 캡처 → Canvas → PNG Blob
+ * 순서: 이미지 로드 대기 → Data URL 사전 변환 → html2canvas 캡처 → Canvas → PNG Blob
  */
 export async function captureShareCard(element: HTMLElement): Promise<Blob> {
   /** 1) 캡처 영역 내 모든 이미지가 로드될 때까지 대기 */
   await waitForImages(element)
 
-  /** 2) html2canvas로 DOM → Canvas 변환
-   *    - useCORS: 이미지를 CORS로 로드하여 캔버스 오염(taint) 방지
-   *    - allowTaint: false — tainted canvas는 toBlob() 시 SecurityError 발생
-   *      → 같은 도메인 이미지(/images/tarot/*.jpg)는 CORS 없이도 깨끗하게 렌더됨
-   *    - onclone: 캡처용 복제 DOM에서 불필요한 스타일을 정리
+  /** 2) 모든 이미지를 Data URL로 사전 변환 — CDN/CORS 완전 회피
+   *    Vercel 프로덕션에서 static 이미지가 CDN(vercel.app/_next/...)을 통해
+   *    서빙되면 cross-origin 취급되어 canvas taint 발생.
+   *    fetch → blob → DataURL 변환으로 이 문제를 근본적으로 해결한다.
+   */
+  const imageDataUrls = await preloadImagesAsDataUrls(element)
+
+  /** 3) html2canvas로 DOM → Canvas 변환
+   *    onclone에서 이미지 src를 Data URL로 교체
    */
   const canvas = await html2canvas(element, {
-    backgroundColor: '#020617',   // slate-950 — 다크 배경
-    scale: 2,                      // 레티나 대응 (2x 해상도)
-    useCORS: true,                 // 외부 이미지 CORS 허용
-    allowTaint: false,             // taint 금지 — toBlob() 내보내기 가능 유지
-    logging: false,                // 콘솔 로그 비활성화
-    imageTimeout: 5000,            // 이미지 로드 최대 5초 대기
+    backgroundColor: '#020617',
+    scale: 2,
+    useCORS: true,
+    allowTaint: false,
+    logging: false,
+    imageTimeout: 5000,
     onclone: (_doc, clonedElement) => {
-      /** 캡처용 복제 DOM에서 overflow를 visible로 — 잘림 방지 */
       clonedElement.style.overflow = 'visible'
+
+      /** 복제된 DOM의 이미지를 Data URL로 교체 — taint 완전 방지 */
+      const clonedImages = clonedElement.querySelectorAll('img')
+      clonedImages.forEach((img) => {
+        const match = imageDataUrls.find((d) => img.src.includes(d.src) || d.src.includes(img.src))
+        if (match?.dataUrl) {
+          img.src = match.dataUrl
+        }
+      })
     },
   })
 
-  /** 3) Canvas → PNG Blob 변환 */
+  /** 4) Canvas → PNG Blob 변환 */
   return new Promise((resolve, reject) => {
     canvas.toBlob(
       (blob) => {
@@ -106,7 +155,6 @@ export function downloadImage(blob: Blob, filename: string = 'fateweaver-reading
  */
 export async function copyToClipboard(blob: Blob): Promise<boolean> {
   try {
-    /** ClipboardItem API가 존재하는지 먼저 확인 */
     if (typeof ClipboardItem === 'undefined') {
       return false
     }

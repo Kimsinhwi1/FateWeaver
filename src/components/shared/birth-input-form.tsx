@@ -70,7 +70,7 @@ export default function BirthInputForm({ onSubmit, isLoading, submitLabel, loadi
           onChange={(e) => setBirthDate(e.target.value)}
           max={new Date().toISOString().split('T')[0]}
           min="1920-01-01"
-          className="h-12 w-full rounded-xl border border-white/20 bg-white/5 px-4 text-base text-slate-100 transition-colors focus:border-mystic-500 focus:outline-none focus:ring-1 focus:ring-mystic-500"
+          className="h-12 w-full rounded-xl border border-white/20 bg-white/5 px-3 text-base text-slate-100 transition-colors focus:border-mystic-500 focus:outline-none focus:ring-1 focus:ring-mystic-500 sm:px-4"
         />
       </div>
 
@@ -89,7 +89,7 @@ export default function BirthInputForm({ onSubmit, isLoading, submitLabel, loadi
             value={birthTime}
             onChange={(e) => setBirthTime(e.target.value)}
             disabled={timeUnknown}
-            className={`h-12 flex-1 rounded-xl border bg-white/5 px-4 text-base text-slate-100 transition-colors focus:border-mystic-500 focus:outline-none focus:ring-1 focus:ring-mystic-500 ${
+            className={`h-12 min-w-0 flex-1 rounded-xl border bg-white/5 px-3 text-base text-slate-100 transition-colors focus:border-mystic-500 focus:outline-none focus:ring-1 focus:ring-mystic-500 sm:px-4 ${
               timeUnknown
                 ? 'cursor-not-allowed border-white/10 opacity-40'
                 : 'border-white/20'
@@ -100,7 +100,7 @@ export default function BirthInputForm({ onSubmit, isLoading, submitLabel, loadi
           <button
             type="button"
             onClick={handleTimeUnknownToggle}
-            className={`flex h-12 items-center whitespace-nowrap rounded-xl border px-4 text-sm transition-all active:scale-95 ${
+            className={`flex h-12 shrink-0 items-center whitespace-nowrap rounded-xl border px-3 text-sm transition-all active:scale-95 sm:px-4 ${
               timeUnknown
                 ? 'border-mystic-500 bg-mystic-600/20 text-mystic-300'
                 : 'border-white/20 bg-white/5 text-slate-400 hover:border-white/30'

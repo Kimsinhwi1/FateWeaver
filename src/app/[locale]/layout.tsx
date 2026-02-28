@@ -6,7 +6,7 @@
 
 import type { Metadata } from 'next'
 import { Noto_Sans_KR, Cinzel } from 'next/font/google'
-import { NextIntlClientProvider, useMessages } from 'next-intl'
+import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
@@ -16,7 +16,7 @@ import '@/app/globals.css'
 const notoSansKr = Noto_Sans_KR({
   subsets: ['latin'],
   weight: ['300', '400', '500', '700'],
-  variable: '--font-body',
+  variable: '--font-noto',
   display: 'swap',
 })
 
@@ -24,7 +24,7 @@ const notoSansKr = Noto_Sans_KR({
 const cinzel = Cinzel({
   subsets: ['latin'],
   weight: ['400', '600', '700'],
-  variable: '--font-heading',
+  variable: '--font-cinzel',
   display: 'swap',
 })
 

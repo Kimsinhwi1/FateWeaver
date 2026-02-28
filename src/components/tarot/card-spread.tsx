@@ -1,7 +1,7 @@
 /* ─────────────────────────────────────────
  * 카드 스프레드 레이아웃
  * 비유: 타로 테이블 위에 카드를 "배치"하는 레이아웃
- * 3카드 스프레드: 과거 - 현재 - 미래
+ * 3카드 스프레드: 과거 - 현재 - 미래 (순서대로 뒤집힘)
  * ───────────────────────────────────────── */
 
 'use client'
@@ -26,6 +26,7 @@ export default function CardSpread({ cards }: CardSpreadProps) {
           key={drawnCard.card.id}
           drawnCard={drawnCard}
           positionLabel={positionLabels[index] ?? `Position ${index + 1}`}
+          flipDelay={index * 400}
         />
       ))}
     </div>

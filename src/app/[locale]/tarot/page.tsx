@@ -74,10 +74,27 @@ export default function TarotPage() {
           </p>
         </div>
 
-        {/* 입력 폼 (결과가 없을 때만 표시) */}
-        {!result && (
+        {/* 입력 폼 (결과가 없고 로딩 중이 아닐 때만 표시) */}
+        {!result && !isLoading && (
           <div className="mt-12">
             <BirthInputForm onSubmit={handleSubmit} isLoading={isLoading} />
+          </div>
+        )}
+
+        {/* 로딩 상태 — 카드를 뽑고 있는 동안 */}
+        {isLoading && (
+          <div className="mx-auto mt-16 flex max-w-md flex-col items-center gap-6">
+            {/* 로딩 카드 3장 */}
+            <div className="flex gap-4">
+              {[0, 1, 2].map((i) => (
+                <div
+                  key={i}
+                  className="animate-pulse-glow h-48 w-28 rounded-xl border-2 border-mystic-700/50 bg-gradient-to-b from-mystic-900 to-slate-900 sm:h-56 sm:w-32"
+                  style={{ animationDelay: `${i * 300}ms` }}
+                />
+              ))}
+            </div>
+            <p className="text-sm text-mystic-400">{t('loading')}</p>
           </div>
         )}
 
@@ -91,14 +108,16 @@ export default function TarotPage() {
         {/* 리딩 결과 */}
         {result && (
           <div className="mt-12 space-y-12">
-            {/* 뽑힌 카드들 */}
+            {/* 뽑힌 카드들 — 순서대로 뒤집힘 */}
             <CardSpread cards={result.cards} />
 
-            {/* AI 해석 */}
-            <ReadingResult interpretation={result.interpretation} />
+            {/* AI 해석 — 카드 뒤집기 후 페이드인 */}
+            <div className="animate-fade-in-up" style={{ animationDelay: '1.4s', opacity: 0 }}>
+              <ReadingResult interpretation={result.interpretation} />
+            </div>
 
             {/* 다시 뽑기 버튼 */}
-            <div className="text-center">
+            <div className="animate-fade-in-up text-center" style={{ animationDelay: '2s', opacity: 0 }}>
               <button
                 onClick={() => setResult(null)}
                 className="rounded-full border border-white/20 px-6 py-2 text-sm text-slate-400 transition-colors hover:border-mystic-400 hover:text-mystic-400"

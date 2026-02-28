@@ -7,8 +7,8 @@
 
 /* 커스텀 테마 변수 — 신비로운 퍼플/딥블루 톤 */
 @theme {
-  --font-body: var(--font-body);
-  --font-heading: var(--font-heading);
+  --font-body: var(--font-noto);
+  --font-heading: var(--font-cinzel);
 
   /* 브랜드 컬러 — 신비로운 보라/인디고 계열 */
   --color-mystic-50: #f3f1ff;
@@ -61,4 +61,29 @@ body {
 
 .backface-hidden {
   backface-visibility: hidden;
+}
+
+/* Y축 180도 회전 — 카드 뒤집기용 */
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* 로딩 애니메이션 — 카드 뽑는 중 */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(132, 61, 255, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(132, 61, 255, 0.4); }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* 텍스트 타이핑 효과를 위한 페이드인 */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
 }

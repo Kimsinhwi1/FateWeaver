@@ -20,7 +20,8 @@ export default function CardSpread({ cards }: CardSpreadProps) {
   const positionLabels = [t('past'), t('present'), t('future')]
 
   return (
-    <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
+    /* 모바일(375px): 3장이 겹치지 않도록 gap-3 + 카드 크기 자동 축소 */
+    <div className="flex items-start justify-center gap-3 sm:gap-6 md:gap-8">
       {cards.map((drawnCard, index) => (
         <TarotCard
           key={drawnCard.card.id}

@@ -2,6 +2,11 @@
  * 생년월일시 입력 폼
  * 비유: 운세를 보기 위한 "접수 양식" — Auth 없이도 사용 가능
  *
+ * 모바일 최적화:
+ *   - type="date"/type="time"으로 네이티브 OS 피커 활용
+ *   - 최소 터치 영역 48px (Apple HIG 44px 이상 충족)
+ *   - active:scale 피드백으로 터치 반응성 향상
+ *
  * "시간 모름" 기능:
  *   태어난 시간을 모르는 사용자도 운세를 볼 수 있다.
  *   시간을 모르면 3기둥(년·월·일)만으로 사주를 해석하고,
@@ -51,8 +56,8 @@ export default function BirthInputForm({ onSubmit, isLoading, submitLabel, loadi
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mx-auto w-full max-w-md space-y-6">
-      {/* 생년월일 */}
+    <form onSubmit={handleSubmit} className="mx-auto w-full max-w-md space-y-5">
+      {/* 생년월일 — 네이티브 date picker */}
       <div>
         <label htmlFor="birthDate" className="mb-2 block text-sm font-medium text-slate-300">
           {t('birthDate')}
@@ -63,7 +68,9 @@ export default function BirthInputForm({ onSubmit, isLoading, submitLabel, loadi
           required
           value={birthDate}
           onChange={(e) => setBirthDate(e.target.value)}
-          className="w-full rounded-lg border border-white/20 bg-white/5 px-4 py-3 text-slate-100 transition-colors focus:border-mystic-500 focus:outline-none focus:ring-1 focus:ring-mystic-500"
+          max={new Date().toISOString().split('T')[0]}
+          min="1920-01-01"
+          className="h-12 w-full rounded-xl border border-white/20 bg-white/5 px-4 text-base text-slate-100 transition-colors focus:border-mystic-500 focus:outline-none focus:ring-1 focus:ring-mystic-500"
         />
       </div>
 
@@ -75,25 +82,25 @@ export default function BirthInputForm({ onSubmit, isLoading, submitLabel, loadi
         </label>
 
         <div className="flex gap-2">
-          {/* 시간 입력 — "모름" 상태면 비활성화 */}
+          {/* 시간 입력 — 네이티브 time picker */}
           <input
             id="birthTime"
             type="time"
             value={birthTime}
             onChange={(e) => setBirthTime(e.target.value)}
             disabled={timeUnknown}
-            className={`flex-1 rounded-lg border bg-white/5 px-4 py-3 text-slate-100 transition-colors focus:border-mystic-500 focus:outline-none focus:ring-1 focus:ring-mystic-500 ${
+            className={`h-12 flex-1 rounded-xl border bg-white/5 px-4 text-base text-slate-100 transition-colors focus:border-mystic-500 focus:outline-none focus:ring-1 focus:ring-mystic-500 ${
               timeUnknown
                 ? 'cursor-not-allowed border-white/10 opacity-40'
                 : 'border-white/20'
             }`}
           />
 
-          {/* "시간 모름" 토글 버튼 */}
+          {/* "시간 모름" 토글 버튼 — 최소 48px 높이 */}
           <button
             type="button"
             onClick={handleTimeUnknownToggle}
-            className={`whitespace-nowrap rounded-lg border px-3 py-2 text-sm transition-all ${
+            className={`flex h-12 items-center whitespace-nowrap rounded-xl border px-4 text-sm transition-all active:scale-95 ${
               timeUnknown
                 ? 'border-mystic-500 bg-mystic-600/20 text-mystic-300'
                 : 'border-white/20 bg-white/5 text-slate-400 hover:border-white/30'
@@ -111,7 +118,7 @@ export default function BirthInputForm({ onSubmit, isLoading, submitLabel, loadi
         )}
       </div>
 
-      {/* 성별 (선택) */}
+      {/* 성별 (선택) — 큰 터치 영역 */}
       <div>
         <label className="mb-2 block text-sm font-medium text-slate-300">
           {t('gender')}
@@ -125,7 +132,7 @@ export default function BirthInputForm({ onSubmit, isLoading, submitLabel, loadi
               key={option.value}
               type="button"
               onClick={() => setGender(gender === option.value ? undefined : option.value)}
-              className={`flex-1 rounded-lg border px-4 py-2 text-sm transition-all ${
+              className={`flex h-12 flex-1 items-center justify-center rounded-xl border text-sm transition-all active:scale-95 ${
                 gender === option.value
                   ? 'border-mystic-500 bg-mystic-600/20 text-mystic-300'
                   : 'border-white/20 bg-white/5 text-slate-400 hover:border-white/30'
@@ -137,11 +144,11 @@ export default function BirthInputForm({ onSubmit, isLoading, submitLabel, loadi
         </div>
       </div>
 
-      {/* 제출 버튼 */}
+      {/* 제출 버튼 — 56px 높이로 모바일 터치 편의성 극대화 */}
       <button
         type="submit"
         disabled={!birthDate || isLoading}
-        className="w-full rounded-full bg-mystic-600 py-3 text-base font-medium text-white shadow-lg shadow-mystic-600/25 transition-all hover:bg-mystic-500 disabled:cursor-not-allowed disabled:opacity-50"
+        className="h-14 w-full rounded-full bg-mystic-600 text-base font-medium text-white shadow-lg shadow-mystic-600/25 transition-all hover:bg-mystic-500 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
       >
         {isLoading
           ? (loadingLabel || tTarot('loading'))

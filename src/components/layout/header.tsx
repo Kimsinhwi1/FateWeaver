@@ -24,33 +24,34 @@ export default function Header() {
           FateWeaver
         </Link>
 
-        {/* 네비게이션 링크 + 인증 */}
-        <div className="flex items-center gap-4 sm:gap-6">
+        {/* 네비게이션 링크 + 인증 — 모든 링크 최소 44px 터치 영역 */}
+        <div className="flex items-center gap-3 sm:gap-5">
           <Link
             href={`/${locale}/tarot`}
-            className="text-sm text-slate-300 transition-colors hover:text-mystic-400"
+            className="flex min-h-[44px] items-center text-sm text-slate-300 transition-colors hover:text-mystic-400"
           >
             {t('tarot')}
           </Link>
           <Link
             href={`/${locale}/daily`}
-            className="text-sm text-slate-300 transition-colors hover:text-mystic-400"
+            className="flex min-h-[44px] items-center text-sm text-slate-300 transition-colors hover:text-mystic-400"
           >
             {t('daily')}
           </Link>
           <Link
             href={`/${locale}/pricing`}
-            className="hidden text-sm text-slate-300 transition-colors hover:text-gold-400 sm:inline"
+            className="hidden min-h-[44px] items-center text-sm text-slate-300 transition-colors hover:text-gold-400 sm:flex"
           >
             {t('pricing')}
           </Link>
 
-          {/* 언어 전환 */}
+          {/* 언어 전환 — 44px 터치 영역, 모바일에서 KO/EN 약어 사용 */}
           <Link
             href={locale === 'en' ? '/ko' : '/en'}
-            className="rounded-full border border-white/20 px-2.5 py-1 text-xs text-slate-400 transition-colors hover:border-mystic-400 hover:text-mystic-400"
+            className="flex min-h-[44px] items-center whitespace-nowrap rounded-full border border-white/20 px-3 text-xs text-slate-400 transition-colors hover:border-mystic-400 hover:text-mystic-400"
           >
-            {locale === 'en' ? '한국어' : 'EN'}
+            <span className="sm:hidden">{locale === 'en' ? 'KO' : 'EN'}</span>
+            <span className="hidden sm:inline">{locale === 'en' ? '한국어' : 'EN'}</span>
           </Link>
 
           {/* 로그인/프로필 버튼 */}

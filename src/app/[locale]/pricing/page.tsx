@@ -142,11 +142,11 @@ export default function PricingPage() {
                 {t(`plans.${plan.id}.description`)}
               </p>
 
-              {/* CTA 버튼 */}
+              {/* CTA 버튼 — h-12(48px) 터치 영역 확보 */}
               <button
                 onClick={() => handleCheckout(plan.id)}
                 disabled={loadingPlan === plan.id}
-                className={`w-full rounded-full px-6 py-3 text-sm font-medium transition-all ${
+                className={`flex h-12 w-full items-center justify-center rounded-full px-6 text-sm font-medium transition-all active:scale-[0.98] ${
                   plan.popular
                     ? 'bg-gradient-to-r from-gold-500 to-gold-600 text-slate-950 hover:from-gold-400 hover:to-gold-500 hover:shadow-lg hover:shadow-gold-500/20 disabled:opacity-50'
                     : 'border border-white/20 text-slate-300 hover:border-gold-500/40 hover:text-gold-400 disabled:opacity-50'
@@ -169,7 +169,7 @@ export default function PricingPage() {
             {t('compareTitle')}
           </h2>
 
-          <div className="overflow-hidden rounded-xl border border-white/10">
+          <div className="overflow-x-auto rounded-xl border border-white/10">
             {/* 테이블 헤더 */}
             <div className="grid grid-cols-3 border-b border-white/10 bg-white/[0.03]">
               <div className="p-4 text-sm font-medium text-slate-400">

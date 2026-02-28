@@ -32,10 +32,15 @@ export async function POST(request: NextRequest) {
     let userId: string | null = null
 
     if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      // Supabase가 설정된 환경 — 실제 인증 확인
       const { createClient } = await import('@/lib/supabase/server')
       const supabase = await createClient()
       const { data: { user } } = await supabase.auth.getUser()
       userId = user?.id ?? null
+    } else if (process.env.PAYMENT_PROVIDER !== 'lemonsqueezy') {
+      // Supabase 미설정 + Mock 모드 — 개발용 mock userId 사용
+      // 비유: "시식 코너에서는 회원증 없이도 맛보기 가능"
+      userId = 'mock_user_dev'
     }
 
     if (!userId) {

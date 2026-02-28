@@ -51,8 +51,10 @@ export default function TarotCard({
         {positionLabel}
       </span>
 
-      {/* 카드 본체 — 3D 뒤집기 컨테이너 */}
-      <div className="perspective-1000 h-64 w-40 sm:h-72 sm:w-44">
+      {/* 카드 본체 — 3D 뒤집기 컨테이너
+         모바일(375px): 96×160px — 카드 3장 + gap-3 = 312px < 343px(뷰포트-패딩)
+         sm(640px+): 160×256px, md(768px+): 176×288px */}
+      <div className="perspective-1000 h-40 w-24 sm:h-64 sm:w-40 md:h-72 md:w-44">
         <div
           className={`preserve-3d relative h-full w-full transition-transform duration-700 ease-in-out ${
             flipped ? 'rotate-y-180' : ''
@@ -77,7 +79,7 @@ export default function TarotCard({
                 src={imagePath}
                 alt={`${card.name} (${card.nameKo})`}
                 fill
-                sizes="(max-width: 640px) 160px, 176px"
+                sizes="(max-width: 639px) 96px, (max-width: 767px) 160px, 176px"
                 className="object-cover object-top"
                 priority={false}
               />
@@ -85,10 +87,10 @@ export default function TarotCard({
 
             {/* 카드 정보 영역 */}
             <div className="flex flex-1 flex-col items-center justify-center px-2 py-1.5">
-              <h4 className="text-center font-heading text-xs font-semibold leading-tight text-gold-300 sm:text-sm">
+              <h4 className="text-center font-heading text-[10px] font-semibold leading-tight text-gold-300 sm:text-xs md:text-sm">
                 {card.name}
               </h4>
-              <p className="text-center text-[10px] text-slate-400">
+              <p className="hidden text-center text-[10px] text-slate-400 sm:block">
                 {card.nameKo}
               </p>
 

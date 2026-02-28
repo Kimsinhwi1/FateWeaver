@@ -14,7 +14,7 @@ export class MockPaymentProvider implements PaymentProvider {
   async createCheckout(
     priceId: string,
     userId: string,
-    _locale: string
+    locale: string
   ): Promise<string> {
     // 목업: 즉시 구독 활성화하고 현재 페이지로 리다이렉트
     mockSubscriptions.set(userId, {
@@ -25,8 +25,10 @@ export class MockPaymentProvider implements PaymentProvider {
       externalSubscriptionId: `mock_sub_${Date.now()}`,
     })
 
-    // 목업에서는 결제 페이지 대신 성공 URL 반환
-    return '/pricing?success=true'
+    // 목업에서는 결제 페이지 대신 locale 포함 성공 URL 반환
+    // (locale 없이 /pricing 으로 가면 404 발생)
+    const validLocale = locale === 'ko' ? 'ko' : 'en'
+    return `/${validLocale}/pricing?success=true`
   }
 
   async verifySubscription(userId: string): Promise<Subscription | null> {

@@ -83,10 +83,10 @@ export default function PremiumGate({
 
       {/* 모달 본체 */}
       <div className="relative z-10 w-full max-w-md rounded-2xl border border-gold-500/20 bg-slate-900 p-8 shadow-2xl">
-        {/* 닫기 버튼 */}
+        {/* 닫기 버튼 — 최소 44×44px 터치 영역 */}
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 text-slate-500 transition-colors hover:text-white"
+          className="absolute right-2 top-2 flex h-11 w-11 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-white/5 hover:text-white active:scale-95"
         >
           &#x2715;
         </button>
@@ -126,19 +126,19 @@ export default function PremiumGate({
 
         {/* CTA 버튼들 */}
         <div className="flex flex-col gap-3">
-          {/* 업그레이드 버튼 — 체크아웃 직접 연결 */}
+          {/* 업그레이드 버튼 — h-12(48px) 터치 영역 */}
           <button
             onClick={handleUpgrade}
             disabled={checkoutLoading}
-            className="block rounded-full bg-gradient-to-r from-gold-500 to-gold-600 px-6 py-3 text-center text-sm font-semibold text-slate-950 transition-all hover:from-gold-400 hover:to-gold-500 hover:shadow-lg hover:shadow-gold-500/20 disabled:opacity-50"
+            className="flex h-12 items-center justify-center rounded-full bg-gradient-to-r from-gold-500 to-gold-600 px-6 text-center text-sm font-semibold text-slate-950 transition-all hover:from-gold-400 hover:to-gold-500 hover:shadow-lg hover:shadow-gold-500/20 active:scale-[0.98] disabled:opacity-50"
           >
             {checkoutLoading ? '...' : t('upgrade')}
           </button>
 
-          {/* 요금제 전체 보기 링크 */}
+          {/* 요금제 전체 보기 링크 — min-h 44px 터치 영역 */}
           <Link
             href={`/${locale}/pricing`}
-            className="text-center text-xs text-slate-500 transition-colors hover:text-slate-300"
+            className="flex min-h-[44px] items-center justify-center text-center text-xs text-slate-500 transition-colors hover:text-slate-300"
             onClick={onClose}
           >
             {t('viewPricing')}

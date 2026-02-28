@@ -1,8 +1,8 @@
 /* ─────────────────────────────────────────
  * 블로그 아티클 상세 — SEO 롱테일 콘텐츠
  * 비유: "도서관의 책 한 권" — 특정 주제를 깊이 다루는 글
- * generateStaticParams로 3개 slug를 정적 생성 → 빠른 로딩
- * async Server Component — getTranslations 사용 (SEO 최적화)
+ * SSR(force-dynamic) — getTranslations가 요청 컨텍스트(cookies/headers)에
+ * 의존하므로 정적 생성(SSG)과 충돌. SSR로 전환하여 문제 해결.
  * ───────────────────────────────────────── */
 
 import type { Metadata } from 'next'
@@ -13,12 +13,8 @@ import Header from '@/components/layout/header'
 import Footer from '@/components/layout/footer'
 import { BLOG_ARTICLES } from '@/data/blog-articles'
 
-/** 정적 빌드 시 3개 아티클 slug를 미리 생성 */
-export function generateStaticParams() {
-  return BLOG_ARTICLES.map((article) => ({
-    slug: article.slug,
-  }))
-}
+/** SSR 강제 — getTranslations/getLocale이 동적 함수이므로 SSG와 충돌 방지 */
+export const dynamic = 'force-dynamic'
 
 /** 아티클별 SEO 메타데이터 */
 export async function generateMetadata({

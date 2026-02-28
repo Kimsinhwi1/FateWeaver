@@ -229,7 +229,6 @@ export default function ShareCard({ cards, interpretation, onClose }: ShareCardP
                         objectPosition: 'top',
                         transform: drawn.isReversed ? 'rotate(180deg)' : 'none',
                       }}
-                      crossOrigin="anonymous"
                     />
                   </div>
                   <div

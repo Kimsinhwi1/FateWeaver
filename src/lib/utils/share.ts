@@ -48,15 +48,16 @@ export async function captureShareCard(element: HTMLElement): Promise<Blob> {
   await waitForImages(element)
 
   /** 2) html2canvas로 DOM → Canvas 변환
-   *    - allowTaint: 같은 도메인 이미지를 taint 허용 (로컬 /images/tarot/*.jpg)
-   *    - useCORS: 외부 이미지도 CORS로 가져오기
+   *    - useCORS: 이미지를 CORS로 로드하여 캔버스 오염(taint) 방지
+   *    - allowTaint: false — tainted canvas는 toBlob() 시 SecurityError 발생
+   *      → 같은 도메인 이미지(/images/tarot/*.jpg)는 CORS 없이도 깨끗하게 렌더됨
    *    - onclone: 캡처용 복제 DOM에서 불필요한 스타일을 정리
    */
   const canvas = await html2canvas(element, {
     backgroundColor: '#020617',   // slate-950 — 다크 배경
     scale: 2,                      // 레티나 대응 (2x 해상도)
     useCORS: true,                 // 외부 이미지 CORS 허용
-    allowTaint: true,              // 같은 도메인 이미지 taint 허용
+    allowTaint: false,             // taint 금지 — toBlob() 내보내기 가능 유지
     logging: false,                // 콘솔 로그 비활성화
     imageTimeout: 5000,            // 이미지 로드 최대 5초 대기
     onclone: (_doc, clonedElement) => {

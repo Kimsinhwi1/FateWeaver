@@ -31,7 +31,7 @@ export default function AuthButton() {
     return (
       <button
         onClick={() => signInWithGoogle(locale)}
-        className="min-h-[44px] rounded-full border border-mystic-500/40 px-4 py-2 text-xs font-medium text-mystic-400 transition-all hover:border-mystic-400 hover:bg-mystic-500/10 hover:text-mystic-300"
+        className="min-h-[44px] whitespace-nowrap rounded-full border border-mystic-500/40 px-3 py-2 text-xs font-medium text-mystic-400 transition-all hover:border-mystic-400 hover:bg-mystic-500/10 hover:text-mystic-300 sm:px-4"
       >
         {t('signIn')}
       </button>

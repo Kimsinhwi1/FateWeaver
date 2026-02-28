@@ -15,26 +15,26 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-md">
-      <nav className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-        {/* 로고 */}
+      <nav className="mx-auto flex max-w-5xl items-center justify-between px-3 py-3 sm:px-4">
+        {/* 로고 — 모바일에서 약간 축소 */}
         <Link
           href={`/${locale}`}
-          className="font-heading text-xl font-semibold tracking-wider text-gold-400"
+          className="font-heading text-lg font-semibold tracking-wider text-gold-400 sm:text-xl"
         >
           FateWeaver
         </Link>
 
-        {/* 네비게이션 링크 + 인증 — 모든 링크 최소 44px 터치 영역 */}
-        <div className="flex items-center gap-3 sm:gap-5">
+        {/* 네비게이션 링크 + 인증 — 모바일 갭 축소 + nowrap으로 줄바꿈 방지 */}
+        <div className="flex items-center gap-2 sm:gap-5">
           <Link
             href={`/${locale}/tarot`}
-            className="flex min-h-[44px] items-center text-sm text-slate-300 transition-colors hover:text-mystic-400"
+            className="flex min-h-[44px] items-center whitespace-nowrap text-xs text-slate-300 transition-colors hover:text-mystic-400 sm:text-sm"
           >
             {t('tarot')}
           </Link>
           <Link
             href={`/${locale}/daily`}
-            className="flex min-h-[44px] items-center text-sm text-slate-300 transition-colors hover:text-mystic-400"
+            className="flex min-h-[44px] items-center whitespace-nowrap text-xs text-slate-300 transition-colors hover:text-mystic-400 sm:text-sm"
           >
             {t('daily')}
           </Link>

@@ -41,6 +41,7 @@ export async function generateMetadata({
     openGraph: {
       type: 'article',
       publishedTime: article.publishedAt,
+      images: [{ url: '/api/og', width: 1200, height: 630 }],
     },
   }
 }

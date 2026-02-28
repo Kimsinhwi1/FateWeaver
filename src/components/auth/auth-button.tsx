@@ -20,7 +20,7 @@ export default function AuthButton() {
   // 로딩 중에는 스켈레톤 표시
   if (loading) {
     return (
-      <div className="h-8 w-8 animate-pulse rounded-full bg-white/10" />
+      <div className="min-h-[44px] min-w-[44px] animate-pulse rounded-full bg-white/10" />
     )
   }
 
@@ -29,7 +29,7 @@ export default function AuthButton() {
     return (
       <button
         onClick={() => signInWithGoogle(locale)}
-        className="rounded-full border border-mystic-500/40 px-3 py-1.5 text-xs font-medium text-mystic-400 transition-all hover:border-mystic-400 hover:bg-mystic-500/10 hover:text-mystic-300"
+        className="min-h-[44px] rounded-full border border-mystic-500/40 px-4 py-2 text-xs font-medium text-mystic-400 transition-all hover:border-mystic-400 hover:bg-mystic-500/10 hover:text-mystic-300"
       >
         {t('signIn')}
       </button>
@@ -46,7 +46,7 @@ export default function AuthButton() {
     <div className="relative">
       <button
         onClick={() => setMenuOpen(!menuOpen)}
-        className="flex items-center gap-2 rounded-full border border-white/10 px-2 py-1 transition-colors hover:border-mystic-500/30"
+        className="flex min-h-[44px] items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 transition-colors hover:border-mystic-500/30"
       >
         {avatarUrl ? (
           // eslint-disable-next-line @next/next/no-img-element

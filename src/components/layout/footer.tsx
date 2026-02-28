@@ -18,37 +18,37 @@ export default function Footer() {
       <nav className="mx-auto mb-6 grid max-w-5xl grid-cols-2 gap-3 px-4 sm:grid-cols-4">
         <Link
           href={`/${locale}/tarot`}
-          className="text-sm text-slate-400 transition-colors hover:text-mystic-400"
+          className="inline-flex min-h-[44px] items-center text-sm text-slate-400 transition-colors hover:text-mystic-400"
         >
           {tNav('tarot')}
         </Link>
         <Link
           href={`/${locale}/daily`}
-          className="text-sm text-slate-400 transition-colors hover:text-mystic-400"
+          className="inline-flex min-h-[44px] items-center text-sm text-slate-400 transition-colors hover:text-mystic-400"
         >
           {tNav('daily')}
         </Link>
         <Link
           href={`/${locale}/archetype`}
-          className="text-sm text-slate-400 transition-colors hover:text-mystic-400"
+          className="inline-flex min-h-[44px] items-center text-sm text-slate-400 transition-colors hover:text-mystic-400"
         >
           {tNav('archetype')}
         </Link>
         <Link
           href={`/${locale}/compatibility`}
-          className="text-sm text-slate-400 transition-colors hover:text-gold-400"
+          className="inline-flex min-h-[44px] items-center text-sm text-slate-400 transition-colors hover:text-gold-400"
         >
           {tNav('compatibility')}
         </Link>
         <Link
           href={`/${locale}/blog`}
-          className="text-sm text-slate-400 transition-colors hover:text-mystic-400"
+          className="inline-flex min-h-[44px] items-center text-sm text-slate-400 transition-colors hover:text-mystic-400"
         >
           {tNav('blog')}
         </Link>
         <Link
           href={`/${locale}/pricing`}
-          className="text-sm text-slate-400 transition-colors hover:text-gold-400"
+          className="inline-flex min-h-[44px] items-center text-sm text-slate-400 transition-colors hover:text-gold-400"
         >
           {tNav('pricing')}
         </Link>

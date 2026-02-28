@@ -11,6 +11,7 @@ import { getTranslations, getLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import Header from '@/components/layout/header'
 import Footer from '@/components/layout/footer'
+import { JsonLd } from '@/components/seo/json-ld'
 import { BLOG_ARTICLES } from '@/data/blog-articles'
 
 /** SSR 강제 — getTranslations/getLocale이 동적 함수이므로 SSG와 충돌 방지 */
@@ -76,9 +77,47 @@ export default async function BlogArticlePage({
     }
   }
 
+  /**
+   * Article 스키마 — Google에 아티클 정보 전달
+   * 비유: "도서관 색인 카드" — 이 글의 제목, 저자, 발행일을 검색 엔진에 알림
+   * headline/description은 i18n JSON에서 가져온 번역본 사용
+   */
+  const articleTitle = t(`articles.${slug}.title` as Parameters<typeof t>[0])
+  const articleDesc = t(`articles.${slug}.summary` as Parameters<typeof t>[0])
+
+  const articleJsonLd: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: articleTitle,
+    description: articleDesc,
+    author: {
+      '@type': 'Organization',
+      name: 'FateWeaver',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'FateWeaver',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://fateweaver.vercel.app/icon.svg',
+      },
+    },
+    datePublished: article.publishedAt,
+    dateModified: article.publishedAt,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://fateweaver.vercel.app/${locale}/blog/${slug}`,
+    },
+    inLanguage: locale,
+  }
+
   return (
     <>
       <Header />
+
+      {/* Article 구조화된 데이터 */}
+      <JsonLd data={articleJsonLd} />
+
       <main className="mx-auto min-h-screen max-w-3xl px-4 pt-24 pb-16">
         {/* 뒤로가기 링크 */}
         <Link

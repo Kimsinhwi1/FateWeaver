@@ -7,14 +7,54 @@ import Link from 'next/link'
 import { useTranslations, useLocale } from 'next-intl'
 import Header from '@/components/layout/header'
 import Footer from '@/components/layout/footer'
+import { JsonLd } from '@/components/seo/json-ld'
 
 export default function LandingPage() {
   const t = useTranslations()
   const locale = useLocale()
 
+  /**
+   * SoftwareApplication 스키마 — Google에 앱 정보 전달
+   * 비유: "앱 스토어 등록 정보" — 검색 결과에서 앱임을 인식
+   * aggregateRating은 실제 리뷰가 쌓인 후 추가 (Google 스팸 정책 준수)
+   */
+  const appJsonLd: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'FateWeaver',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    url: 'https://fateweaver.vercel.app',
+    description: locale === 'ko'
+      ? 'AI가 동양 사주명리학과 서양 타로를 융합 해석하는 운세 서비스'
+      : 'AI-powered Saju (Korean Four Pillars) and Tarot reading',
+    offers: [
+      {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD',
+        description: locale === 'ko'
+          ? '무료 일일 타로 리딩 및 운세'
+          : 'Free tier with daily tarot and horoscope',
+      },
+      {
+        '@type': 'Offer',
+        price: '6.99',
+        priceCurrency: 'USD',
+        description: locale === 'ko'
+          ? '프리미엄 월간 구독 — 궁합, 10년 대운, 월간/연간 운세'
+          : 'Premium monthly subscription',
+        priceValidUntil: '2026-12-31',
+      },
+    ],
+  }
+
   return (
     <>
       <Header />
+
+      {/* SoftwareApplication 구조화된 데이터 */}
+      <JsonLd data={appJsonLd} />
 
       <main className="flex min-h-screen flex-col items-center px-4 pt-16">
         {/* 히어로 섹션 */}

@@ -1,6 +1,10 @@
 /* ─────────────────────────────────────────
  * Sitemap — 검색 엔진에게 사이트 구조를 알려주는 "지도"
  * Next.js App Router의 sitemap 규칙을 사용하여 자동 생성
+ *
+ * hreflang alternates:
+ *   각 URL에 대체 언어 버전을 명시하여
+ *   Google이 같은 페이지의 en/ko 버전을 정확히 매칭
  * ───────────────────────────────────────── */
 
 import type { MetadataRoute } from 'next'
@@ -24,6 +28,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: new Date(),
         changeFrequency: page === '/daily' ? 'daily' : 'weekly',
         priority: page === '' ? 1.0 : page === '/blog' ? 0.7 : 0.8,
+        /** hreflang — 대체 언어 버전 URL을 Google에 알림 */
+        alternates: {
+          languages: {
+            en: `${BASE_URL}/en${page}`,
+            ko: `${BASE_URL}/ko${page}`,
+          },
+        },
       })
     }
   }
@@ -36,6 +47,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: new Date(),
         changeFrequency: 'monthly',
         priority: 0.6,
+        /** hreflang — 블로그 아티클도 대체 언어 버전 명시 */
+        alternates: {
+          languages: {
+            en: `${BASE_URL}/en/blog/${slug}`,
+            ko: `${BASE_URL}/ko/blog/${slug}`,
+          },
+        },
       })
     }
   }

@@ -55,7 +55,7 @@
 프론트엔드:  Next.js 15 (App Router) + Tailwind CSS
 백엔드:      Next.js API Routes + Supabase (DB + Auth)
 AI:          Anthropic Claude API (운세 해석 생성)
-결제:        Paddle (1순위) / Lemon Squeezy (백업) — 아래 결제 전략 참고
+결제:        Lemon Squeezy (1순위) / Paddle (백업) — 아래 결제 전략 참고
 배포:        Vercel
 다국어:      next-intl (영어, 한국어, 일본어, 중국어 우선)
 이미지:      Canvas API / html2canvas (공유카드 생성)
@@ -72,16 +72,16 @@ AI:          Anthropic Claude API (운세 해석 생성)
 
 | 순위 | 서비스 | 장점 | 단점 | 수수료 |
 |------|--------|------|------|--------|
-| 1순위 | **Paddle** | MoR 모델(세금 자동처리), 한국에서 사용 가능, 220국 지원 | 심사 있음, 수수료 높음 | ~5% + $0.50 |
-| 2순위 | **Lemon Squeezy** | 이미 사용 경험 있음, 연동 익숙함 | HabitGlow에서 승인 지연 경험 | 5% + $0.50 |
+| 1순위 | **Lemon Squeezy** | 이미 연동 경험 있음, 빠른 구현 가능 | HabitGlow에서 승인 지연 경험 | 5% + $0.50 |
+| 2순위 | **Paddle** | MoR 모델(세금 자동처리), 한국에서 사용 가능, 220국 지원 | 심사 있음, 수수료 높음 | ~5% + $0.50 |
 | 보조 | **Buy Me a Coffee** | 즉시 사용, 심사 없음 | 정식 구독 기능 제한적 | 5% |
 | 성장 후 | **Stripe Atlas** | 업계 표준, 낮은 수수료(2.9%) | 미국 법인 설립 필요 ($500+), 세무 복잡 | 2.9% + $0.30 |
 
 **실행 전략:**
 1. MVP 단계 (Week 1-2): 결제 없이 무료 기능으로 트래픽 검증
-2. Phase 3 진입 전: Paddle 계정 신청 (심사 2-4주 소요)
-3. Paddle 승인 시 → Paddle로 결제 연동
-4. Paddle 거절 시 → Lemon Squeezy (기존 경험 활용)
+2. Phase 3 진입 전: Lemon Squeezy 계정 신청 (기존 경험 활용)
+3. Lemon Squeezy 승인 시 → Lemon Squeezy로 결제 연동
+4. Lemon Squeezy 거절 시 → Paddle로 전환
 5. 둘 다 실패 시 → Buy Me a Coffee로 임시 수익화 + Stripe Atlas 검토
 6. MRR $500 돌파 시 → Stripe Atlas로 미국 법인 설립 후 전환 검토
 
@@ -97,11 +97,11 @@ interface PaymentProvider {
   handleWebhook(payload: unknown): Promise<void>;
 }
 
-// Paddle용 구현
-class PaddleProvider implements PaymentProvider { ... }
-
-// Lemon Squeezy용 구현 (백업)
+// Lemon Squeezy용 구현
 class LemonSqueezyProvider implements PaymentProvider { ... }
+
+// Paddle용 구현 (백업)
+class PaddleProvider implements PaymentProvider { ... }
 ```
 
 ### 3-2. 시스템 흐름
@@ -200,7 +200,7 @@ src/
 │       ├── daily/
 │       │   └── fortune/route.ts      # 일일 운세 생성
 │       └── webhooks/
-│           └── payments/route.ts     # 결제 웹훅 (Paddle/LemonSqueezy 추상화)
+│           └── payments/route.ts     # 결제 웹훅 (LemonSqueezy/Paddle 추상화)
 ├── components/
 │   ├── tarot/
 │   │   ├── tarot-card.tsx            # 타로 카드 UI
@@ -470,12 +470,12 @@ Claude API 비용/리딩: ~$0.02 (Haiku 사용 시 더 저렴)
 ### Phase 3: 수익화 (Week 5-6)
 목표: **결제 → 첫 매출 달성**
 
-- [ ] **Paddle 연동** (Phase 1 시작과 동시에 계정 신청해둘 것, 심사 2-4주)
+- [ ] **Lemon Squeezy 연동** (기존 HabitGlow 경험 활용, 빠르게 연동 가능)
 - [ ] 프리미엄/무료 기능 분리 (프리미엄 게이트 UI)
 - [ ] 심층 사주 분석 (프리미엄 전용)
 - [ ] 궁합 분석 기능 (바이럴 + 프리미엄)
 - [ ] PWA + 푸시 알림 (오늘의 운세)
-- [ ] Paddle 거절 시 Lemon Squeezy 즉시 전환
+- [ ] Lemon Squeezy 거절 시 Paddle 즉시 전환
 
 **검증 지표:** 전환율, MRR, 이탈율
 
@@ -542,7 +542,7 @@ Claude API 비용/리딩: ~$0.02 (Haiku 사용 시 더 저렴)
 
 | 리스크 | 확률 | 심각도 | 대응 |
 |--------|------|--------|------|
-| **결제 승인 실패 (최우선)** | **중** | **치명적** | **Paddle 1순위 + Lemon Squeezy 백업 + 결제 추상화 설계. Phase 1 시작일에 즉시 Paddle 계정 신청. MRR $500 이후 Stripe Atlas 검토** |
+| **결제 승인 실패 (최우선)** | **중** | **치명적** | **Lemon Squeezy 1순위 (기존 경험) + Paddle 백업 + 결제 추상화 설계. MRR $500 이후 Stripe Atlas 검토** |
 | AI 해석 "챗봇 냄새" | 높 | 높 | 프롬프트 v1부터 철저한 튜닝 + 50개 조합 테스트 + 지속적 개선 |
 | AI 해석 품질 불안정 | 중 | 높 | 프롬프트 튜닝 + 해석 템플릿 + A/B 테스트 |
 | 사주 계산 오류 | 중 | 중 | 검증된 만세력 데이터 사용 + 단위 테스트 |

@@ -7,6 +7,7 @@
     "home": "Home",
     "tarot": "Tarot Reading",
     "daily": "Daily Fortune",
+    "pricing": "Pricing",
     "about": "About"
   },
   "landing": {
@@ -103,6 +104,90 @@
     "male": "Male",
     "female": "Female",
     "preferNotToSay": "Prefer not to say"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "history": "My Readings",
+    "pricing": "Pricing"
+  },
+  "gate": {
+    "limitTitle": "Daily Limit Reached",
+    "premiumTitle": "Premium Feature",
+    "limitDescription": "You've used all your free readings for today. Upgrade to Premium for unlimited access.",
+    "premiumDescription": "This feature is available for Premium members only.",
+    "benefits": {
+      "unlimited": "Unlimited tarot & fortune readings",
+      "deepSaju": "In-depth birth chart analysis",
+      "compatibility": "Love & relationship compatibility",
+      "monthlyReport": "Monthly personalized reports"
+    },
+    "viewPricing": "View Pricing Plans",
+    "resetNotice": "Free readings reset every day at midnight."
+  },
+  "history": {
+    "title": "My Readings",
+    "subtitle": "Look back on your past tarot readings and daily fortunes",
+    "loginRequired": "Sign In Required",
+    "loginDescription": "Sign in to save and view your reading history. Your past tarot cards and daily fortunes will be stored here.",
+    "signInToView": "Sign In with Google",
+    "empty": "No readings yet. Start your first tarot reading or check today's fortune!",
+    "typeTarot": "Tarot Reading",
+    "typeFortune": "Daily Fortune"
+  },
+  "pricing": {
+    "title": "Choose Your Plan",
+    "subtitle": "Unlock deeper insights into your destiny with Premium",
+    "popular": "Most Popular",
+    "comingSoon": "Coming Soon",
+    "plans": {
+      "deep_reading": {
+        "name": "Deep Reading",
+        "price": "$3.99",
+        "description": "One-time in-depth tarot + birth chart fusion reading"
+      },
+      "premium_monthly": {
+        "name": "Premium Monthly",
+        "price": "$6.99",
+        "description": "Unlimited readings, deep analysis, compatibility & monthly reports"
+      },
+      "premium_yearly": {
+        "name": "Premium Yearly",
+        "price": "$49.99",
+        "description": "Save 40% — all Premium features for a full year"
+      }
+    },
+    "interval": {
+      "month": "mo",
+      "year": "yr"
+    },
+    "compareTitle": "Free vs Premium",
+    "featureLabel": "Feature",
+    "free": "Free",
+    "premium": "Premium",
+    "features": {
+      "dailyTarot": "Daily Tarot Reading",
+      "basicSaju": "Basic Birth Chart",
+      "dailyFortune": "Daily Fortune",
+      "unlimitedReading": "Unlimited Readings",
+      "deepSaju": "Deep Birth Chart Analysis",
+      "compatibility": "Compatibility Reading",
+      "monthlyReport": "Monthly Report",
+      "readingHistory": "Reading History",
+      "aiCounseling": "AI Counseling"
+    },
+    "comparison": {
+      "dailyTarot": { "free": "1/day" },
+      "basicSaju": { "free": "true" },
+      "dailyFortune": { "free": "3/day" },
+      "unlimitedReading": { "free": "\u2715" },
+      "deepSaju": { "free": "\u2715" },
+      "compatibility": { "free": "\u2715" },
+      "monthlyReport": { "free": "\u2715" },
+      "readingHistory": { "free": "\u2715" },
+      "aiCounseling": { "free": "\u2715" }
+    },
+    "notice": "Prices are in USD. Payment processing will be available soon via Lemon Squeezy."
   },
   "common": {
     "loading": "Loading...",

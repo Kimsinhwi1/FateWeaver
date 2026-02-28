@@ -13,6 +13,9 @@ import BirthInputForm from '@/components/shared/birth-input-form'
 import CardSpread from '@/components/tarot/card-spread'
 import ReadingResult from '@/components/tarot/reading-result'
 import ShareCard from '@/components/shared/share-card'
+import PremiumGate from '@/components/shared/premium-gate'
+import { useAuth } from '@/components/auth/auth-provider'
+import { canUseFeature, incrementUsage, getRemainingUses } from '@/lib/usage/limit'
 import type { BirthInput } from '@/types/saju'
 import type { DrawnCard } from '@/types/tarot'
 
@@ -27,13 +30,21 @@ export default function TarotPage() {
   const t = useTranslations('tarot')
   const tCommon = useTranslations('common')
   const locale = useLocale()
+  const { isPremium } = useAuth()
 
   const [isLoading, setIsLoading] = useState(false)
   const [result, setResult] = useState<ReadingResponse | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [showShare, setShowShare] = useState(false)
+  const [showGate, setShowGate] = useState(false)
 
   const handleSubmit = async (birthData: BirthInput) => {
+    // 사용 횟수 확인 — "시식 카운터 체크"
+    if (!canUseFeature('tarot', isPremium)) {
+      setShowGate(true)
+      return
+    }
+
     setIsLoading(true)
     setError(null)
 
@@ -54,6 +65,9 @@ export default function TarotPage() {
 
       const data: ReadingResponse = await response.json()
       setResult(data)
+
+      // 성공한 리딩만 사용 횟수에 카운트
+      incrementUsage('tarot')
     } catch {
       setError(tCommon('error'))
     } finally {
@@ -81,9 +95,19 @@ export default function TarotPage() {
           </p>
         </div>
 
+        {/* 남은 무료 횟수 안내 */}
+        {!isPremium && !result && !isLoading && (
+          <p className="mt-4 text-center text-xs text-slate-500">
+            {getRemainingUses('tarot', isPremium) > 0
+              ? `${getRemainingUses('tarot', isPremium)}/${1} remaining today`
+              : ''
+            }
+          </p>
+        )}
+
         {/* 입력 폼 (결과가 없고 로딩 중이 아닐 때만 표시) */}
         {!result && !isLoading && (
-          <div className="mt-12">
+          <div className="mt-8">
             <BirthInputForm onSubmit={handleSubmit} isLoading={isLoading} />
           </div>
         )}
@@ -152,6 +176,13 @@ export default function TarotPage() {
             onClose={() => setShowShare(false)}
           />
         )}
+
+        {/* 프리미엄 게이트 모달 */}
+        <PremiumGate
+          isOpen={showGate}
+          onClose={() => setShowGate(false)}
+          type="usage_limit"
+        />
       </main>
 
       <Footer />

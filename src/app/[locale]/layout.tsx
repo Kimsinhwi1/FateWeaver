@@ -10,6 +10,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
+import { AuthProvider } from '@/components/auth/auth-provider'
 import '@/app/globals.css'
 
 /** 본문 폰트 — 한/영 모두 깔끔하게 지원 */
@@ -85,7 +86,9 @@ export default async function RootLayout({
         className={`${notoSansKr.variable} ${cinzel.variable} font-body antialiased bg-slate-950 text-slate-100 min-h-screen`}
       >
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <AuthProvider>
+            {children}
+          </AuthProvider>
         </NextIntlClientProvider>
       </body>
     </html>

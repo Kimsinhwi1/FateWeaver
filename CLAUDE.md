@@ -11,7 +11,7 @@ FateWeaver — 동양 사주 × 서양 타로를 AI가 융합 해석하는 글�
 - Supabase (DB + Auth)
 - Anthropic Claude API
 - Vercel 배포
-- Paddle (결제)
+- Lemon Squeezy (결제)
 
 ## 코드 규칙
 - 파일 하나에 하나의 역할만
@@ -20,4 +20,4 @@ FateWeaver — 동양 사주 × 서양 타로를 AI가 융합 해석하는 글�
 - 코드 작성 후 초보자 눈높이로 원리와 이유를 비유와 함께 설명
 
 ## 현재 Phase
-Phase 1: 린 MVP (생년월일 입력 → 타로 3카드 + 사주 융합 해석)
+Phase 3: 수익화 (Auth + 프리미엄 게이트 + 히스토리 + 결제 준비)

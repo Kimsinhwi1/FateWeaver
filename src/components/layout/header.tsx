@@ -1,11 +1,13 @@
 /* ─────────────────────────────────────────
  * 헤더 — 상단 네비게이션 바
+ * Phase 3: 로그인/프로필 버튼 + pricing/history 네비 추가
  * ───────────────────────────────────────── */
 
 'use client'
 
 import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
+import AuthButton from '@/components/auth/auth-button'
 
 export default function Header() {
   const t = useTranslations('nav')
@@ -22,8 +24,8 @@ export default function Header() {
           FateWeaver
         </Link>
 
-        {/* 네비게이션 링크 */}
-        <div className="flex items-center gap-6">
+        {/* 네비게이션 링크 + 인증 */}
+        <div className="flex items-center gap-4 sm:gap-6">
           <Link
             href={`/${locale}/tarot`}
             className="text-sm text-slate-300 transition-colors hover:text-mystic-400"
@@ -36,14 +38,23 @@ export default function Header() {
           >
             {t('daily')}
           </Link>
+          <Link
+            href={`/${locale}/pricing`}
+            className="hidden text-sm text-slate-300 transition-colors hover:text-gold-400 sm:inline"
+          >
+            {t('pricing')}
+          </Link>
 
           {/* 언어 전환 */}
           <Link
             href={locale === 'en' ? '/ko' : '/en'}
-            className="rounded-full border border-white/20 px-3 py-1 text-xs text-slate-400 transition-colors hover:border-mystic-400 hover:text-mystic-400"
+            className="rounded-full border border-white/20 px-2.5 py-1 text-xs text-slate-400 transition-colors hover:border-mystic-400 hover:text-mystic-400"
           >
             {locale === 'en' ? '한국어' : 'EN'}
           </Link>
+
+          {/* 로그인/프로필 버튼 */}
+          <AuthButton />
         </div>
       </nav>
     </header>

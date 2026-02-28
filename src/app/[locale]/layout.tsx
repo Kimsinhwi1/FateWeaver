@@ -68,6 +68,9 @@ export async function generateMetadata({
       card: 'summary_large_image',
       images: ['/api/og'],
     },
+    verification: {
+      google: 'R86r-1_0STVoydKaN8uHW4WBgd0QQFeKuRUqJ9YJTc4',
+    },
   }
 }
 

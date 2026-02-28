@@ -66,11 +66,16 @@ export function buildTarotReadingPrompt(
 - 년주: ${sajuData.fourPillars.year.stem}${sajuData.fourPillars.year.branch}
 - 월주: ${sajuData.fourPillars.month.stem}${sajuData.fourPillars.month.branch}
 - 일주: ${sajuData.fourPillars.day.stem}${sajuData.fourPillars.day.branch}
-- 시주: ${sajuData.fourPillars.hour ? sajuData.fourPillars.hour.stem + sajuData.fourPillars.hour.branch : '미상'}`
+- 시주: ${sajuData.fourPillars.hour ? sajuData.fourPillars.hour.stem + sajuData.fourPillars.hour.branch : '미상(시간 미입력 — 삼주 기반 해석)'}`
   }
 
   const questionContext = question
     ? `\n[질문]\n${question}`
+    : ''
+
+  // 시간 미입력 시 삼주 기반 해석 안내
+  const timeNote = sajuData && !sajuData.fourPillars.hour
+    ? '\n참고: 태어난 시간이 입력되지 않아 삼주(년·월·일) 기반으로 해석한다. 시주 없이도 충분히 깊이 있는 해석이 가능하다. 시주가 없다는 사실 자체를 언급하지 말 것.'
     : ''
 
   return `[리딩 요청]
@@ -81,6 +86,7 @@ ${questionContext}
 [뽑힌 카드]
 ${cardDescriptions}
 ${sajuContext}
+${timeNote}
 
 위 카드와 사주 데이터를 융합하여, The Oracle로서 해석을 제공하라.
 타로 카드의 상징과 사주의 오행 에너지를 자연스럽게 엮어 하나의 이야기로 풀어내라.`

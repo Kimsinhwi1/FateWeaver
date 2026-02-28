@@ -10,17 +10,24 @@
   },
   "landing": {
     "hero": {
-      "title": "Where East Meets West",
-      "subtitle": "Ancient Saju wisdom and Tarot cards, woven together by AI",
-      "cta": "Get Your Reading"
+      "title": "Discover Your Fate",
+      "titleAccent": "Through Ancient Wisdom",
+      "subtitle": "Eastern Saju and Western Tarot — two ancient wisdoms woven into one personalized reading by AI.",
+      "cta": "Begin Your Reading",
+      "ctaFree": "Free 3-Card Reading"
     },
     "features": {
       "tarot": "3-Card Tarot",
-      "tarotDesc": "Past, Present, Future — revealed through the cards",
+      "tarotDesc": "Past, Present, Future — the cards reveal the hidden currents of your journey.",
       "saju": "Saju Analysis",
-      "sajuDesc": "Your birth chart decoded through Eastern philosophy",
+      "sajuDesc": "Your Four Pillars decoded — the cosmic blueprint written at your birth.",
       "fusion": "AI Fusion",
-      "fusionDesc": "Two wisdom traditions, one personalized reading"
+      "fusionDesc": "Two wisdom traditions, one deeply personalized oracle reading."
+    },
+    "trust": {
+      "readings": "Readings Delivered",
+      "accuracy": "Based on Manseryeok",
+      "languages": "EN & KO"
     }
   },
   "tarot": {
@@ -28,6 +35,9 @@
     "subtitle": "Enter your birth details for a personalized fusion reading",
     "startReading": "Draw Cards",
     "loading": "The Oracle is reading your cards...",
+    "retry": "Draw Again",
+    "share": "Share Result",
+    "shareComingSoon": "Coming soon",
     "positions": {
       "past": "Past",
       "present": "Present",
@@ -38,6 +48,8 @@
     "birthDate": "Birth Date",
     "birthTime": "Birth Time",
     "birthTimeOptional": "(optional — for deeper analysis)",
+    "birthTimeUnknown": "Don't Know",
+    "birthTimeUnknownDesc": "No worries! We'll read your fate using the Three Pillars (year, month, day).",
     "gender": "Gender",
     "male": "Male",
     "female": "Female",
@@ -46,6 +58,6 @@
   "common": {
     "loading": "Loading...",
     "error": "Something went wrong. Please try again.",
-    "disclaimer": "For entertainment purposes only."
+    "disclaimer": "For entertainment purposes only. Not a substitute for professional advice."
   }
 }

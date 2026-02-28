@@ -10,17 +10,24 @@
   },
   "landing": {
     "hero": {
-      "title": "동양과 서양이 만나는 곳",
-      "subtitle": "사주명리학과 타로 카드, AI가 하나로 엮어드립니다",
-      "cta": "운세 보러 가기"
+      "title": "당신의 운명을 읽다",
+      "titleAccent": "동양과 서양의 지혜로",
+      "subtitle": "사주명리학과 타로 카드 — 두 세계의 지혜를 AI가 하나의 해석으로 엮어드립니다.",
+      "cta": "리딩 시작하기",
+      "ctaFree": "무료 3카드 리딩"
     },
     "features": {
       "tarot": "3카드 타로",
-      "tarotDesc": "과거, 현재, 미래 — 카드가 이야기합니다",
+      "tarotDesc": "과거, 현재, 미래 — 카드가 당신 여정의 숨은 흐름을 드러냅니다.",
       "saju": "사주 분석",
-      "sajuDesc": "생년월일로 읽는 동양의 운명 지도",
+      "sajuDesc": "당신의 사주팔자 해독 — 태어난 순간에 쓰인 우주의 설계도.",
       "fusion": "AI 융합 해석",
-      "fusionDesc": "두 가지 지혜의 전통, 하나의 맞춤형 리딩"
+      "fusionDesc": "두 가지 지혜의 전통, 하나의 깊이 있는 맞춤형 오라클 리딩."
+    },
+    "trust": {
+      "readings": "리딩 제공",
+      "accuracy": "만세력 기반",
+      "languages": "한국어 & 영어"
     }
   },
   "tarot": {
@@ -28,6 +35,9 @@
     "subtitle": "생년월일을 입력하면 맞춤형 융합 리딩을 제공합니다",
     "startReading": "카드 뽑기",
     "loading": "오라클이 카드를 읽고 있습니다...",
+    "retry": "다시 뽑기",
+    "share": "결과 공유",
+    "shareComingSoon": "곧 오픈 예정",
     "positions": {
       "past": "과거",
       "present": "현재",
@@ -38,6 +48,8 @@
     "birthDate": "생년월일",
     "birthTime": "태어난 시간",
     "birthTimeOptional": "(선택 — 더 정확한 분석을 위해)",
+    "birthTimeUnknown": "모름",
+    "birthTimeUnknownDesc": "괜찮아요! 삼주(년·월·일)로 운세를 읽어드립니다.",
     "gender": "성별",
     "male": "남성",
     "female": "여성",
@@ -46,6 +58,6 @@
   "common": {
     "loading": "불러오는 중...",
     "error": "문제가 발생했습니다. 다시 시도해 주세요.",
-    "disclaimer": "오락 목적으로만 제공됩니다."
+    "disclaimer": "오락 목적으로만 제공됩니다. 전문적인 조언을 대체하지 않습니다."
   }
 }

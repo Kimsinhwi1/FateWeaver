@@ -59,6 +59,11 @@ export default function TarotPage() {
     }
   }
 
+  const handleRetry = () => {
+    setResult(null)
+    setError(null)
+  }
+
   return (
     <>
       <Header />
@@ -116,13 +121,26 @@ export default function TarotPage() {
               <ReadingResult interpretation={result.interpretation} />
             </div>
 
-            {/* 다시 뽑기 버튼 */}
-            <div className="animate-fade-in-up text-center" style={{ animationDelay: '2s', opacity: 0 }}>
+            {/* 하단 액션 버튼들 */}
+            <div className="animate-fade-in-up flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4" style={{ animationDelay: '2s', opacity: 0 }}>
+              {/* 다시 뽑기 */}
               <button
-                onClick={() => setResult(null)}
-                className="rounded-full border border-white/20 px-6 py-2 text-sm text-slate-400 transition-colors hover:border-mystic-400 hover:text-mystic-400"
+                onClick={handleRetry}
+                className="rounded-full border border-white/20 px-6 py-2.5 text-sm text-slate-400 transition-colors hover:border-mystic-400 hover:text-mystic-400"
               >
-                {t('startReading')}
+                {t('retry')}
+              </button>
+
+              {/* 결과 공유 (Phase 2 placeholder) */}
+              <button
+                disabled
+                className="group relative rounded-full border border-white/10 px-6 py-2.5 text-sm text-slate-500 transition-colors"
+                title={t('shareComingSoon')}
+              >
+                {t('share')}
+                <span className="ml-1.5 rounded bg-mystic-900/50 px-1.5 py-0.5 text-[10px] text-mystic-400">
+                  {t('shareComingSoon')}
+                </span>
               </button>
             </div>
           </div>

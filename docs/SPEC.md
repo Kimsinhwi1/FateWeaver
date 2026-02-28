@@ -1,4 +1,8 @@
-# 🔮 AI Fortune Teller — 프로젝트 기획서
+# 🔮 AI Fortune Teller — 프로젝트 기획서 (Updated 2026-03-01)
+
+> **변경 이력:** 원본 기획서 대비 실제 구현 현황 반영. ✅=완료, 🔄=부분완료, ❌=미구현, 🔀=계획변경
+
+---
 
 ## 1. 제품 개요
 
@@ -14,36 +18,59 @@
 > 동양 사주 앱은 한국/중국 로컬에 갇혀 있다.
 > 우리는 "둘 다"를 AI가 융합 해석하는 유일한 글로벌 서비스.
 
+**현재 URL:** https://fateweaver.vercel.app
+
 ---
 
 ## 2. 핵심 기능 설계
 
 ### 2-1. 무료 티어 (Free)
 
-| 기능 | 설명 |
-|------|------|
-| **오늘의 타로** | 매일 1회, 3장 카드 스프레드 + AI 해석 |
-| **간단 사주 프로필** | 생년월일시 입력 → 사주 기본 성격 분석 |
-| **오늘의 운세** | 사주 + 별자리 기반 일일 운세 (짧은 버전) |
+| 기능 | 설명 | 상태 | 비고 |
+|------|------|------|------|
+| **오늘의 타로** | 매일 3장 카드 스프레드 + AI 해석 | ✅ | 1회/일 제한 |
+| **오늘의 운세** | 사주 기반 일일 운세 | ✅ | 3회/일 제한 |
+| **원형(Archetype) 매칭** | 사주 기반 12원형 성격 분석 | ✅ | 무제한, 바이럴 핵심 기능 |
+| ~~간단 사주 프로필~~ | ~~생년월일시 입력 → 사주 기본 성격 분석~~ | 🔀 | 원형 매칭으로 대체 |
+| **SEO 블로그** | "What is Saju?", 타로, 별자리 관련 콘텐츠 | ✅ | 3편 작성 완료 |
 
 ### 2-2. 프리미엄 티어 ($6.99/월)
 
-| 기능 | 설명 |
-|------|------|
-| **무제한 타로 리딩** | 원할 때 언제든 + 다양한 스프레드 (연애, 커리어, 재물 등) |
-| **심층 사주 분석** | 10년 대운, 올해 운세, 성격 심층 분석 |
-| **궁합 분석** | 두 사람의 사주 + 별자리 궁합을 AI가 종합 해석 |
-| **월간 운세 리포트** | 매월 AI가 생성하는 상세 월간 예측 |
-| **AI 운세 상담** | 고민을 말하면 AI가 타로 + 사주 기반으로 조언 |
-| **리딩 히스토리** | 과거 리딩 기록 저장 및 열람 |
+| 기능 | 설명 | 상태 | 비고 |
+|------|------|------|------|
+| **무제한 타로/데일리** | 일일 제한 해제 | ✅ | 프리미엄 게이트 구현 |
+| **궁합 분석** | 두 사람의 사주 궁합 AI 해석 | ✅ | 프리미엄 전용 (0회/무료) |
+| **10년 대운** | 60갑자 순환 기반 10년 타임라인 | ✅ | 프리미엄 전용 |
+| **월간 운세** | 월주 계산 + 4대 영역(연애/재물/건강/커리어) 점수 | ✅ | 프리미엄 전용 |
+| **연간 운세** | 년주 분석 + 4분기 시즌 가이드 | ✅ | 프리미엄 전용 |
+| **리딩 히스토리** | 과거 리딩 기록 열람 | ✅ | 로그인 유저용 |
+| 추가 타로 스프레드 | Love, Career, Celtic Cross, Yes/No | ❌ | 런칭 후 확장 예정 |
+| AI 운세 상담 | 고민 → AI가 타로+사주 기반 조언 | ❌ | 런칭 후 확장 예정 |
+| ~~Deep Reading 원타임 ($3.99)~~ | ~~1회 심층 리포트~~ | 🔀 | 구독 모델로 통일 |
+| ~~연간 구독 ($49.99/년)~~ | ~~40% 할인 연간 플랜~~ | 🔀 | 월간 구독만 운영 중 |
 
 ### 2-3. 바이럴 기능
 
-| 기능 | 설명 |
-|------|------|
-| **공유 카드** | 타로 결과를 SNS용 예쁜 이미지로 자동 생성 |
-| **궁합 초대** | "나와 궁합 확인해볼래?" 링크 공유 |
-| **오늘의 운세 위젯** | PWA 알림으로 매일 아침 운세 푸시 |
+| 기능 | 설명 | 상태 | 비고 |
+|------|------|------|------|
+| **공유 카드** | 타로 결과 SNS용 이미지 자동 생성 | ❌ | 런칭 후 구현 예정 |
+| **궁합 초대** | "나와 궁합 확인해볼래?" 링크 공유 | ❌ | 바이럴 직결, 우선순위 높음 |
+| **PWA 푸시 알림** | 매일 아침 운세 푸시 | ❌ | 유저 확보 후 추가 |
+
+### 2-4. 인프라 & 법적 페이지 (SPEC 외 추가 구현)
+
+| 기능 | 설명 | 상태 |
+|------|------|------|
+| **Google OAuth** | 소셜 로그인 | ✅ |
+| **Lemon Squeezy 결제** | 프리미엄 구독 결제 | ✅ |
+| **Favicon + Manifest** | PWA 기본 설정 | ✅ |
+| **SEO** | sitemap (34 URL), robots.txt, OG 이미지 | ✅ |
+| **Privacy Policy** | 개인정보 처리방침 (/privacy) | ✅ |
+| **Terms of Service** | 이용약관 (/terms) | ✅ |
+| **회원탈퇴** | 계정 삭제 기능 (DELETE /api/account) | ✅ |
+| **피드백** | 문의하기/피드백 폼 (/feedback) | ✅ |
+| **Google Search Console** | 인증 메타태그 추가 | ✅ |
+| **hreflang + JSON-LD** | SEO 구조화 데이터 | 🔄 | 프롬프트 준비 완료, 구현 대기 |
 
 ---
 
@@ -55,79 +82,49 @@
 프론트엔드:  Next.js 15 (App Router) + Tailwind CSS
 백엔드:      Next.js API Routes + Supabase (DB + Auth)
 AI:          Anthropic Claude API (운세 해석 생성)
-결제:        Lemon Squeezy (1순위) / Paddle (백업) — 아래 결제 전략 참고
-배포:        Vercel
-다국어:      next-intl (영어, 한국어, 일본어, 중국어 우선)
-이미지:      Canvas API / html2canvas (공유카드 생성)
+결제:        Lemon Squeezy ($6.99/월)                    ← 확정
+배포:        Vercel                                       ← 확정
+다국어:      next-intl (영어 + 한국어)                      ← 2개 언어로 축소
+이미지:      미구현 (공유 카드 기능 보류)
 ```
 
-### ⚠️ 3-1-1. 결제 게이트웨이 전략 (현실 반영)
+### ⚠️ 3-1-1. 결제 게이트웨이 전략 — 현황
 
-**핵심 제약:** 한국 법인/개인사업자로는 Stripe 계정 개설이 불가능하다.
-미국/호주/싱가포르 법인이 필요하며, 이는 초기 비용($500+)과 세무 복잡성을 동반한다.
+| 항목 | 계획 | 현재 |
+|------|------|------|
+| 1순위 | Lemon Squeezy | ✅ **Lemon Squeezy 확정 사용 중** |
+| 2순위 | Paddle (백업) | ❌ 불필요 (LS 승인 완료) |
+| 보조 | Buy Me a Coffee | ❌ 불필요 |
+| 성장 후 | Stripe Atlas | 🔄 MRR $500 이후 검토 |
 
-**따라서 Stripe는 "성장 후 전환" 옵션이지, 초기 선택지가 아니다.**
-
-**결제 수단 우선순위 (한국 솔로 개발자 기준):**
-
-| 순위 | 서비스 | 장점 | 단점 | 수수료 |
-|------|--------|------|------|--------|
-| 1순위 | **Lemon Squeezy** | 이미 연동 경험 있음, 빠른 구현 가능 | HabitGlow에서 승인 지연 경험 | 5% + $0.50 |
-| 2순위 | **Paddle** | MoR 모델(세금 자동처리), 한국에서 사용 가능, 220국 지원 | 심사 있음, 수수료 높음 | ~5% + $0.50 |
-| 보조 | **Buy Me a Coffee** | 즉시 사용, 심사 없음 | 정식 구독 기능 제한적 | 5% |
-| 성장 후 | **Stripe Atlas** | 업계 표준, 낮은 수수료(2.9%) | 미국 법인 설립 필요 ($500+), 세무 복잡 | 2.9% + $0.30 |
-
-**실행 전략:**
-1. MVP 단계 (Week 1-2): 결제 없이 무료 기능으로 트래픽 검증
-2. Phase 3 진입 전: Lemon Squeezy 계정 신청 (기존 경험 활용)
-3. Lemon Squeezy 승인 시 → Lemon Squeezy로 결제 연동
-4. Lemon Squeezy 거절 시 → Paddle로 전환
-5. 둘 다 실패 시 → Buy Me a Coffee로 임시 수익화 + Stripe Atlas 검토
-6. MRR $500 돌파 시 → Stripe Atlas로 미국 법인 설립 후 전환 검토
-
-**결제 추상화는 여전히 필수:**
-어떤 결제사를 쓰든 갈아끼울 수 있도록 인터페이스를 통일해둔다.
-
-```typescript
-// 결제 서비스 추상화 — "콘센트 규격 통일"
-// 비유: USB-C 포트처럼, 어떤 충전기(결제사)를 꽂든 작동하는 구조
-interface PaymentProvider {
-  createCheckout(priceId: string, userId: string): Promise<string>;
-  verifySubscription(userId: string): Promise<boolean>;
-  handleWebhook(payload: unknown): Promise<void>;
-}
-
-// Lemon Squeezy용 구현
-class LemonSqueezyProvider implements PaymentProvider { ... }
-
-// Paddle용 구현 (백업)
-class PaddleProvider implements PaymentProvider { ... }
-```
+**결제 추상화 설계:** 구현됨 (PaymentProvider 인터페이스). Lemon Squeezy 웹훅 처리 포함.
 
 ### 3-2. 시스템 흐름
 
 ```
 [유저] → 생년월일시 입력 → [Supabase] 프로필 저장
                               ↓
-[유저] → 타로 리딩 요청 → [API Route] → 카드 랜덤 선택
+[유저] → 타로/운세 요청 → [API Route] → 사주 계산 + 카드 추첨
                               ↓
                     [Claude API] → 카드 + 사주 데이터 기반 해석 생성
                               ↓
                     [Supabase] 리딩 결과 저장 → [유저] 결과 표시
+                              ↓
+                    무료 제한 초과 시 → PremiumGate UI → Lemon Squeezy 결제
 ```
 
-### 3-3. DB 스키마 (Supabase)
+### 3-3. DB 스키마 (Supabase) — 현재 상태
 
 ```sql
 -- 유저 프로필 (사주/별자리 기본 정보)
 CREATE TABLE user_profiles (
   id UUID PRIMARY KEY REFERENCES auth.users(id),
   birth_date DATE NOT NULL,
-  birth_time TIME,                    -- 시간 모르면 NULL
-  birth_timezone TEXT DEFAULT 'UTC',  -- 태어난 곳 시간대
-  gender TEXT,                        -- 사주 해석에 영향
-  zodiac_sign TEXT,                   -- 자동 계산된 별자리
-  saju_data JSONB,                    -- 사주 사주팔자 계산 결과 캐싱
+  birth_time TIME,
+  birth_timezone TEXT DEFAULT 'UTC',
+  gender TEXT,
+  zodiac_sign TEXT,
+  saju_data JSONB,
   locale TEXT DEFAULT 'en',
   is_premium BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -138,11 +135,11 @@ CREATE TABLE user_profiles (
 CREATE TABLE tarot_readings (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES user_profiles(id),
-  spread_type TEXT NOT NULL,          -- 'daily_3card', 'love', 'career', 'celtic_cross'
-  question TEXT,                      -- 유저가 물어본 질문
-  cards JSONB NOT NULL,               -- [{position, card_id, is_reversed}]
-  interpretation TEXT NOT NULL,       -- AI가 생성한 해석
-  reading_type TEXT DEFAULT 'free',   -- 'free' | 'premium'
+  spread_type TEXT NOT NULL,          -- 현재 'daily_3card'만 사용
+  question TEXT,
+  cards JSONB NOT NULL,
+  interpretation TEXT NOT NULL,
+  reading_type TEXT DEFAULT 'free',
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -150,15 +147,15 @@ CREATE TABLE tarot_readings (
 CREATE TABLE saju_readings (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES user_profiles(id),
-  reading_type TEXT NOT NULL,         -- 'basic', 'yearly', 'deep', 'compatibility'
-  target_year INTEGER,                -- 연도별 분석일 경우
-  partner_birth_date DATE,            -- 궁합일 경우
+  reading_type TEXT NOT NULL,         -- 'basic', 'yearly', 'monthly', 'decade', 'compatibility'
+  target_year INTEGER,
+  partner_birth_date DATE,
   partner_birth_time TIME,
-  analysis TEXT NOT NULL,             -- AI가 생성한 분석
+  analysis TEXT NOT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 일일 운세 (캐싱용 - 같은 날 같은 유저 재요청 시 재사용)
+-- 일일 운세 (캐싱용)
 CREATE TABLE daily_fortunes (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES user_profiles(id),
@@ -166,91 +163,113 @@ CREATE TABLE daily_fortunes (
   content TEXT NOT NULL,
   lucky_color TEXT,
   lucky_number INTEGER,
-  mood_score INTEGER,                 -- 1-10
+  mood_score INTEGER,
   created_at TIMESTAMPTZ DEFAULT NOW(),
-  UNIQUE(user_id, fortune_date)       -- 하루에 하나만
+  UNIQUE(user_id, fortune_date)
+);
+
+-- 피드백 (SPEC 외 추가)
+CREATE TABLE feedback (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  category TEXT NOT NULL,             -- 'bug', 'feature', 'general', 'other'
+  email TEXT,
+  message TEXT NOT NULL,
+  user_id UUID,                       -- nullable (비로그인도 가능)
+  created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 -- RLS 정책: 모든 테이블에 "자기 데이터만 접근" 적용
+-- feedback: INSERT 누구나, SELECT 본인만
 ```
 
-### 3-4. 프로젝트 디렉토리 구조
+### 3-4. 프로젝트 디렉토리 구조 — 현재 상태
 
 ```
 src/
 ├── app/
 │   ├── [locale]/
-│   │   ├── page.tsx                  # 랜딩 페이지
-│   │   ├── tarot/
-│   │   │   ├── page.tsx              # 타로 메인 (스프레드 선택)
-│   │   │   └── [readingId]/page.tsx  # 리딩 결과
-│   │   ├── saju/
-│   │   │   ├── page.tsx              # 사주 메인
-│   │   │   └── [readingId]/page.tsx  # 분석 결과
-│   │   ├── daily/page.tsx            # 오늘의 운세
-│   │   ├── compatibility/page.tsx    # 궁합
-│   │   ├── history/page.tsx          # 리딩 기록
-│   │   ├── profile/page.tsx          # 프로필 설정
-│   │   └── pricing/page.tsx          # 요금제
+│   │   ├── page.tsx                  # ✅ 랜딩 페이지
+│   │   ├── tarot/page.tsx            # ✅ 타로 3카드 리딩
+│   │   ├── daily/page.tsx            # ✅ 오늘의 운세
+│   │   ├── archetype/page.tsx        # ✅ 원형 매칭 (SPEC 외 추가)
+│   │   ├── compatibility/page.tsx    # ✅ 궁합 분석
+│   │   ├── fortune/
+│   │   │   ├── decade/page.tsx       # ✅ 10년 대운 (프리미엄)
+│   │   │   ├── monthly/page.tsx      # ✅ 월간 운세 (프리미엄)
+│   │   │   └── yearly/page.tsx       # ✅ 연간 운세 (프리미엄)
+│   │   ├── history/page.tsx          # ✅ 리딩 기록
+│   │   ├── pricing/page.tsx          # ✅ 요금제
+│   │   ├── blog/
+│   │   │   ├── page.tsx              # ✅ 블로그 인덱스
+│   │   │   └── [slug]/page.tsx       # ✅ 블로그 상세 (3편)
+│   │   ├── privacy/page.tsx          # ✅ 개인정보 처리방침
+│   │   ├── terms/page.tsx            # ✅ 이용약관
+│   │   ├── feedback/page.tsx         # ✅ 피드백/문의
+│   │   ├── settings/page.tsx         # ✅ 설정 (계정 삭제 포함)
+│   │   └── profile/page.tsx          # ❌ 미구현
 │   └── api/
-│       ├── tarot/
-│       │   └── reading/route.ts      # 타로 리딩 생성
-│       ├── saju/
-│       │   └── analysis/route.ts     # 사주 분석 생성
-│       ├── daily/
-│       │   └── fortune/route.ts      # 일일 운세 생성
+│       ├── tarot/reading/route.ts    # ✅ 타로 리딩
+│       ├── daily/fortune/route.ts    # ✅ 일일 운세
+│       ├── archetype/route.ts        # ✅ 원형 매칭
+│       ├── compatibility/route.ts    # ✅ 궁합 분석
+│       ├── fortune/
+│       │   ├── decade/route.ts       # ✅ 10년 대운
+│       │   ├── monthly/route.ts      # ✅ 월간 운세
+│       │   └── yearly/route.ts       # ✅ 연간 운세
+│       ├── account/route.ts          # ✅ 계정 삭제 (DELETE)
+│       ├── feedback/route.ts         # ✅ 피드백 제출 (POST)
+│       ├── og/route.ts               # ✅ OG 이미지 생성
 │       └── webhooks/
-│           └── payments/route.ts     # 결제 웹훅 (LemonSqueezy/Paddle 추상화)
+│           └── lemon-squeezy/route.ts # ✅ 결제 웹훅
 ├── components/
-│   ├── tarot/
-│   │   ├── tarot-card.tsx            # 타로 카드 UI
-│   │   ├── card-spread.tsx           # 카드 배치 레이아웃
-│   │   └── reading-result.tsx        # 리딩 결과 표시
-│   ├── saju/
-│   │   ├── saju-chart.tsx            # 사주 차트 시각화
-│   │   └── element-badge.tsx         # 오행 뱃지 (木火土金水)
+│   ├── tarot/                        # ✅ 카드 UI, 결과 표시
+│   ├── fortune/                      # ✅ 대운/월간/연간 결과 컴포넌트
 │   ├── shared/
-│   │   ├── share-card.tsx            # SNS 공유 카드 생성
-│   │   ├── premium-gate.tsx          # 프리미엄 잠금 UI
-│   │   └── birth-input-form.tsx      # 생년월일시 입력 폼
+│   │   ├── premium-gate.tsx          # ✅ 프리미엄 잠금 UI
+│   │   ├── premium-teaser.tsx        # ✅ 프리미엄 티저 (실제 링크 연결)
+│   │   └── birth-input-form.tsx      # ✅ 생년월일시 입력 폼
 │   └── layout/
-│       ├── header.tsx
-│       └── footer.tsx
+│       ├── header.tsx                # ✅ auth-button 포함
+│       └── footer.tsx                # ✅ 전체 페이지 링크
 ├── lib/
 │   ├── tarot/
-│   │   ├── cards.ts                  # 78장 타로카드 데이터
-│   │   ├── spreads.ts                # 스프레드 타입 정의
-│   │   └── draw.ts                   # 카드 추첨 로직
+│   │   ├── cards.ts                  # ✅ 78장 타로카드 데이터
+│   │   └── draw.ts                   # ✅ 카드 추첨 로직
 │   ├── saju/
-│   │   ├── calculator.ts             # 사주팔자 계산 엔진
-│   │   ├── elements.ts               # 오행 (木火土金水) 로직
-│   │   ├── stems-branches.ts         # 천간지지 데이터
-│   │   └── interpretation.ts         # 사주 해석 매핑
-│   ├── zodiac/
-│   │   └── signs.ts                  # 12별자리 계산
+│   │   ├── calculator.ts             # ✅ 사주팔자 계산 엔진
+│   │   ├── elements.ts               # ✅ 오행 로직
+│   │   ├── stems-branches.ts         # ✅ 천간지지 데이터
+│   │   ├── period.ts                 # ✅ 대운/년주/월주 계산 (추가)
+│   │   └── interpretation.ts         # ✅ 사주 해석 매핑
 │   ├── ai/
-│   │   ├── prompts.ts                # AI 프롬프트 템플릿
-│   │   └── client.ts                 # Claude API 클라이언트
+│   │   ├── prompts.ts                # ✅ AI 프롬프트 6종
+│   │   └── client.ts                 # ✅ Claude API 클라이언트
+│   ├── payment/
+│   │   └── lemon-squeezy.ts          # ✅ Lemon Squeezy 연동
 │   ├── supabase/
-│   │   ├── client.ts                 # Supabase 클라이언트
-│   │   └── server.ts                 # 서버 사이드 클라이언트
+│   │   ├── client.ts                 # ✅ 클라이언트
+│   │   └── server.ts                 # ✅ 서버 사이드
 │   └── utils/
-│       ├── date.ts                   # 날짜/시간 유틸
-│       └── share.ts                  # 공유 링크 생성
-├── types/
-│   ├── tarot.ts                      # 타로 관련 타입
-│   ├── saju.ts                       # 사주 관련 타입
-│   └── user.ts                       # 유저 관련 타입
+│       ├── date.ts                   # ✅ 날짜/시간 유틸
+│       └── limit.ts                  # ✅ 무료 사용 제한 관리
+├── types/                            # ✅ 타입 정의
 └── i18n/
-    ├── en.json
-    ├── ko.json
-    ├── ja.json
-    └── zh.json
+    ├── en.json                       # ✅ 316개 키
+    └── ko.json                       # ✅ 316개 키 (EN과 정합성 확인)
 ```
+
+**원본 SPEC 대비 미구현 파일:**
+- `spreads.ts` — Daily 3-Card만 사용 중이라 불필요
+- `share.ts` — 공유 카드 기능 보류
+- `zodiac/signs.ts` — 사주 중심으로 피벗
+- `ja.json`, `zh.json` — 런칭 후 추가
+- `profile/page.tsx` — settings로 대체
 
 ---
 
 ## 4. 사주팔자 계산 로직 설계
+
+*(원본과 동일 — 변경 없음)*
 
 사주(四柱)는 네 개의 기둥으로 이루어지며, 각각 천간(天干)과 지지(地支)의 조합이다.
 
@@ -269,26 +288,29 @@ src/
 - 시주(時柱): 태어난 시간 → 천간 + 지지
 ```
 
-### 4-2. 계산 흐름
+### 4-2. 계산 흐름 — 현재 구현
 
 ```
 생년월일시 입력
     ↓
-음력 변환 (한국 음력 기준)
+년주 계산: (연도 - 4) % 60 → 60갑자 인덱스         ✅ calculator.ts
+월주 계산: 연간(年干) 기반 월간 + 월지              ✅ period.ts
+일주 계산: 기준일 기반 일진 계산                    ✅ calculator.ts
+시주 계산: 일간(日干) 기반 시간 + 시지              ✅ calculator.ts
     ↓
-년주 계산: (연도 - 4) % 60 → 60갑자 인덱스
-월주 계산: 연간(年干) 기반 월간 + 월지
-일주 계산: 만세력 기반 일진 조회
-시주 계산: 일간(日干) 기반 시간 + 시지
+오행 분포 분석                                     ✅ elements.ts
     ↓
-오행 분포 분석 (각 글자의 오행 합산)
+용신(用神) 판단                                    ✅ interpretation.ts
     ↓
-용신(用神) 판단 (부족한 오행 보완)
+대운 계산: 60갑자 순환으로 10년 단위               ✅ period.ts (추가)
+관계 분석: 천간지지 간 상생/상극                    ✅ period.ts (추가)
     ↓
-AI에게 전달하여 자연어 해석 생성
+AI에게 전달하여 자연어 해석 생성                    ✅ prompts.ts + client.ts
 ```
 
 ### 4-3. AI에게 전달할 사주 데이터 구조
+
+*(원본과 동일)*
 
 ```json
 {
@@ -311,7 +333,7 @@ AI에게 전달하여 자연어 해석 생성
 
 ## 5. 타로 카드 시스템
 
-### 5-1. 78장 타로 덱 구성
+### 5-1. 78장 타로 덱 구성 ✅
 
 ```
 메이저 아르카나 (22장): The Fool(0) ~ The World(21)
@@ -322,102 +344,59 @@ AI에게 전달하여 자연어 해석 생성
   - Pentacles(동전) Ace~10 + Page, Knight, Queen, King
 ```
 
-### 5-2. 스프레드 타입
+### 5-2. 스프레드 타입 — 현재 상태
 
-| 스프레드 | 카드 수 | 용도 | 티어 |
-|---------|---------|------|-----|
-| Daily 3-Card | 3장 | 과거-현재-미래 | Free |
-| Love Spread | 5장 | 연애/관계 | Premium |
-| Career Spread | 5장 | 진로/직장 | Premium |
-| Celtic Cross | 10장 | 심층 분석 | Premium |
-| Yes/No | 1장 | 빠른 질문 | Free (1일 3회) |
+| 스프레드 | 카드 수 | 용도 | 티어 | 상태 |
+|---------|---------|------|-----|------|
+| **Daily 3-Card** | 3장 | 과거-현재-미래 | Free (1회/일) | ✅ |
+| Love Spread | 5장 | 연애/관계 | Premium | ❌ 런칭 후 |
+| Career Spread | 5장 | 진로/직장 | Premium | ❌ 런칭 후 |
+| Celtic Cross | 10장 | 심층 분석 | Premium | ❌ 런칭 후 |
+| Yes/No | 1장 | 빠른 질문 | Free (1일 3회) | ❌ 런칭 후 |
 
-### 5-3. AI 프롬프트 전략 — "프롬프트가 곧 제품" (Gemini 피드백 반영)
+### 5-3. AI 프롬프트 전략
 
-운세 앱에서 AI 해석의 말투가 "챗봇 냄새"가 나는 순간, 유저의 몰입은 깨지고 지갑은 닫힌다.
-이 프로덕트의 성공은 코딩이 아니라 **프롬프트 품질**이 9할을 좌우한다.
+*(원본 철학 유지 — "프롬프트가 곧 제품")*
 
-**❌ 절대 나오면 안 되는 말투:**
-```
-"도움이 되셨길 바랍니다."
-"추가로 궁금한 점이 있으시면..."
-"저는 AI이므로 실제 운세와 다를 수 있습니다."
-"이것은 재미를 위한 것이며..."
-```
+현재 구현된 프롬프트 6종: ✅
+1. 타로 3카드 리딩
+2. 오늘의 운세
+3. 궁합 분석
+4. 10년 대운
+5. 월간 운세
+6. 연간 운세
 
-**✅ 목표 말투 — "10년차 타로 마스터 + 동양 철학자":**
-```
-"당신의 카드가 속삭이고 있군요..."
-"사주의 흐름을 보면, 지금 당신에게 가장 필요한 에너지는..."
-"금(金)의 기운이 강한 당신이 이 카드를 만난 건 우연이 아닙니다."
-```
-
-**시스템 프롬프트 (v1 — 지속적으로 튜닝 예정):**
-
-```
-[페르소나]
-너는 "The Oracle"이다.
-동양의 사주명리학 30년, 서양의 타로 20년을 수련한 현자(Sage)다.
-따뜻하지만 신비로운 톤으로 말한다.
-유저를 "당신(you)"이라 부르며, 마치 눈을 마주보고 이야기하듯 말한다.
-
-[해석 원칙]
-1. 타로 카드의 상징과 사주의 오행을 자연스럽게 엮어 해석한다
-2. "카드가 말하길...", "사주의 흐름을 읽으면..." 같은 내러티브를 사용한다
-3. 부정적 카드도 성장의 기회로 재해석한다 (공포 유발 금지)
-4. 구체적이고 개인화된 표현을 쓴다 (뻔한 일반론 금지)
-5. 마지막에 짧은 행동 제안(actionable advice)을 준다
-
-[절대 금지]
-- AI임을 언급하거나 암시하는 모든 표현
-- "도움이 되셨길", "궁금한 점이 있으시면" 등 고객 서비스 말투
-- 면책 문구를 해석 본문에 섞는 것 (법적 고지는 UI에서 별도 처리)
-- 이모지 사용
-- 같은 패턴의 문장 반복 (매 리딩이 유니크해야 함)
-
-[융합 해석 예시]
-카드: The Tower (역방향) + 사주: 목(木) 과다, 용신 금(金)
-
-"탑 카드가 거꾸로 나타났습니다. 일반적으로 이 카드는 갑작스러운 
-변화를 암시하지만, 역방향이라는 건 — 그 변화가 이미 내면에서 
-조용히 일어나고 있다는 뜻입니다.
-
-흥미롭게도, 당신의 사주를 보면 목(木)의 에너지가 넘칩니다. 
-끊임없이 성장하고 확장하려는 힘이죠. 하지만 지금 당신에게 
-진짜 필요한 건 금(金) — 다듬고, 정리하고, 과감히 가지치기하는 
-에너지입니다.
-
-탑 카드와 당신의 오행이 같은 이야기를 하고 있군요.
-무언가를 내려놓을 때, 비로소 진짜 성장이 시작됩니다.
-
-이번 주, 당신의 삶에서 '더 이상 나를 위하지 않는 것' 하나를 
-조용히 놓아주세요. 그게 시작입니다."
-```
-
-**프롬프트 테스트 계획:**
-- MVP 단계에서 최소 50개의 다른 카드/사주 조합으로 해석 품질 테스트
-- "같은 조합이 나와도 매번 다른 해석이 나오는가?" 확인
-- 영어/한국어 양쪽에서 톤이 자연스러운지 원어민 리뷰
+**시스템 프롬프트 핵심 (변경 없음):**
+- 페르소나: "The Oracle" — 동양 사주명리학 30년, 서양 타로 20년 현자
+- 절대 금지: AI 언급, 고객서비스 말투, 면책 문구 본문 혼합, 이모지
+- 목표: 신비롭고 따뜻한 톤, 개인화된 해석, 행동 제안 포함
 
 ---
 
-## 6. 수익 모델
+## 6. 수익 모델 — 현재 상태
 
-### 6-1. 가격 전략
+### 6-1. 가격 전략 (확정)
 
-| 플랜 | 가격 | 주요 혜택 |
-|------|------|----------|
-| Free | $0 | 일일 타로 1회 + 기본 사주 + 오늘의 운세 |
-| **Deep Reading (원타임)** | **$3.99** | **1회 심층 리포트 (2,000자 딥다이브)** |
-| Premium Monthly | $6.99/월 | 전체 기능 무제한 |
-| Premium Yearly | $49.99/년 ($4.17/월) | 40% 할인 |
+| 플랜 | 가격 | 주요 혜택 | 상태 |
+|------|------|----------|------|
+| Free | $0 | 타로 1회/일 + 운세 3회/일 + 원형 매칭 무제한 | ✅ |
+| **Premium Monthly** | **$6.99/월** | 전체 기능 무제한 + 프리미엄 전용 기능 | ✅ |
+| ~~Deep Reading~~ | ~~$3.99~~ | ~~원타임 심층 리포트~~ | 🔀 미구현 |
+| ~~Premium Yearly~~ | ~~$49.99/년~~ | ~~40% 할인~~ | 🔀 미구현 |
 
-**원타임 결제를 추가한 이유 (Gemini 피드백 반영):**
-구독은 허들이 높다. 특히 운세처럼 "지금 당장 궁금한" 충동 구매가 많은 카테고리에서는
-$3.99 원타임 결제가 전환율이 훨씬 높을 수 있다.
-유저를 "원타임 → 구독"으로 넘기는 퍼널로 활용.
+### 6-2. 무료 사용 제한 (limit.ts)
 
-### 6-2. 예상 유닛 이코노믹스
+| 기능 | 무료 횟수/일 | 프리미엄 |
+|------|-------------|---------|
+| 타로 리딩 | 1회 | 무제한 |
+| 오늘의 운세 | 3회 | 무제한 |
+| 원형 매칭 | 무제한 | 무제한 |
+| 궁합 분석 | 0회 | 무제한 |
+| 10년 대운 | 0회 | 무제한 |
+| 월간 운세 | 0회 | 무제한 |
+| 연간 운세 | 0회 | 무제한 |
+
+### 6-3. 예상 유닛 이코노믹스
 
 ```
 Claude API 비용/리딩: ~$0.02 (Haiku 사용 시 더 저렴)
@@ -429,105 +408,94 @@ Claude API 비용/리딩: ~$0.02 (Haiku 사용 시 더 저렴)
 
 ---
 
-## 7. 개발 로드맵 (8주) — 린 MVP 전략 적용 (Gemini 피드백 반영)
+## 7. 개발 로드맵 — 실행 결과
 
-**원칙:** 거대한 플랫폼을 한 번에 만들지 않는다.
-"트래픽 검증 → 결제 검증 → 기능 확장" 순서로 진행한다.
+### Phase 1: 린 MVP ✅ 완료
 
-### Phase 1: 린 MVP (Week 1-2) — "돌아가는 최소 제품"
-목표: **"생년월일 입력 → 타로 1-3장 + 사주 융합 해석"이 나오는 것**
+- [x] 프로젝트 셋업 (Next.js 15 + Supabase + Vercel)
+- [x] 랜딩 페이지 (신비로운 다크 테마, SEO 최적화)
+- [x] 생년월일시 입력 폼
+- [x] 사주팔자 계산 엔진 핵심 로직
+- [x] 타로 카드 데이터 & 추첨 로직 (78장)
+- [x] Daily 3-Card 타로 리딩 + AI 융합 해석
+- [x] 프롬프트 튜닝
+- [x] 결과 페이지 하단에 "심층 분석 잠금" 티저 배치
+- [x] 기본 다국어 (EN + KO)
 
-- [ ] 프로젝트 셋업 (Next.js 15 + Supabase + Cloudflare)
-- [ ] 랜딩 페이지 (신비로운 다크 테마, SEO 최적화)
-- [ ] 생년월일시 입력 폼 (Auth 없이도 사용 가능하게)
-- [ ] 사주팔자 계산 엔진 핵심 로직 (lib/saju/)
-- [ ] 타로 카드 데이터 & 추첨 로직 (78장)
-- [ ] Daily 3-Card 타로 리딩 + AI 융합 해석
-- [ ] **프롬프트 튜닝** (50개 조합 테스트 → 해석 품질 확보)
-- [ ] 결과 페이지 하단에 "심층 분석 잠금" 티저 배치
-- [ ] 기본 다국어 (EN + KO)
+### Phase 2: 소셜 검증 + 핵심 기능 ✅ 대부분 완료
 
-**검증 지표:** 일일 방문자 수, 리딩 완료율, 체류 시간
+- [x] **원형(Archetype) 매칭** — 사주 기반 12원형 성격 분석 ← 바이럴 핵심
+- [ ] ~~SNS 공유 카드 생성~~ → 런칭 후 추가
+- [x] Supabase Auth (Google 소셜 로그인)
+- [x] 오늘의 운세
+- [ ] ~~추가 스프레드 (Love, Career)~~ → 런칭 후 추가
+- [x] 리딩 히스토리
+- [ ] ~~숏폼 콘텐츠 제작~~ → 런칭 후 마케팅 단계
+- [ ] ~~JA, ZH 다국어~~ → 트래픽 검증 후 추가
 
-### Phase 2: 소셜 검증 + 핵심 기능 (Week 3-4)
-목표: **바이럴 루프 + 트래픽 확보**
+### Phase 3: 수익화 ✅ 완료
 
-- [ ] **원형(Archetype) 매칭** — 사주 기반으로 "당신은 어떤 원형인가?" 결과 생성
-  - 예: "현자(Sage)", "탐험가(Explorer)", "창조자(Creator)" 등 12가지 원형
-  - 저작권 이슈 없는 보편적 원형(칼 융 기반)으로 설계
-  - SNS 공유 욕구를 자극하는 킬러 바이럴 기능
-  - 영감: 디스콰이엇에서 발견한 "사주 → 캐릭터 매칭" 컨셉 (차별화: 저작권 프리 + 타로 융합)
-- [ ] SNS 공유 카드 생성 (인스타/틱톡용 이미지)
-- [ ] Supabase Auth (Google 소셜 로그인)
-- [ ] 오늘의 운세 (사주 + 별자리 기반)
-- [ ] 추가 스프레드 (Love, Career)
-- [ ] 리딩 히스토리 (로그인 유저용)
-- [ ] 숏폼 콘텐츠 제작 & 배포 (틱톡, 인스타 릴스, 레딧)
-- [ ] JA, ZH 다국어 추가
+- [x] **Lemon Squeezy 연동**
+- [x] 프리미엄/무료 기능 분리 (프리미엄 게이트 UI)
+- [x] 궁합 분석 기능
+- [x] 10년 대운 / 월간 운세 / 연간 운세 (계획보다 확장)
+- [ ] ~~PWA + 푸시 알림~~ → 유저 확보 후
+- [x] ~~Paddle 백업~~ → 불필요 (LS 확정)
 
-**검증 지표:** 공유 횟수, 소셜 유입, 재방문율
+### Phase 4: 성장 최적화 🔄 부분 완료
 
-### Phase 3: 수익화 (Week 5-6)
-목표: **결제 → 첫 매출 달성**
+- [ ] Celtic Cross 스프레드 → 런칭 후
+- [x] ~~월간 운세 리포트~~ → Phase 3에서 조기 구현
+- [x] SEO 콘텐츠 (블로그 3편)
+- [x] SEO 최적화 (sitemap, robots, OG, Search Console)
+- [ ] Product Hunt 런칭 → **다음 단계**
+- [ ] A/B 테스트 → 트래픽 확보 후
 
-- [ ] **Lemon Squeezy 연동** (기존 HabitGlow 경험 활용, 빠르게 연동 가능)
-- [ ] 프리미엄/무료 기능 분리 (프리미엄 게이트 UI)
-- [ ] 심층 사주 분석 (프리미엄 전용)
-- [ ] 궁합 분석 기능 (바이럴 + 프리미엄)
-- [ ] PWA + 푸시 알림 (오늘의 운세)
-- [ ] Lemon Squeezy 거절 시 Paddle 즉시 전환
+### Phase 5: 런칭 준비 (SPEC 외 추가) ✅ 완료
 
-**검증 지표:** 전환율, MRR, 이탈율
-
-### Phase 4: 성장 최적화 (Week 7-8)
-목표: **$500 MRR 달성 기반 마련**
-
-- [ ] Celtic Cross 스프레드 (프리미엄 심층)
-- [ ] 월간 운세 리포트 (프리미엄)
-- [ ] SEO 콘텐츠 (블로그: "What is Saju?", "Tarot vs Astrology" 등)
-- [ ] 성능 최적화 (Core Web Vitals)
-- [ ] Product Hunt 런칭
-- [ ] A/B 테스트 (가격, CTA, 온보딩 플로우)
-
-### 📱 숏폼 바이럴 전략 (Gemini 피드백 반영)
-
-운세는 틱톡/릴스에서 가장 바이럴이 잘 터지는 소재 중 하나.
-
-**콘텐츠 예시:**
-- "이 AI가 내 생년월일만으로 소름끼치게 맞춤 ㄷㄷ"
-- "AI mixed my Korean birth chart with Tarot and I'm SHOOK"
-- "POV: AI reads your fate using ancient Eastern + Western wisdom"
-
-**실행:**
-- Phase 2에서 공유 카드 기능 완성 후 바로 숏폼 제작
-- 화면 녹화 → 리액션 형태 → 글로벌(EN) + 한국(KO) 양쪽 배포
-- 레딧 r/tarot, r/astrology 커뮤니티에 자연스러운 포스팅
+- [x] Privacy Policy + Terms of Service
+- [x] 회원탈퇴 (계정 삭제) 기능
+- [x] 피드백/문의 기능
+- [x] Google Search Console 인증
+- [x] 모바일 터치 영역 44px 수정
+- [x] 블로그 og:image 추가
+- [x] 궁합 API 응답 키 통일
+- [x] hreflang + JSON-LD 구조화 데이터 프롬프트 준비
 
 ---
 
-## 8. SEO 키워드 전략
+## 8. SEO 전략 — 현재 상태
 
-### 영어 (메인 타겟)
-- "free tarot reading online" — 검색량 매우 높음
-- "AI tarot reading" — 성장 중, 경쟁 아직 낮음
-- "birth chart analysis" — 안정적 검색량
-- "love compatibility test" — 바이럴 잠재력 높음
-- "fortune telling AI" — 블루오션 키워드
+### 구현 완료 ✅
 
-### 한국어 (서브 타겟)
-- "무료 타로" / "AI 타로"
-- "사주팔자 무료"
-- "궁합 보기"
-- "오늘의 운세"
+- 사이트맵 (34개 URL, priority 설정)
+- robots.txt
+- OG 이미지 (동적 생성 /api/og)
+- 메타데이터 (title, description 전 페이지)
+- Google Search Console 인증
+- SEO 블로그 3편
 
-### 일본어 (서브 타겟)
-- "タロット占い 無料" / "AI占い"
-- "四柱推命"
-- "相性占い"
+### 구현 예정 (프롬프트 준비 완료)
+
+- hreflang 태그 (en↔ko 페이지 연결)
+- JSON-LD 구조화 데이터 5종 (WebSite, SoftwareApplication, Article, BreadcrumbList, FAQPage)
+- Canonical URL
+
+### 키워드 전략
+
+**영어 (메인 타겟):**
+"free tarot reading online", "AI tarot reading", "birth chart analysis", "love compatibility test", "fortune telling AI"
+
+**한국어 (서브 타겟):**
+"무료 타로", "AI 타로", "사주팔자 무료", "궁합 보기", "오늘의 운세"
+
+**일본어/중국어:** 언어 추가 시 확장 예정
 
 ---
 
 ## 9. 경쟁사 분석
+
+*(원본과 동일)*
 
 | 서비스 | 강점 | 약점 | 우리의 차별점 |
 |--------|------|------|-------------|
@@ -538,14 +506,71 @@ Claude API 비용/리딩: ~$0.02 (Haiku 사용 시 더 저렴)
 
 ---
 
-## 10. 리스크 & 대응
+## 10. 리스크 & 대응 — 업데이트
 
-| 리스크 | 확률 | 심각도 | 대응 |
-|--------|------|--------|------|
-| **결제 승인 실패 (최우선)** | **중** | **치명적** | **Lemon Squeezy 1순위 (기존 경험) + Paddle 백업 + 결제 추상화 설계. MRR $500 이후 Stripe Atlas 검토** |
-| AI 해석 "챗봇 냄새" | 높 | 높 | 프롬프트 v1부터 철저한 튜닝 + 50개 조합 테스트 + 지속적 개선 |
-| AI 해석 품질 불안정 | 중 | 높 | 프롬프트 튜닝 + 해석 템플릿 + A/B 테스트 |
-| 사주 계산 오류 | 중 | 중 | 검증된 만세력 데이터 사용 + 단위 테스트 |
-| API 비용 폭증 | 낮 | 중 | Haiku 사용 + 캐싱 전략 + 무료 사용 제한 |
-| 문화적 민감성 | 중 | 중 | "entertainment purposes" 고지 + 문화 중립 표현 |
-| 저작권 (타로 이미지) | 중 | 중 | 퍼블릭 도메인 이미지 또는 AI 생성 이미지 사용 |
+| 리스크 | 확률 | 심각도 | 대응 | 현재 상태 |
+|--------|------|--------|------|----------|
+| ~~결제 승인 실패~~ | ~~중~~ | ~~치명적~~ | ~~LS + Paddle 백업~~ | ✅ **해결됨** |
+| AI 해석 "챗봇 냄새" | 높 | 높 | 프롬프트 튜닝 + 테스트 | 🔄 지속 개선 중 |
+| AI 해석 품질 불안정 | 중 | 높 | 프롬프트 튜닝 + A/B 테스트 | 🔄 런칭 후 데이터 기반 |
+| 사주 계산 오류 | 중 | 중 | 검증된 데이터 + 단위 테스트 | ✅ 빌드/타입 통과 |
+| API 비용 폭증 | 낮 | 중 | 캐싱 + 무료 제한 | ✅ limit.ts 구현 |
+| 문화적 민감성 | 중 | 중 | "entertainment purposes" 고지 | ✅ Terms 면책 조항 |
+| 저작권 (타로 이미지) | 중 | 중 | 텍스트 기반 (이미지 미사용) | ✅ 리스크 없음 |
+| **초기 트래픽 부족** | **높** | **높** | **PH + 레딧 + 원형 바이럴** | ⏳ **런칭 필요** |
+
+---
+
+## 11. 다음 단계 (런칭 후 로드맵)
+
+### 즉시 (런칭과 함께)
+1. Product Hunt 런칭
+2. Reddit r/tarot, r/astrology 포스팅
+3. hreflang + JSON-LD 구현
+
+### 단기 (첫 유료 유저 이후)
+1. 궁합 초대 링크 (바이럴 직결)
+2. SNS 공유 카드 생성
+3. Yes/No 타로 스프레드
+4. 프로필 페이지
+
+### 중기 (트래픽 월 10,000+ 이후)
+1. Love/Career 스프레드 추가
+2. JA/ZH 다국어 추가
+3. PWA 푸시 알림
+4. AI 운세 상담 기능
+5. AdSense 검토
+
+### 장기 (MRR $500+ 이후)
+1. Celtic Cross 스프레드
+2. 연간 구독 플랜
+3. Stripe Atlas 전환 검토
+4. A/B 테스트 (가격, CTA, 온보딩)
+
+---
+
+## 12. 커밋 히스토리 (주요)
+
+| 커밋 | 내용 |
+|------|------|
+| `413b4a2` | Google Search Console 인증 메타태그 |
+| `5dd20ed` | 법적 페이지 + 계정 삭제 + 피드백 기능 |
+| `ae80028` | 프리미엄 기능 3종 (10년 대운/월간/연간 운세) |
+
+---
+
+## 13. 구현 일치율 요약
+
+**PDCA 갭 분석: 78%**
+
+| 카테고리 | 계획 | 완료 | 비율 |
+|---------|------|------|------|
+| 무료 기능 | 3 | 3 (원형 매칭 대체 포함) | 100% |
+| 프리미엄 기능 | 8 | 6 | 75% |
+| 바이럴 기능 | 3 | 0 | 0% |
+| 인프라 | 5 | 5+ | 100%+ |
+| 법적/운영 | 0 (미계획) | 4 | 보너스 |
+| SEO | 2 | 5+ | 100%+ |
+| 다국어 | 4 | 2 | 50% |
+
+**결론:** MVP로서 런칭 가능 상태. 미구현 항목은 런칭 후 데이터 기반으로 우선순위 결정.

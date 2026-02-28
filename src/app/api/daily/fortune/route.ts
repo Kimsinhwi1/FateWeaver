@@ -89,6 +89,8 @@ function generateMockFortune(
 /**
  * Supabase 캐시 확인 — 같은 생년월일 + 오늘 날짜면 캐시 히트
  * Supabase 미설정 시 null 반환 (캐시 스킵)
+ *
+ * 컬럼 매핑: DB 'content' → 응답 'fortune'
  */
 async function checkCache(birthDate: string, today: string): Promise<DailyFortuneResponse | null> {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
@@ -101,14 +103,14 @@ async function checkCache(birthDate: string, today: string): Promise<DailyFortun
 
     const { data } = await supabase
       .from('daily_fortunes')
-      .select('fortune_text, lucky_color, lucky_number, mood_score, zodiac_sign')
+      .select('content, lucky_color, lucky_number, mood_score, zodiac_sign')
       .eq('birth_date', birthDate)
       .eq('fortune_date', today)
       .single()
 
     if (data) {
       return {
-        fortune: data.fortune_text,
+        fortune: data.content,
         luckyColor: data.lucky_color,
         luckyNumber: data.lucky_number,
         moodScore: data.mood_score,
@@ -126,12 +128,16 @@ async function checkCache(birthDate: string, today: string): Promise<DailyFortun
 /**
  * Supabase에 운세 저장 — 다음 같은 요청 시 캐시 히트
  * 저장 실패해도 사용자에게 운세는 반환 (비동기 저장)
+ *
+ * 컬럼 매핑: fortune → DB 'content'
+ * user_id: 로그인 유저면 히스토리 조회용으로 함께 저장
  */
 async function saveToCache(
   birthDate: string,
   today: string,
   zodiacSign: string,
-  result: DailyFortuneResponse
+  result: DailyFortuneResponse,
+  userId?: string | null
 ): Promise<void> {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     return // Supabase 미설정 → 저장 스킵
@@ -144,11 +150,12 @@ async function saveToCache(
     await supabase.from('daily_fortunes').upsert({
       birth_date: birthDate,
       fortune_date: today,
-      fortune_text: result.fortune,
+      content: result.fortune,
       lucky_color: result.luckyColor,
       lucky_number: result.luckyNumber,
       mood_score: result.moodScore,
       zodiac_sign: zodiacSign,
+      ...(userId ? { user_id: userId } : {}),
     }, {
       onConflict: 'birth_date,fortune_date',
     })
@@ -173,13 +180,26 @@ export async function POST(request: NextRequest) {
     // 3. 오늘 날짜 (YYYY-MM-DD)
     const today = new Date().toISOString().split('T')[0]
 
-    // 4. 캐시 확인 — 같은 생년월일 + 오늘이면 저장된 운세 반환
+    // 4. 로그인 유저 확인 (히스토리 저장용, 실패해도 계속 진행)
+    let userId: string | null = null
+    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      try {
+        const { createClient } = await import('@/lib/supabase/server')
+        const supabase = await createClient()
+        const { data: { user } } = await supabase.auth.getUser()
+        userId = user?.id ?? null
+      } catch {
+        // 비로그인 또는 Auth 실패 → userId null로 계속
+      }
+    }
+
+    // 5. 캐시 확인 — 같은 생년월일 + 오늘이면 저장된 운세 반환
     const cached = await checkCache(birthDate, today)
     if (cached) {
       return NextResponse.json(cached)
     }
 
-    // 5. 운세 생성 — API 키 있으면 Claude, 없으면 목업
+    // 6. 운세 생성 — API 키 있으면 Claude, 없으면 목업
     let result: DailyFortuneResponse
 
     if (process.env.ANTHROPIC_API_KEY) {
@@ -210,8 +230,8 @@ export async function POST(request: NextRequest) {
       result = generateMockFortune(sajuData, zodiacSign, locale)
     }
 
-    // 6. 캐시 저장 (비동기 — 실패해도 무관)
-    saveToCache(birthDate, today, zodiacSign, result)
+    // 7. 캐시 저장 (비동기 — 실패해도 무관, 로그인 시 user_id 포함)
+    saveToCache(birthDate, today, zodiacSign, result, userId)
 
     return NextResponse.json(result)
   } catch (error) {

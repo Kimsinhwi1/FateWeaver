@@ -60,6 +60,44 @@ Looking ahead, the ${future.card.name} card illuminates the path forward. ${futu
 This week, consciously seek out ${elementName} energy in your daily life. Small shifts can create powerful currents of change.`
 }
 
+/**
+ * 타로 리딩을 DB에 저장 — 로그인 유저의 히스토리 기록
+ * 비유: "타로 일기장에 기록" — 나중에 다시 볼 수 있도록
+ *
+ * 비동기 저장: 실패해도 사용자 응답에는 영향 없음
+ */
+async function saveReading(
+  readingId: string,
+  cards: DrawnCard[],
+  interpretation: string,
+  spreadType?: string,
+  question?: string
+): Promise<void> {
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    return // Supabase 미설정 → 저장 스킵
+  }
+
+  try {
+    const { createClient } = await import('@/lib/supabase/server')
+    const supabase = await createClient()
+
+    /* 로그인 유저만 저장 — 비로그인이면 히스토리 불필요 */
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return
+
+    await supabase.from('tarot_readings').insert({
+      id: readingId,
+      user_id: user.id,
+      spread_type: spreadType ?? 'daily_3card',
+      question: question ?? null,
+      cards,           // DrawnCard[] → JSONB 자동 변환
+      interpretation,
+    })
+  } catch {
+    // 저장 실패해도 응답에는 영향 없음 — 다음에 다시 시도하면 됨
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body: ReadingRequest = await request.json()
@@ -90,6 +128,9 @@ export async function POST(request: NextRequest) {
     }
 
     const readingId = crypto.randomUUID()
+
+    // 5. DB 저장 (비동기 — 로그인 유저만, 실패해도 무관)
+    saveReading(readingId, cards, interpretation, body.spreadType, question)
 
     return NextResponse.json({
       readingId,

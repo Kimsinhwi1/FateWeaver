@@ -12,6 +12,7 @@
 
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
+import DateSelect from '@/components/shared/date-select'
 
 export interface DualBirthInput {
   person1: { birthDate: string; birthTime: string | null }
@@ -33,8 +34,6 @@ export default function DualBirthForm({ onSubmit, isLoading }: DualBirthFormProp
   const [p2Date, setP2Date] = useState('')
   const [p2Time, setP2Time] = useState('')
   const [p2TimeUnknown, setP2TimeUnknown] = useState(false)
-
-  const today = new Date().toISOString().split('T')[0]
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -62,20 +61,15 @@ export default function DualBirthForm({ onSubmit, isLoading }: DualBirthFormProp
             {t('person1Label')}
           </legend>
 
-          {/* 생년월일 */}
+          {/* 생년월일 — 3개 셀렉트 드롭다운 (모바일 최적) */}
           <div>
-            <label htmlFor="p1-date" className="mb-1.5 block text-xs font-medium text-slate-400">
+            <label className="mb-1.5 block text-xs font-medium text-slate-400">
               {t('birthDate')}
             </label>
-            <input
-              id="p1-date"
-              type="date"
-              required
+            <DateSelect
               value={p1Date}
-              onChange={(e) => setP1Date(e.target.value)}
-              max={today}
-              min="1920-01-01"
-              className="h-11 w-full rounded-xl border border-white/20 bg-white/5 px-3 text-sm text-slate-100 transition-colors focus:border-mystic-500 focus:outline-none focus:ring-1 focus:ring-mystic-500"
+              onChange={setP1Date}
+              accentClass="focus:border-mystic-500 focus:ring-mystic-500"
             />
           </div>
 
@@ -91,14 +85,14 @@ export default function DualBirthForm({ onSubmit, isLoading }: DualBirthFormProp
                 value={p1Time}
                 onChange={(e) => setP1Time(e.target.value)}
                 disabled={p1TimeUnknown}
-                className={`h-11 flex-1 rounded-xl border bg-white/5 px-3 text-sm text-slate-100 transition-colors focus:border-mystic-500 focus:outline-none focus:ring-1 focus:ring-mystic-500 ${
+                className={`h-11 min-w-0 flex-1 rounded-xl border bg-white/5 px-3 text-sm text-slate-100 transition-colors focus:border-mystic-500 focus:outline-none focus:ring-1 focus:ring-mystic-500 ${
                   p1TimeUnknown ? 'cursor-not-allowed border-white/10 opacity-40' : 'border-white/20'
                 }`}
               />
               <button
                 type="button"
                 onClick={() => { setP1TimeUnknown(!p1TimeUnknown); if (!p1TimeUnknown) setP1Time('') }}
-                className={`flex h-11 items-center whitespace-nowrap rounded-xl border px-3 text-xs transition-all active:scale-95 ${
+                className={`flex h-11 shrink-0 items-center whitespace-nowrap rounded-xl border px-3 text-xs transition-all active:scale-95 ${
                   p1TimeUnknown
                     ? 'border-mystic-500 bg-mystic-600/20 text-mystic-300'
                     : 'border-white/20 bg-white/5 text-slate-400 hover:border-white/30'
@@ -116,19 +110,15 @@ export default function DualBirthForm({ onSubmit, isLoading }: DualBirthFormProp
             {t('person2Label')}
           </legend>
 
+          {/* 생년월일 — 3개 셀렉트 드롭다운 (모바일 최적) */}
           <div>
-            <label htmlFor="p2-date" className="mb-1.5 block text-xs font-medium text-slate-400">
+            <label className="mb-1.5 block text-xs font-medium text-slate-400">
               {t('birthDate')}
             </label>
-            <input
-              id="p2-date"
-              type="date"
-              required
+            <DateSelect
               value={p2Date}
-              onChange={(e) => setP2Date(e.target.value)}
-              max={today}
-              min="1920-01-01"
-              className="h-11 w-full rounded-xl border border-white/20 bg-white/5 px-3 text-sm text-slate-100 transition-colors focus:border-gold-500 focus:outline-none focus:ring-1 focus:ring-gold-500"
+              onChange={setP2Date}
+              accentClass="focus:border-gold-500 focus:ring-gold-500"
             />
           </div>
 
@@ -143,14 +133,14 @@ export default function DualBirthForm({ onSubmit, isLoading }: DualBirthFormProp
                 value={p2Time}
                 onChange={(e) => setP2Time(e.target.value)}
                 disabled={p2TimeUnknown}
-                className={`h-11 flex-1 rounded-xl border bg-white/5 px-3 text-sm text-slate-100 transition-colors focus:border-gold-500 focus:outline-none focus:ring-1 focus:ring-gold-500 ${
+                className={`h-11 min-w-0 flex-1 rounded-xl border bg-white/5 px-3 text-sm text-slate-100 transition-colors focus:border-gold-500 focus:outline-none focus:ring-1 focus:ring-gold-500 ${
                   p2TimeUnknown ? 'cursor-not-allowed border-white/10 opacity-40' : 'border-white/20'
                 }`}
               />
               <button
                 type="button"
                 onClick={() => { setP2TimeUnknown(!p2TimeUnknown); if (!p2TimeUnknown) setP2Time('') }}
-                className={`flex h-11 items-center whitespace-nowrap rounded-xl border px-3 text-xs transition-all active:scale-95 ${
+                className={`flex h-11 shrink-0 items-center whitespace-nowrap rounded-xl border px-3 text-xs transition-all active:scale-95 ${
                   p2TimeUnknown
                     ? 'border-gold-500 bg-gold-500/20 text-gold-300'
                     : 'border-white/20 bg-white/5 text-slate-400 hover:border-white/30'

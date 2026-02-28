@@ -17,6 +17,7 @@
 
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
+import DateSelect from '@/components/shared/date-select'
 import type { BirthInput } from '@/types/saju'
 
 interface BirthInputFormProps {
@@ -57,20 +58,14 @@ export default function BirthInputForm({ onSubmit, isLoading, submitLabel, loadi
 
   return (
     <form onSubmit={handleSubmit} className="mx-auto w-full max-w-md space-y-5">
-      {/* 생년월일 — 네이티브 date picker */}
+      {/* 생년월일 — 3개 셀렉트 드롭다운 (모바일 최적) */}
       <div>
-        <label htmlFor="birthDate" className="mb-2 block text-sm font-medium text-slate-300">
+        <label className="mb-2 block text-sm font-medium text-slate-300">
           {t('birthDate')}
         </label>
-        <input
-          id="birthDate"
-          type="date"
-          required
+        <DateSelect
           value={birthDate}
-          onChange={(e) => setBirthDate(e.target.value)}
-          max={new Date().toISOString().split('T')[0]}
-          min="1920-01-01"
-          className="h-12 w-full rounded-xl border border-white/20 bg-white/5 px-3 text-base text-slate-100 transition-colors focus:border-mystic-500 focus:outline-none focus:ring-1 focus:ring-mystic-500 sm:px-4"
+          onChange={setBirthDate}
         />
       </div>
 

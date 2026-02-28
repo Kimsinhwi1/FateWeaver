@@ -9,7 +9,10 @@ const BASE_URL = 'https://fateweaver.vercel.app'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const locales = ['en', 'ko']
-  const pages = ['', '/tarot', '/daily', '/history', '/pricing']
+  const pages = ['', '/tarot', '/daily', '/history', '/pricing', '/archetype', '/compatibility', '/blog']
+
+  /** 블로그 아티클 slug — 정적 콘텐츠 */
+  const blogSlugs = ['what-is-saju', 'free-ai-tarot-reading', 'saju-archetype']
 
   // locale × page 조합으로 모든 URL 생성
   const urls: MetadataRoute.Sitemap = []
@@ -20,7 +23,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
         url: `${BASE_URL}/${locale}${page}`,
         lastModified: new Date(),
         changeFrequency: page === '/daily' ? 'daily' : 'weekly',
-        priority: page === '' ? 1.0 : 0.8,
+        priority: page === '' ? 1.0 : page === '/blog' ? 0.7 : 0.8,
+      })
+    }
+  }
+
+  // 블로그 아티클 URL 추가
+  for (const slug of blogSlugs) {
+    for (const locale of locales) {
+      urls.push({
+        url: `${BASE_URL}/${locale}/blog/${slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.6,
       })
     }
   }

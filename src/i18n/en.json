@@ -8,6 +8,9 @@
     "tarot": "Tarot Reading",
     "daily": "Daily Fortune",
     "pricing": "Pricing",
+    "blog": "Blog",
+    "archetype": "Archetype",
+    "compatibility": "Compatibility",
     "about": "About"
   },
   "landing": {
@@ -191,6 +194,218 @@
     "subscribe": "Subscribe",
     "checkoutError": "Checkout failed. Please try again.",
     "notice": "Prices are in USD. Secure payments powered by Lemon Squeezy."
+  },
+  "blog": {
+    "title": "FateWeaver Blog",
+    "subtitle": "Explore the wisdom behind your readings",
+    "readMore": "Read More",
+    "readingTime": "{minutes} min read",
+    "backToList": "Back to Blog",
+    "tryCta": "Try It Now",
+    "articles": {
+      "what-is-saju": {
+        "title": "What is Saju? The Korean Birth Chart Reading Explained",
+        "summary": "Discover the ancient Korean art of Saju reading — how your birth date and time reveal your destiny through the Four Pillars.",
+        "ogDescription": "Learn about Saju, the Korean fortune telling system based on the Four Pillars of Destiny. Understand how your birth chart shapes your life path.",
+        "body": [
+          "Saju (四柱), meaning 'Four Pillars,' is one of Korea's oldest and most respected fortune telling traditions. While Western astrology looks to the stars, Saju reading examines the cosmic energy present at the exact moment of your birth — your year, month, day, and hour — each forming a pillar of your destiny.",
+          "Each pillar is composed of two characters: a Heavenly Stem and an Earthly Branch. Together, the eight characters (known as 'Saju Palja' or Eight Characters) create a unique cosmic fingerprint. This birth chart reveals your core personality, natural talents, life challenges, and the flow of fortune throughout your life.",
+          "At the heart of every Saju reading lies the Five Elements: Wood, Fire, Earth, Metal, and Water. These elements interact through cycles of creation and control. Wood feeds Fire, Fire creates Earth (ash), Earth yields Metal, Metal collects Water, and Water nourishes Wood. When your elements are balanced, life flows smoothly. When they are not, a skilled reader can identify which element you need more of.",
+          "Your Day Master — the Heavenly Stem of your day pillar — represents your true self. It determines how you think, relate to others, and navigate challenges. For example, a Wood Day Master person is like a growing tree: flexible, ambitious, and always reaching upward. A Metal Day Master is like a refined blade: decisive, principled, and sharp.",
+          "What makes Saju unique compared to other fortune telling systems is its emphasis on timing. The Four Pillars don't just describe who you are — they map out 10-year periods of fortune called 'Daeun,' showing when opportunities will arise and when patience is needed.",
+          "Modern Saju reading has evolved beyond traditional consultations. At FateWeaver, we combine Saju analysis with Western Tarot and AI interpretation, creating a fusion reading that bridges Eastern and Western wisdom traditions."
+        ],
+        "ctaText": "Ready to discover what your birth chart reveals?"
+      },
+      "free-ai-tarot-reading": {
+        "title": "Free AI Tarot Reading: How It Works and Why It's Different",
+        "summary": "Get a free AI tarot reading that combines traditional card symbolism with personalized birth chart analysis — powered by advanced AI.",
+        "ogDescription": "Try our free AI tarot reading. Unlike generic online tarot, FateWeaver combines your birth chart with card symbolism for a deeply personal reading.",
+        "body": [
+          "Online tarot readings have come a long way from random card generators. With advances in AI, it's now possible to receive a tarot reading that feels genuinely personal — one that considers not just the cards you draw, but who you are at a fundamental level.",
+          "FateWeaver's free AI tarot reading works in three steps. First, you enter your birth date (and optionally, your birth time). Our system calculates your Saju — the Korean birth chart based on the Four Pillars of Destiny. This reveals your elemental balance, core personality, and current life phase.",
+          "Next, three tarot cards are drawn for your Past, Present, and Future positions. Each card carries rich symbolism — The Empress speaks of nurturing abundance, The Tower signals sudden transformation, The Star promises hope after darkness. But here's what makes our reading different: we don't just tell you what each card means.",
+          "In the final step, our AI Oracle weaves your birth chart data together with the tarot card symbolism. If your Saju shows a strong Water element and you draw The Star, the reading might speak of deep intuitive wisdom guiding you through a period of renewal. If your Day Master is Metal and you draw The Tower, it could reveal how your natural decisiveness will help you navigate an unexpected change.",
+          "This fusion approach means no two readings are alike, even if the same cards appear. Your unique cosmic blueprint ensures the interpretation speaks directly to your life situation. The AI has been trained in both Eastern Saju philosophy and Western Tarot traditions, allowing it to find connections that would take a human reader years of dual study.",
+          "The best part? Your first reading is completely free. No account required, no credit card needed. Just your birth date and an open mind."
+        ],
+        "ctaText": "Get your free personalized tarot reading now"
+      },
+      "saju-archetype": {
+        "title": "Your Saju Archetype: Discover Your True Self Through Korean Astrology",
+        "summary": "Find your Saju Archetype — a fusion of Korean birth chart wisdom and Jungian psychology that reveals your deepest personality patterns.",
+        "ogDescription": "Discover your Saju Archetype based on Korean astrology and Jungian psychology. Find out if you're The Magician, The Sage, or one of 12 archetypes.",
+        "body": [
+          "What if your Korean birth chart could reveal not just your fortune, but your fundamental personality archetype? By combining the ancient wisdom of Saju with Carl Jung's theory of archetypes, we've created something entirely new: the Saju Archetype system.",
+          "Jung identified universal patterns in the human psyche — The Hero, The Sage, The Magician, The Explorer, and more. These archetypes appear across every culture and era because they represent fundamental ways of being human. Your Saju birth chart, with its unique balance of Five Elements, naturally aligns with specific archetypes.",
+          "Here's how it works: Your Day Master (the element representing your core self) determines your primary archetype category. A Fire Day Master naturally gravitates toward passionate, transformative archetypes like The Magician or The Creator. A Water Day Master resonates with deep, intuitive types like The Sage or The Mystic.",
+          "But your archetype isn't determined by your Day Master alone. The balance of all Five Elements in your birth chart refines the result. Someone with a Fire Day Master but strong Water influence might be The Sage — passionate about knowledge and truth. The same Fire Day Master with dominant Wood energy could be The Hero — driven by growth and courageous action.",
+          "Your favorable element (the energy your chart needs most) reveals your secondary archetype — the qualities you're developing throughout your life. This creates a rich, nuanced personality portrait that goes far beyond simple sun sign astrology.",
+          "The twelve Saju Archetypes are: The Ruler (leadership and responsibility), The Sage (wisdom and truth), The Explorer (freedom and discovery), The Innocent (optimism and trust), The Creator (imagination and expression), The Hero (courage and mastery), The Magician (transformation and vision), The Rebel (liberation and revolution), The Lover (passion and connection), The Caregiver (generosity and compassion), The Jester (joy and presence), and The Everyman (belonging and authenticity).",
+          "Unlike personality tests that rely on self-reported answers, your Saju Archetype is calculated from objective data — the cosmic conditions at your birth. Many people find it reveals patterns they've always sensed but could never quite name."
+        ],
+        "ctaText": "Discover your Saju Archetype now — it's free"
+      }
+    }
+  },
+  "archetype": {
+    "pageTitle": "Your Saju Archetype",
+    "pageSubtitle": "Discover which of 12 Jungian archetypes matches your Korean birth chart",
+    "freeBadge": "Free & Unlimited",
+    "findArchetype": "Find My Archetype",
+    "tryAgain": "Try Another Birthday",
+    "share": "Share My Archetype",
+    "strengths": "Core Strengths",
+    "advice": "Today's Guidance",
+    "secondaryLabel": "Your Growth Archetype",
+    "types": {
+      "ruler": {
+        "name": "The Ruler",
+        "title": "Leadership & Responsibility",
+        "description": "You carry the energy of a natural leader. Like the earth that supports all things, your stability and authority inspire trust. You create order from chaos and guide others with a steady hand.",
+        "strengths": ["Strategic thinking and long-term vision", "Natural authority that inspires confidence", "Ability to build lasting structures and systems"],
+        "advice": "A true ruler serves their people. Today, lead by listening."
+      },
+      "sage": {
+        "name": "The Sage",
+        "title": "Wisdom & Truth",
+        "description": "Your mind is a deep well of understanding. Like water that finds the hidden path through stone, you see truths others miss. Knowledge isn't just power for you — it's purpose.",
+        "strengths": ["Penetrating insight and analytical depth", "Calm wisdom under pressure", "Ability to see patterns in complexity"],
+        "advice": "Wisdom grows when shared. Teach someone something meaningful today."
+      },
+      "explorer": {
+        "name": "The Explorer",
+        "title": "Freedom & Discovery",
+        "description": "Your spirit cannot be contained. Like a young tree reaching toward the light, you're always growing toward the next horizon. Routine is your cage; the unknown is your invitation.",
+        "strengths": ["Adaptability in unfamiliar situations", "Courage to forge new paths", "Infectious enthusiasm for discovery"],
+        "advice": "The path reveals itself only to those who walk it. Take one step into the unknown today."
+      },
+      "innocent": {
+        "name": "The Innocent",
+        "title": "Optimism & Trust",
+        "description": "You see the world through eyes of wonder. Like polished metal reflecting pure light, you maintain clarity and hope even when others have given up. Your faith isn't naivety — it's strength.",
+        "strengths": ["Unwavering optimism that uplifts others", "Clarity of purpose and intent", "Ability to find goodness in any situation"],
+        "advice": "Your light is needed most in dark places. Share your optimism freely today."
+      },
+      "creator": {
+        "name": "The Creator",
+        "title": "Imagination & Expression",
+        "description": "You transform the invisible into the visible. Like fire that shapes and transforms, your creative energy turns raw ideas into something the world has never seen. Creating isn't what you do — it's who you are.",
+        "strengths": ["Boundless creative imagination", "Ability to manifest visions into reality", "Passionate dedication to craft"],
+        "advice": "Create something today — even if it's imperfect. The act of creation itself is the gift."
+      },
+      "hero": {
+        "name": "The Hero",
+        "title": "Courage & Mastery",
+        "description": "You are forged in challenges. Like a mighty oak that grows stronger with every storm, you meet adversity head-on and emerge transformed. Your courage isn't the absence of fear — it's the decision to act despite it.",
+        "strengths": ["Unwavering determination and discipline", "Courage to face any challenge", "Ability to inspire others through action"],
+        "advice": "True heroism often happens quietly. Stand up for something that matters today."
+      },
+      "magician": {
+        "name": "The Magician",
+        "title": "Transformation & Vision",
+        "description": "You bridge the mundane and the extraordinary. Like fire meeting wood, you catalyze transformation wherever you go. You see possibilities where others see dead ends, and you have the power to make the impossible happen.",
+        "strengths": ["Visionary thinking that sees beyond limits", "Ability to catalyze transformation in others", "Deep understanding of cause and effect"],
+        "advice": "Your greatest magic today is showing someone their own hidden potential."
+      },
+      "rebel": {
+        "name": "The Rebel",
+        "title": "Liberation & Revolution",
+        "description": "You challenge what others accept. Like lightning that splits a rigid sky, you break through limitations and question every assumption. Your rebellion isn't destruction — it's the birth of something better.",
+        "strengths": ["Fearless questioning of the status quo", "Ability to see through illusions", "Courage to stand alone for what's right"],
+        "advice": "Choose your battles wisely. Rebel against complacency, not against connection."
+      },
+      "lover": {
+        "name": "The Lover",
+        "title": "Passion & Connection",
+        "description": "You feel everything deeply. Like fire that illuminates from within, your passion brings warmth and light to every relationship. Your heart is your compass, and it always points toward what truly matters.",
+        "strengths": ["Deep emotional intelligence and empathy", "Ability to forge lasting bonds", "Passion that inspires and moves others"],
+        "advice": "Love is both given and received. Open your heart to unexpected connections today."
+      },
+      "caregiver": {
+        "name": "The Caregiver",
+        "title": "Generosity & Compassion",
+        "description": "Your strength lies in nurturing. Like the earth that feeds the seeds within it, you provide the foundation others need to grow. Your generosity isn't weakness — it's your superpower.",
+        "strengths": ["Extraordinary empathy and intuition", "Ability to create safe spaces for growth", "Tireless dedication to others' wellbeing"],
+        "advice": "You can't pour from an empty cup. Take care of yourself first today."
+      },
+      "jester": {
+        "name": "The Jester",
+        "title": "Joy & Presence",
+        "description": "You live fully in the present moment. Like water that flows freely and finds joy in every turn, you remind everyone that life is meant to be enjoyed. Your humor carries wisdom deeper than most realize.",
+        "strengths": ["Ability to find lightness in heavy moments", "Creative problem-solving through play", "Gift for bringing people together through joy"],
+        "advice": "Laughter is the shortest distance between two people. Share a genuine moment of joy today."
+      },
+      "everyman": {
+        "name": "The Everyman",
+        "title": "Belonging & Authenticity",
+        "description": "You are the heart of community. Like water that adapts to every vessel yet remains true, you connect with everyone while staying grounded in your values. Your greatest gift is making others feel they belong.",
+        "strengths": ["Genuine warmth that puts others at ease", "Ability to build bridges between different people", "Authentic presence that earns deep trust"],
+        "advice": "Your quiet influence ripples further than you know. Be authentically you today."
+      }
+    }
+  },
+  "compatibility": {
+    "title": "Compatibility Analysis",
+    "subtitle": "Compare two birth charts and discover the hidden dynamics of your connection",
+    "premiumBadge": "Premium Feature",
+    "person1Label": "Person 1 — You",
+    "person2Label": "Person 2 — Partner",
+    "birthDate": "Date of Birth",
+    "birthTime": "Time of Birth",
+    "timeUnknown": "Unknown",
+    "analyze": "Analyze Compatibility",
+    "analyzing": "Reading the stars...",
+    "tryAgain": "Try Another Pair",
+    "outOf100": "out of 100",
+    "scoreLevel": {
+      "excellent": "Exceptional Harmony",
+      "good": "Natural Connection",
+      "moderate": "Dynamic Balance",
+      "challenging": "Growth-Oriented Bond"
+    },
+    "dayMasterTitle": "Core Energy Relationship",
+    "synergyTitle": "Element Synergy",
+    "interpretationTitle": "The Oracle's Reading",
+    "strengthsTitle": "Strengths",
+    "challengesTitle": "Growth Areas",
+    "element": {
+      "wood": "Wood",
+      "fire": "Fire",
+      "earth": "Earth",
+      "metal": "Metal",
+      "water": "Water"
+    },
+    "relation": {
+      "generating": "Nurturing",
+      "generated_by": "Supported",
+      "same": "Kindred",
+      "overcoming": "Dynamic",
+      "overcome_by": "Challenging"
+    },
+    "strengths": {
+      "naturalHarmony": "Your energies flow together naturally, creating effortless understanding",
+      "growthTogether": "You inspire growth in each other — like sunlight to a seedling",
+      "supportivePartner": "One of you provides a nurturing foundation for the other to thrive",
+      "emotionalSecurity": "There is a deep sense of emotional safety in this connection",
+      "deepUnderstanding": "You share a wavelength that words cannot fully capture",
+      "sharedValues": "Your core values and life rhythms align beautifully",
+      "dynamicTension": "The creative tension between you fuels passion and innovation",
+      "personalGrowth": "This relationship pushes both of you to become your best selves",
+      "learningOpportunity": "You teach each other perspectives neither could discover alone",
+      "complementaryStrength": "Where one is weak, the other naturally steps in with strength",
+      "excellentBalance": "Your combined elemental energies create near-perfect balance"
+    },
+    "challenges": {
+      "dependencyRisk": "Be mindful of over-reliance — nurture your individual strengths too",
+      "passivityRisk": "Ensure both voices are heard equally in the relationship",
+      "competitionRisk": "Similar energies can create rivalry — channel it into shared goals",
+      "samenessRisk": "Too much similarity may limit growth — seek new experiences together",
+      "conflictRisk": "Opposing energies may clash at times — see conflicts as growth catalysts",
+      "powerImbalance": "Watch for uneven dynamics — conscious effort toward balance is key",
+      "selfEsteemRisk": "One partner may feel overshadowed — celebrate each other's unique gifts",
+      "elementImbalance": "Both of you share similar gaps — support each other in those areas"
+    }
   },
   "common": {
     "loading": "Loading...",

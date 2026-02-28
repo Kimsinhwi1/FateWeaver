@@ -4,7 +4,7 @@
  * 다크 테마 + 신비로운 분위기를 전체 앱에 적용
  * ───────────────────────────────────────── */
 
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Noto_Sans_KR, Cinzel } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
@@ -30,6 +30,13 @@ const cinzel = Cinzel({
 })
 
 const BASE_URL = 'https://fateweaver.vercel.app'
+
+/** 뷰포트 + 테마 컬러 — 브라우저 주소창 색상을 다크 테마와 일치 */
+export const viewport: Viewport = {
+  themeColor: '#020617',
+  width: 'device-width',
+  initialScale: 1,
+}
 
 /** 동적 메타데이터 — locale에 따라 title, OG, Twitter 분기 */
 export async function generateMetadata({

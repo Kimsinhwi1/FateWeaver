@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- 다크 원형 배경 -->
+  <circle cx="16" cy="16" r="16" fill="#020617"/>
+  <!-- 금색 별/타로 심볼 — 4포인트 스타 -->
+  <path d="M16 4 L18.5 13 L28 16 L18.5 19 L16 28 L13.5 19 L4 16 L13.5 13 Z" fill="#d4a017" opacity="0.9"/>
+  <!-- 중심 작은 원 -->
+  <circle cx="16" cy="16" r="3" fill="#020617"/>
+  <circle cx="16" cy="16" r="2" fill="#c084fc" opacity="0.8"/>
+</svg>

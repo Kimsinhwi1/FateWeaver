@@ -11,17 +11,19 @@
 const STORAGE_KEY = 'fateweaver_usage'
 
 interface UsageData {
-  /** 날짜별 기능 사용 횟수: { "2026-02-28": { tarot: 1, daily: 1 } } */
+  /** 날짜별 기능 사용 횟수: { "2026-02-28": { tarot: 1, daily: 1, compatibility: 0 } } */
   [date: string]: {
     tarot?: number
     daily?: number
+    compatibility?: number
   }
 }
 
 /** 무료 티어 일일 제한 */
 export const FREE_LIMITS = {
-  tarot: 1,    // 하루 타로 1회
-  daily: 3,    // 오늘의 운세 3회 (다른 생일로 확인 가능)
+  tarot: 1,           // 하루 타로 1회
+  daily: 3,           // 오늘의 운세 3회 (다른 생일로 확인 가능)
+  compatibility: 0,   // 궁합: 무료 0회 = 프리미엄 전용
 } as const
 
 type FeatureKey = keyof typeof FREE_LIMITS

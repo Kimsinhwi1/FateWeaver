@@ -39,8 +39,14 @@ export default function Header() {
             {t('daily')}
           </Link>
           <Link
+            href={`/${locale}/archetype`}
+            className="hidden min-h-[44px] items-center text-sm text-slate-300 transition-colors hover:text-mystic-400 sm:flex"
+          >
+            {t('archetype')}
+          </Link>
+          <Link
             href={`/${locale}/pricing`}
-            className="hidden min-h-[44px] items-center text-sm text-slate-300 transition-colors hover:text-gold-400 sm:flex"
+            className="hidden min-h-[44px] items-center text-sm text-slate-300 transition-colors hover:text-gold-400 lg:flex"
           >
             {t('pricing')}
           </Link>

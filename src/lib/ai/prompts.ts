@@ -6,6 +6,7 @@
 
 import type { DrawnCard } from '@/types/tarot'
 import type { SajuData } from '@/types/saju'
+import type { CompatibilityResult, DayMasterRelation } from '@/lib/compatibility/analyzer'
 
 /** 시스템 프롬프트 — The Oracle 페르소나 */
 export const ORACLE_SYSTEM_PROMPT = `[페르소나]
@@ -136,4 +137,55 @@ export function buildDailyFortunePrompt(
   "luckyNumber": 1에서 99 사이 정수,
   "moodScore": 1에서 10 사이 정수 (10이 최고)
 }`
+}
+
+/** 일간 관계를 사람이 읽을 수 있는 설명으로 변환 */
+const RELATION_DESC: Record<DayMasterRelation, { ko: string; en: string }> = {
+  generating:   { ko: '상생 — 한 쪽이 다른 쪽을 살리는 관계', en: 'Generating — one nurtures the other' },
+  generated_by: { ko: '피생 — 상대가 나를 살려주는 관계', en: 'Supported — the other nurtures you' },
+  same:         { ko: '비화 — 같은 에너지의 동지', en: 'Same element — kindred spirits' },
+  overcoming:   { ko: '상극 — 긴장감 있는 자극적 관계', en: 'Overcoming — dynamic tension' },
+  overcome_by:  { ko: '피극 — 상대에게 눌리는 관계', en: 'Overcome — the other challenges you' },
+}
+
+/**
+ * 궁합 해석 프롬프트 — 두 사람의 사주를 비교하여 AI가 해석
+ * 비유: 두 사람의 "영혼 화학 보고서"를 오라클에게 읽어달라고 요청하는 것
+ */
+export function buildCompatibilityPrompt(
+  saju1: SajuData,
+  saju2: SajuData,
+  result: CompatibilityResult,
+  locale: string
+): string {
+  const relationDesc = RELATION_DESC[result.dayMasterRelation][locale === 'ko' ? 'ko' : 'en']
+
+  return `[궁합 분석 요청]
+언어: ${locale === 'ko' ? '한국어' : 'English'}
+
+[첫 번째 사람 — 사주 데이터]
+- 일간: ${saju1.dayMaster}
+- 오행 분포: 목=${saju1.elementBalance.wood}, 화=${saju1.elementBalance.fire}, 토=${saju1.elementBalance.earth}, 금=${saju1.elementBalance.metal}, 수=${saju1.elementBalance.water}
+- 용신: ${saju1.favorableElement}
+
+[두 번째 사람 — 사주 데이터]
+- 일간: ${saju2.dayMaster}
+- 오행 분포: 목=${saju2.elementBalance.wood}, 화=${saju2.elementBalance.fire}, 토=${saju2.elementBalance.earth}, 금=${saju2.elementBalance.metal}, 수=${saju2.elementBalance.water}
+- 용신: ${saju2.favorableElement}
+
+[분석 결과 요약]
+- 종합 궁합 점수: ${result.score}점/100점
+- 일간 관계: ${relationDesc}
+- 오행 보완 시너지: ${result.elementSynergy}점/100점
+
+두 사람의 사주 데이터와 분석 결과를 바탕으로, The Oracle로서 궁합 해석을 제공하라.
+
+[해석 지침]
+1. 두 사람의 에너지가 만났을 때 어떤 시너지가 생기는지 자연 이미지로 설명
+2. 강점과 도전 과제를 균형 있게 서술 (부정적이더라도 성장 관점으로)
+3. 관계를 더 좋게 만들기 위한 구체적인 행동 제안 1-2가지
+4. 점수가 높든 낮든, 모든 관계에는 고유한 가치가 있다는 메시지 전달
+5. 절대 "궁합이 나쁘다"는 단정적 표현을 쓰지 않는다
+
+출력 형식: 3~4개 문단, 각 문단은 2~4문장. 마지막은 행동 제안.`
 }

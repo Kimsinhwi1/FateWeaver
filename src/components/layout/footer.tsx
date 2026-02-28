@@ -41,6 +41,24 @@ export default function Footer() {
           {tNav('compatibility')}
         </Link>
         <Link
+          href={`/${locale}/fortune/decade`}
+          className="inline-flex min-h-[44px] items-center text-sm text-slate-400 transition-colors hover:text-gold-400"
+        >
+          {tNav('decade')}
+        </Link>
+        <Link
+          href={`/${locale}/fortune/monthly`}
+          className="inline-flex min-h-[44px] items-center text-sm text-slate-400 transition-colors hover:text-gold-400"
+        >
+          {tNav('monthly')}
+        </Link>
+        <Link
+          href={`/${locale}/fortune/yearly`}
+          className="inline-flex min-h-[44px] items-center text-sm text-slate-400 transition-colors hover:text-gold-400"
+        >
+          {tNav('yearly')}
+        </Link>
+        <Link
           href={`/${locale}/blog`}
           className="inline-flex min-h-[44px] items-center text-sm text-slate-400 transition-colors hover:text-mystic-400"
         >

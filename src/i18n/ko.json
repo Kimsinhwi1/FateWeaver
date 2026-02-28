@@ -11,6 +11,9 @@
     "blog": "블로그",
     "archetype": "원형",
     "compatibility": "궁합",
+    "decade": "10년 대운",
+    "monthly": "월간 운세",
+    "yearly": "연간 운세",
     "about": "소개"
   },
   "landing": {
@@ -88,8 +91,8 @@
   },
   "premium": {
     "title": "더 깊은 해석",
-    "comingSoon": "준비 중",
-    "description": "프리미엄 기능을 준비하고 있습니다. 운명의 더 깊은 비밀을 곧 만나보세요.",
+    "comingSoon": "프리미엄",
+    "description": "프리미엄으로 운명의 더 깊은 비밀을 풀어보세요.",
     "features": {
       "deepReading": "10년 대운 심층 분석",
       "monthlyFortune": "월간 운세 & 가이드",
@@ -344,6 +347,42 @@
         "advice": "당신의 조용한 영향력은 생각보다 멀리 퍼져갑니다. 오늘 진정한 나 자신으로 살아보세요."
       }
     }
+  },
+  "decade": {
+    "title": "10년 대운 분석",
+    "subtitle": "앞으로 10년, 당신에게 흐르는 우주 에너지를 한눈에 파악하세요",
+    "premiumBadge": "프리미엄 전용",
+    "analyze": "대운 분석하기",
+    "loading": "오라클이 10년의 흐름을 읽고 있습니다...",
+    "tryAgain": "다른 생일로 분석하기",
+    "timelineTitle": "10년 타임라인",
+    "currentYear": "올해",
+    "overallTitle": "오라클의 대운 해석"
+  },
+  "monthly": {
+    "title": "월간 운세",
+    "subtitle": "이번 달에 흐르는 에너지에 맞춘 맞춤형 가이드를 받아보세요",
+    "premiumBadge": "프리미엄 전용",
+    "analyze": "이달의 운세 확인",
+    "loading": "오라클이 이달의 기운을 읽고 있습니다...",
+    "tryAgain": "다른 생일로 확인하기",
+    "categoriesTitle": "이달의 영역별 운세",
+    "category": {
+      "love": "연애 & 인간관계",
+      "wealth": "재물 & 금전",
+      "health": "건강 & 웰빙",
+      "career": "커리어 & 성장"
+    },
+    "adviceTitle": "이달의 조언"
+  },
+  "yearly": {
+    "title": "연간 운세",
+    "subtitle": "올해 사계절에 펼쳐지는 운세의 흐름을 한눈에 확인하세요",
+    "premiumBadge": "프리미엄 전용",
+    "analyze": "올해 운세 확인",
+    "loading": "오라클이 올해의 흐름을 읽고 있습니다...",
+    "tryAgain": "다른 생일로 확인하기",
+    "adviceTitle": "오라클의 연간 조언"
   },
   "compatibility": {
     "title": "궁합 분석",

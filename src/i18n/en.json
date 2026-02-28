@@ -11,6 +11,9 @@
     "blog": "Blog",
     "archetype": "Archetype",
     "compatibility": "Compatibility",
+    "decade": "10-Year Fortune",
+    "monthly": "Monthly Fortune",
+    "yearly": "Yearly Fortune",
     "about": "About"
   },
   "landing": {
@@ -88,8 +91,8 @@
   },
   "premium": {
     "title": "Deeper Insights",
-    "comingSoon": "Coming Soon",
-    "description": "Premium features are being prepared. Stay tuned for a deeper look into your destiny.",
+    "comingSoon": "Premium",
+    "description": "Unlock premium features for a deeper look into your destiny.",
     "features": {
       "deepReading": "In-depth 10-year fortune analysis",
       "monthlyFortune": "Monthly fortune & guidance",
@@ -344,6 +347,42 @@
         "advice": "Your quiet influence ripples further than you know. Be authentically you today."
       }
     }
+  },
+  "decade": {
+    "title": "10-Year Fortune Analysis",
+    "subtitle": "Discover the cosmic energy flowing through the next decade of your life",
+    "premiumBadge": "Premium Feature",
+    "analyze": "Analyze My Decade",
+    "loading": "The Oracle is mapping your decade...",
+    "tryAgain": "Try Another Birthday",
+    "timelineTitle": "Your 10-Year Timeline",
+    "currentYear": "This Year",
+    "overallTitle": "The Oracle's Decade Reading"
+  },
+  "monthly": {
+    "title": "Monthly Fortune",
+    "subtitle": "Get personalized guidance for the energy of this month",
+    "premiumBadge": "Premium Feature",
+    "analyze": "Check This Month",
+    "loading": "The Oracle is reading this month's energy...",
+    "tryAgain": "Try Another Birthday",
+    "categoriesTitle": "Life Areas This Month",
+    "category": {
+      "love": "Love & Relationships",
+      "wealth": "Wealth & Finance",
+      "health": "Health & Wellbeing",
+      "career": "Career & Growth"
+    },
+    "adviceTitle": "This Month's Guidance"
+  },
+  "yearly": {
+    "title": "Yearly Fortune",
+    "subtitle": "See the four seasons of your fortune unfold across the entire year",
+    "premiumBadge": "Premium Feature",
+    "analyze": "Check This Year",
+    "loading": "The Oracle is mapping your year...",
+    "tryAgain": "Try Another Birthday",
+    "adviceTitle": "The Oracle's Yearly Guidance"
   },
   "compatibility": {
     "title": "Compatibility Analysis",

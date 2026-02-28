@@ -9,7 +9,7 @@ const BASE_URL = 'https://fateweaver.vercel.app'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const locales = ['en', 'ko']
-  const pages = ['', '/tarot', '/daily', '/history', '/pricing', '/archetype', '/compatibility', '/blog']
+  const pages = ['', '/tarot', '/daily', '/history', '/pricing', '/archetype', '/compatibility', '/fortune/decade', '/fortune/monthly', '/fortune/yearly', '/blog']
 
   /** 블로그 아티클 slug — 정적 콘텐츠 */
   const blogSlugs = ['what-is-saju', 'free-ai-tarot-reading', 'saju-archetype']

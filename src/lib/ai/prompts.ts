@@ -189,3 +189,130 @@ export function buildCompatibilityPrompt(
 
 출력 형식: 3~4개 문단, 각 문단은 2~4문장. 마지막은 행동 제안.`
 }
+
+/**
+ * 10년 대운 분석 프롬프트 — 향후 10년의 운의 흐름을 읽는다
+ * 비유: 10년치 "운세 로드맵"을 오라클에게 요청하는 것
+ */
+export function buildDecadeFortunePrompt(
+  sajuData: SajuData,
+  decadePeriods: { year: number; element: string; relation: string }[],
+  locale: string
+): string {
+  const periodsText = decadePeriods
+    .map((p) => `  ${p.year}년: 오행=${p.element}, 사주와의 관계=${p.relation}`)
+    .join('\n')
+
+  return `[10년 대운 분석 요청]
+언어: ${locale === 'ko' ? '한국어' : 'English'}
+
+[사주 데이터]
+- 일간(Day Master): ${sajuData.dayMaster}
+- 오행 분포: 목=${sajuData.elementBalance.wood}, 화=${sajuData.elementBalance.fire}, 토=${sajuData.elementBalance.earth}, 금=${sajuData.elementBalance.metal}, 수=${sajuData.elementBalance.water}
+- 용신(필요한 에너지): ${sajuData.favorableElement}
+
+[10년 각 연도의 에너지 흐름]
+${periodsText}
+
+위 사주 데이터와 10년 흐름을 바탕으로, The Oracle로서 대운 분석을 제공하라.
+
+[해석 지침]
+1. 각 연도별 키워드(2-3글자)와 한 줄 설명을 제공
+2. 상생/피생 관계의 해는 기회와 성장, 상극/피극은 시련과 성장의 관점으로 해석
+3. 전체 10년의 큰 흐름과 전환점을 짚어주라
+4. 마지막에 10년 전체를 아우르는 종합 조언을 주라
+
+반드시 아래 JSON 형식으로만 응답하라 (다른 텍스트 없이 순수 JSON만):
+{
+  "years": [
+    { "year": 2026, "keyword": "키워드", "description": "이 해의 해석 1-2문장" }
+  ],
+  "overall": "10년 전체 종합 해석 텍스트 (2-3문단, 문단 사이 \\n\\n)"
+}`
+}
+
+/**
+ * 월간 운세 프롬프트 — 이번 달의 운세를 읽는다
+ * 비유: 이번 달의 "에너지 일기예보"를 오라클에게 요청하는 것
+ */
+export function buildMonthlyFortunePrompt(
+  sajuData: SajuData,
+  yearMonth: string,
+  monthPillar: { stem: string; branch: string; element: string },
+  locale: string
+): string {
+  return `[월간 운세 요청]
+기간: ${yearMonth}
+언어: ${locale === 'ko' ? '한국어' : 'English'}
+
+[사주 데이터]
+- 일간(Day Master): ${sajuData.dayMaster}
+- 오행 분포: 목=${sajuData.elementBalance.wood}, 화=${sajuData.elementBalance.fire}, 토=${sajuData.elementBalance.earth}, 금=${sajuData.elementBalance.metal}, 수=${sajuData.elementBalance.water}
+- 용신(필요한 에너지): ${sajuData.favorableElement}
+
+[이달의 천간지지]
+- 월간(天干): ${monthPillar.stem}
+- 월지(地支): ${monthPillar.branch}
+- 오행: ${monthPillar.element}
+
+이 달의 에너지가 사주와 어떻게 상호작용하는지 The Oracle로서 운세를 제공하라.
+
+[해석 지침]
+1. 이달의 전체적인 운세 흐름을 2-3문단으로 서술
+2. 연애, 재물, 건강, 커리어 4가지 영역의 점수(1-10)와 한줄 설명
+3. 이달의 핵심 조언을 1문단으로 제공
+4. 자연 이미지와 비유를 활용하여 쉽게 풀어쓸 것
+
+반드시 아래 JSON 형식으로만 응답하라 (다른 텍스트 없이 순수 JSON만):
+{
+  "fortune": "이달의 운세 텍스트 (2-3문단, 문단 사이 \\n\\n)",
+  "categories": { "love": 7, "wealth": 6, "health": 8, "career": 5 },
+  "advice": "이달의 핵심 조언 1문단"
+}`
+}
+
+/**
+ * 연간 운세 프롬프트 — 올해의 운세를 읽는다
+ * 비유: 올해의 "사계절 운세 가이드"를 오라클에게 요청하는 것
+ */
+export function buildYearlyFortunePrompt(
+  sajuData: SajuData,
+  year: number,
+  yearPillar: { stem: string; branch: string; element: string },
+  locale: string
+): string {
+  return `[연간 운세 요청]
+연도: ${year}년
+언어: ${locale === 'ko' ? '한국어' : 'English'}
+
+[사주 데이터]
+- 일간(Day Master): ${sajuData.dayMaster}
+- 오행 분포: 목=${sajuData.elementBalance.wood}, 화=${sajuData.elementBalance.fire}, 토=${sajuData.elementBalance.earth}, 금=${sajuData.elementBalance.metal}, 수=${sajuData.elementBalance.water}
+- 용신(필요한 에너지): ${sajuData.favorableElement}
+
+[올해의 천간지지]
+- 연간(天干): ${yearPillar.stem}
+- 연지(地支): ${yearPillar.branch}
+- 오행: ${yearPillar.element}
+
+올해의 에너지가 사주와 어떻게 상호작용하는지 The Oracle로서 운세를 제공하라.
+
+[해석 지침]
+1. 올해의 테마를 한 줄로 제시
+2. 4분기(1-3월, 4-6월, 7-9월, 10-12월) 각각의 운세를 1문단씩 서술
+3. 각 분기의 에너지 흐름이 자연스럽게 연결되도록
+4. 올해 전체를 아우르는 종합 조언을 1문단으로 제공
+5. 자연 이미지와 비유를 활용하여 쉽게 풀어쓸 것
+
+반드시 아래 JSON 형식으로만 응답하라 (다른 텍스트 없이 순수 JSON만):
+{
+  "theme": "올해의 테마 한 줄",
+  "quarters": [
+    { "period": "1-3월", "forecast": "1분기 운세 1문단" },
+    { "period": "4-6월", "forecast": "2분기 운세 1문단" },
+    { "period": "7-9월", "forecast": "3분기 운세 1문단" },
+    { "period": "10-12월", "forecast": "4분기 운세 1문단" }
+  ],
+  "advice": "올해 종합 조언 1문단"
+}`
+}

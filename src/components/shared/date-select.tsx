@@ -13,7 +13,7 @@
 
 'use client'
 
-import { useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useTranslations } from 'next-intl'
 
 interface DateSelectProps {
@@ -51,12 +51,34 @@ export default function DateSelect({
   const currentYear = new Date().getFullYear()
   const max = maxYear ?? currentYear
 
-  /** 현재 선택된 년/월/일 파싱 */
-  const [selectedYear, selectedMonth, selectedDay] = useMemo(() => {
-    if (!value) return ['', '', '']
-    const parts = value.split('-')
-    return [parts[0] ?? '', parts[1] ?? '', parts[2] ?? '']
+  /**
+   * 부분 선택을 보존하는 로컬 state
+   * 왜 필요한가? 년·월·일 중 하나만 선택한 상태에서
+   * 부모에 onChange('')를 보내면 value=''로 돌아와서
+   * 선택한 값이 사라지는 버그 방지
+   */
+  const [localYear, setLocalYear] = useState('')
+  const [localMonth, setLocalMonth] = useState('')
+  const [localDay, setLocalDay] = useState('')
+
+  /** 부모 value가 외부에서 변경될 때 로컬 동기화 (폼 리셋 등) */
+  useEffect(() => {
+    if (value) {
+      const parts = value.split('-')
+      setLocalYear(parts[0] ?? '')
+      setLocalMonth(parts[1] ?? '')
+      setLocalDay(parts[2] ?? '')
+    } else {
+      setLocalYear('')
+      setLocalMonth('')
+      setLocalDay('')
+    }
   }, [value])
+
+  /** 기존 코드 호환용 alias */
+  const selectedYear = localYear
+  const selectedMonth = localMonth
+  const selectedDay = localDay
 
   /** 년도 옵션: 최근 → 과거 순서 (최근이 위에 오는 게 편함) */
   const yearOptions = useMemo(() => {
@@ -78,28 +100,26 @@ export default function DateSelect({
     return Array.from({ length: maxDay }, (_, i) => i + 1)
   }, [selectedYear, selectedMonth, currentYear])
 
-  /** 값 변경 시 YYYY-MM-DD 조합하여 상위에 전달 */
+  /** 값 변경 시 로컬 state 먼저 갱신 → 3개 완성 시에만 부모에 전달 */
   function handleChange(part: 'year' | 'month' | 'day', val: string) {
-    let y = selectedYear
-    let m = selectedMonth
-    let d = selectedDay
+    let y = localYear
+    let m = localMonth
+    let d = localDay
 
-    if (part === 'year') y = val
-    if (part === 'month') m = val
-    if (part === 'day') d = val
+    /** 로컬 state에 즉시 반영 (부분 선택 보존) */
+    if (part === 'year') { y = val; setLocalYear(val) }
+    if (part === 'month') { m = val; setLocalMonth(val) }
+    if (part === 'day') { d = val; setLocalDay(val) }
 
-    /** 3개 모두 선택되어야 유효한 날짜 */
+    /** 3개 모두 선택되어야 유효한 날짜 → 부모에 전달 */
     if (y && m && d) {
-      /** 일 보정: 월 변경 시 기존 일이 초과할 수 있음 (예: 31 → 2월) */
       const maxDay = getDaysInMonth(parseInt(y), parseInt(m))
       const safeDay = Math.min(parseInt(d), maxDay)
       const paddedMonth = m.padStart(2, '0')
       const paddedDay = String(safeDay).padStart(2, '0')
       onChange(`${y}-${paddedMonth}-${paddedDay}`)
-    } else {
-      /** 부분 선택 상태 → 빈 문자열 (미완료 표시) */
-      onChange('')
     }
+    /** 부분 선택 상태에서는 onChange 호출하지 않음 (기존 값 유지) */
   }
 
   /** 셀렉트 공통 스타일 — 터치 최적 48px 높이 */

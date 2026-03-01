@@ -4,6 +4,7 @@
  * ───────────────────────────────────────── */
 
 import { NextRequest, NextResponse } from 'next/server'
+import { apiGuard } from '@/lib/api/guard'
 import { drawCards } from '@/lib/tarot/draw'
 import { calculateSaju } from '@/lib/saju/calculator'
 import { parseBirthDate, parseBirthTime } from '@/lib/utils/date'
@@ -100,6 +101,10 @@ async function saveReading(
 
 export async function POST(request: NextRequest) {
   try {
+    /* Rate Limit + 사용량 검사 (무료 하루 1회) */
+    const guard = await apiGuard(request, { feature: 'tarot' })
+    if (guard.error) return guard.error
+
     const body: ReadingRequest = await request.json()
     const { birthDate, birthTime, locale, question } = body
 
@@ -110,6 +115,9 @@ export async function POST(request: NextRequest) {
     if (birthTime && !/^\d{2}:\d{2}$/.test(birthTime)) {
       return NextResponse.json({ error: 'Invalid birthTime format (HH:mm)' }, { status: 400 })
     }
+
+    /* 입력값 검증 통과 → 사용량 확정 (검증 실패 시 차감 방지) */
+    await guard.confirmUsage()
 
     // 1. 생년월일 파싱
     const { year, month, day } = parseBirthDate(birthDate)

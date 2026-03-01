@@ -3,10 +3,11 @@
  * 비유: 올해의 "사계절 운세 가이드" — 올해 천간지지와
  *       사주의 상호작용을 분석하여 분기별 운세 제공
  *
- * 프리미엄 전용: 클라이언트에서 isPremium 체크 후 호출
+ * 프리미엄 전용: 서버에서 인증 + 구독 상태를 검증
  * ───────────────────────────────────────── */
 
 import { NextRequest, NextResponse } from 'next/server'
+import { apiGuard } from '@/lib/api/guard'
 import { calculateSaju } from '@/lib/saju/calculator'
 import { parseBirthDate, parseBirthTime } from '@/lib/utils/date'
 import { getYearPillar } from '@/lib/saju/period'
@@ -91,6 +92,10 @@ function generateMockYearly(sajuData: SajuData, locale: string): YearlyResponse 
 
 export async function POST(request: NextRequest) {
   try {
+    /* 인증 + 프리미엄 + Rate Limit 검사 */
+    const guard = await apiGuard(request, { requirePremium: true, feature: 'yearly' })
+    if (guard.error) return guard.error
+
     const body: YearlyRequest = await request.json()
     const { birthDate, birthTime, locale } = body
 
@@ -101,6 +106,9 @@ export async function POST(request: NextRequest) {
     if (birthTime && !/^\d{2}:\d{2}$/.test(birthTime)) {
       return NextResponse.json({ error: 'Invalid birthTime format (HH:mm)' }, { status: 400 })
     }
+
+    /* 입력값 검증 통과 → 사용량 확정 */
+    await guard.confirmUsage()
 
     /* 1. 사주 계산 */
     const { year, month, day } = parseBirthDate(birthDate)

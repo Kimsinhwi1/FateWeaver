@@ -3,10 +3,11 @@
  * 비유: 10년치 "운세 로드맵" — 각 해의 에너지가 사주와
  *       어떻게 만나는지 분석하여 미래의 큰 그림을 보여준다
  *
- * 프리미엄 전용: 클라이언트에서 isPremium 체크 후 호출
+ * 프리미엄 전용: 서버에서 인증 + 구독 상태를 검증
  * ───────────────────────────────────────── */
 
 import { NextRequest, NextResponse } from 'next/server'
+import { apiGuard } from '@/lib/api/guard'
 import { calculateSaju } from '@/lib/saju/calculator'
 import { parseBirthDate, parseBirthTime } from '@/lib/utils/date'
 import { getDecadePeriods, getElementDisplayName, getRelationDisplayName } from '@/lib/saju/period'
@@ -59,6 +60,10 @@ function generateMockDecade(sajuData: SajuData, locale: string): DecadeResponse 
 
 export async function POST(request: NextRequest) {
   try {
+    /* 인증 + 프리미엄 + Rate Limit 검사 */
+    const guard = await apiGuard(request, { requirePremium: true, feature: 'decade' })
+    if (guard.error) return guard.error
+
     const body: DecadeRequest = await request.json()
     const { birthDate, birthTime, locale } = body
 
@@ -69,6 +74,9 @@ export async function POST(request: NextRequest) {
     if (birthTime && !/^\d{2}:\d{2}$/.test(birthTime)) {
       return NextResponse.json({ error: 'Invalid birthTime format (HH:mm)' }, { status: 400 })
     }
+
+    /* 입력값 검증 통과 → 사용량 확정 */
+    await guard.confirmUsage()
 
     /* 1. 사주 계산 */
     const { year, month, day } = parseBirthDate(birthDate)

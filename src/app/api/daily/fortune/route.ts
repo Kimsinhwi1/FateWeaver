@@ -9,6 +9,7 @@
  * ───────────────────────────────────────── */
 
 import { NextRequest, NextResponse } from 'next/server'
+import { apiGuard } from '@/lib/api/guard'
 import { calculateSaju } from '@/lib/saju/calculator'
 import { parseBirthDate, parseBirthTime, getZodiacSign } from '@/lib/utils/date'
 import { ELEMENT_NAMES_KO, ELEMENT_NAMES_EN } from '@/lib/saju/stems-branches'
@@ -166,6 +167,10 @@ async function saveToCache(
 
 export async function POST(request: NextRequest) {
   try {
+    /* Rate Limit + 사용량 검사 (무료 하루 3회) */
+    const guard = await apiGuard(request, { feature: 'daily' })
+    if (guard.error) return guard.error
+
     const body: DailyFortuneRequest = await request.json()
     const { birthDate, birthTime, locale } = body
 
@@ -176,6 +181,9 @@ export async function POST(request: NextRequest) {
     if (birthTime && !/^\d{2}:\d{2}$/.test(birthTime)) {
       return NextResponse.json({ error: 'Invalid birthTime format (HH:mm)' }, { status: 400 })
     }
+
+    /* 입력값 검증 통과 → 사용량 확정 (검증 실패 시 차감 방지) */
+    await guard.confirmUsage()
 
     // 1. 생년월일 파싱 + 사주 계산
     const { year, month, day } = parseBirthDate(birthDate)

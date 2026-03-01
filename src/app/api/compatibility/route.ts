@@ -11,6 +11,7 @@
  * ───────────────────────────────────────── */
 
 import { NextRequest, NextResponse } from 'next/server'
+import { apiGuard } from '@/lib/api/guard'
 import { calculateSaju } from '@/lib/saju/calculator'
 import { parseBirthDate, parseBirthTime } from '@/lib/utils/date'
 import { analyzeCompatibility } from '@/lib/compatibility/analyzer'
@@ -79,6 +80,10 @@ Today's suggestion: Think of one quality you admire in the other person and expr
 
 export async function POST(request: NextRequest) {
   try {
+    /* 인증 + 프리미엄 + Rate Limit 검사 */
+    const guard = await apiGuard(request, { requirePremium: true, feature: 'compatibility' })
+    if (guard.error) return guard.error
+
     const body: CompatibilityRequest = await request.json()
     const { person1, person2, locale } = body
 
@@ -97,6 +102,9 @@ export async function POST(request: NextRequest) {
     if (person2.birthTime && !timeRegex.test(person2.birthTime)) {
       return NextResponse.json({ error: 'Invalid person2.birthTime format (HH:mm)' }, { status: 400 })
     }
+
+    /* 입력값 검증 통과 → 사용량 확정 */
+    await guard.confirmUsage()
 
     /* 1. 두 사람의 사주 각각 계산 */
     const { year: y1, month: m1, day: d1 } = parseBirthDate(person1.birthDate)
